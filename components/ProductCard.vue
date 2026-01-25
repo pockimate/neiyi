@@ -1,21 +1,20 @@
 <template>
-  <div class="glass-card rounded-2xl overflow-hidden border border-pink-200 hover-lift group">
+  <div class="glass-card rounded-2xl overflow-hidden border border-pink-200 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
     <NuxtLink :to="`/products/${product.id}`" class="block">
       <div class="relative overflow-hidden aspect-[3/4] bg-gradient-to-br from-pink-50 to-purple-50">
         <img 
           :src="product.image" 
           :alt="product.name"
-          class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
           loading="lazy"
         />
-        <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         <div v-if="product.badge" :class="`absolute top-4 right-4 ${badgeColor} text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg`">
           {{ product.badge }}
         </div>
       </div>
       <div class="p-6">
         <h3 class="font-display text-xl font-semibold mb-2 text-textPrimary">{{ product.name }}</h3>
-        <p class="text-slate-600 text-small leading-relaxed">{{ product.description }}</p>
+        <p class="text-slate-600 text-sm leading-relaxed">{{ product.description }}</p>
       </div>
     </NuxtLink>
     <div class="px-6 pb-6 flex items-center justify-between gap-4">
