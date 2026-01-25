@@ -8,7 +8,6 @@
           <!-- Product Image -->
           <div class="glass-card rounded-3xl overflow-hidden border border-pink-200 aspect-square">
             <img 
-              v-if="product"
               :src="product.image" 
               :alt="product.name"
               class="w-full h-full object-cover"
@@ -196,10 +195,15 @@ const handleAddToCart = () => {
     price: product.value.price,
     size: selectedSize.value,
     color: selectedColor.value,
-    quantity: quantity.value
+    quantity: quantity.value,
+    image: product.value.image
   })
   
-  alert(`Added ${quantity.value} item(s) to cart!`)
+  // Open cart sidebar
+  const isCartOpen = useState('cartSidebarOpen')
+  isCartOpen.value = true
+  
+  // Reset quantity
   quantity.value = 1
 }
 
