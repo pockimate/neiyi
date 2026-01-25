@@ -1,6 +1,6 @@
 <template>
   <div class="glass-card rounded-2xl overflow-hidden border border-pink-200 hover-lift group">
-    <NuxtLink :to="`/products/${product.id}`" class="block cursor-pointer">
+    <NuxtLink :to="`/products/${product.id}`" class="block">
       <div class="relative overflow-hidden aspect-[3/4] bg-gradient-to-br from-pink-50 to-purple-50">
         <img 
           :src="product.image" 
@@ -15,18 +15,18 @@
       </div>
       <div class="p-6">
         <h3 class="font-display text-xl font-semibold mb-2 text-textPrimary">{{ product.name }}</h3>
-        <p class="text-slate-600 text-small mb-4 leading-relaxed">{{ product.description }}</p>
+        <p class="text-slate-600 text-small leading-relaxed">{{ product.description }}</p>
       </div>
     </NuxtLink>
-    <div class="px-6 pb-6 flex items-center justify-between">
-      <div v-if="product.originalPrice">
-        <span class="font-display text-2xl font-bold text-primary">${{ product.price.toFixed(2) }}</span>
-        <span class="text-slate-400 line-through ml-2">${{ product.originalPrice.toFixed(2) }}</span>
+    <div class="px-6 pb-6 flex items-center justify-between gap-4">
+      <div v-if="product.originalPrice" class="flex-shrink-0">
+        <div class="font-display text-2xl font-bold text-primary">${{ product.price.toFixed(2) }}</div>
+        <div class="text-slate-400 line-through text-sm">${{ product.originalPrice.toFixed(2) }}</div>
       </div>
-      <span v-else class="font-display text-2xl font-bold text-primary">${{ product.price.toFixed(2) }}</span>
+      <div v-else class="font-display text-2xl font-bold text-primary flex-shrink-0">${{ product.price.toFixed(2) }}</div>
       <button 
         @click="handleAddToCart"
-        class="bg-primary hover:bg-pink-700 text-white px-6 py-3 rounded-full text-small font-semibold transition-colors duration-200 cursor-pointer min-h-touch"
+        class="bg-primary hover:bg-pink-700 text-white px-6 py-3 rounded-full text-sm font-semibold transition-colors duration-200 cursor-pointer whitespace-nowrap"
       >
         Add to Cart
       </button>
