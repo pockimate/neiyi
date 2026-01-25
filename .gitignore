@@ -1,0 +1,55 @@
+# System Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+npm-debug.log*
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# Backup files
+*-backup.*
+*.bak
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+
+# Node modules (if added later)
+node_modules/
+
+# Build outputs (if added later)
+dist/
+build/
+
+# Environment variables
+.env
+.env.local
+
+# Design system (internal use only)
+design-system/
+.shared/
+.kiro/
+
+# Test files (optional - remove if you want to include)
+test.html
+check-errors.md
+FIXED.md
+cart-backup.html

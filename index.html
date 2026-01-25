@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intimate Elegance - Luxury Lingerie Collection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#DB2777',
+                        secondary: '#F472B6',
+                        cta: '#CA8A04',
+                        background: '#FDF2F8',
+                        textPrimary: '#831843'
+                    },
+                    fontFamily: {
+                        display: ['Playfair Display', 'serif'],
+                        body: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        
+        .glass-card-dark {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        
+        .liquid-gradient {
+            background: linear-gradient(135deg, #DB2777 0%, #F472B6 50%, #FDF2F8 100%);
+            background-size: 200% 200%;
+            animation: liquidFlow 8s ease infinite;
+        }
+        
+        @keyframes liquidFlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .hover-lift {
+            transition: transform 300ms ease-out, box-shadow 300ms ease-out;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(219, 39, 119, 0.15);
+        }
+    </style>
+</head>
+<body class="font-body bg-background text-textPrimary antialiased">
+    
+    <!-- Floating Navigation -->
+    <nav class="fixed top-4 left-4 right-4 z-50 glass-card-dark rounded-2xl border border-pink-200 shadow-lg">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <svg class="w-8 h-8 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+                    </svg>
+                    <span class="font-display text-2xl font-semibold text-primary">Intimate Elegance</span>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="products.html" class="text-sm font-medium hover:text-primary transition-colors duration-200 cursor-pointer">Shop</a>
+                    <a href="#collections" class="text-sm font-medium hover:text-primary transition-colors duration-200 cursor-pointer">Collections</a>
+                    <a href="#featured" class="text-sm font-medium hover:text-primary transition-colors duration-200 cursor-pointer">Featured</a>
+                    <a href="#about" class="text-sm font-medium hover:text-primary transition-colors duration-200 cursor-pointer">About</a>
+                    <a href="#contact" class="text-sm font-medium hover:text-primary transition-colors duration-200 cursor-pointer">Contact</a>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <button class="p-2 hover:bg-pink-100 rounded-lg transition-colors duration-200 cursor-pointer" aria-label="Search">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                    </button>
+                    <a href="cart.html" class="p-2 hover:bg-pink-100 rounded-lg transition-colors duration-200 cursor-pointer relative" aria-label="Shopping cart">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                        </svg>
+                        <span id="cartCount" class="absolute -top-1 -right-1 bg-primary text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 px-4">
+        <div class="absolute inset-0 liquid-gradient opacity-20"></div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto text-center">
+            <div class="glass-card rounded-3xl p-8 md:p-16 border border-pink-200 shadow-2xl">
+                <h1 class="font-display text-5xl md:text-7xl font-bold text-primary mb-6 leading-tight">
+                    Embrace Your<br/>Sensuality
+                </h1>
+                <p class="text-lg md:text-xl text-slate-600 mb-8 max-w-2xl mx-auto font-light">
+                    Discover our curated collection of luxury lingerie designed to make you feel confident, beautiful, and empowered.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="products.html" class="bg-cta hover:bg-yellow-600 text-white px-8 py-4 rounded-full font-semibold transition-all duration-200 cursor-pointer shadow-lg hover:shadow-xl">
+                        Shop Collection
+                    </a>
+                    <a href="#featured" class="glass-card border border-primary text-primary px-8 py-4 rounded-full font-semibold hover:bg-primary hover:text-white transition-all duration-200 cursor-pointer">
+                        View Lookbook
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="featured" class="py-20 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="font-display text-4xl md:text-5xl font-bold text-primary mb-4">Why Choose Us</h2>
+                <p class="text-slate-600 text-lg max-w-2xl mx-auto">Experience the perfect blend of luxury, comfort, and confidence</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="glass-card rounded-2xl p-8 border border-pink-200 hover-lift cursor-pointer">
+                    <div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-2xl font-semibold mb-3 text-textPrimary">Premium Quality</h3>
+                    <p class="text-slate-600 leading-relaxed">Handcrafted with the finest fabrics and materials for unmatched comfort and durability.</p>
+                </div>
+                
+                <div class="glass-card rounded-2xl p-8 border border-pink-200 hover-lift cursor-pointer">
+                    <div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-2xl font-semibold mb-3 text-textPrimary">Discreet Shipping</h3>
+                    <p class="text-slate-600 leading-relaxed">Your privacy matters. All orders arrive in unmarked, secure packaging with fast delivery.</p>
+                </div>
+                
+                <div class="glass-card rounded-2xl p-8 border border-pink-200 hover-lift cursor-pointer">
+                    <div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-2xl font-semibold mb-3 text-textPrimary">Perfect Fit</h3>
+                    <p class="text-slate-600 leading-relaxed">Comprehensive size guide and expert fitting advice to ensure your complete satisfaction.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Collections Section -->
+    <section id="collections" class="py-20 px-4 bg-white/50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="font-display text-4xl md:text-5xl font-bold text-primary mb-4">Featured Collections</h2>
+                <p class="text-slate-600 text-lg max-w-2xl mx-auto">Explore our carefully curated selections for every occasion</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Product Card 1 -->
+                <div class="glass-card rounded-2xl overflow-hidden border border-pink-200 hover-lift cursor-pointer group">
+                    <div class="relative overflow-hidden bg-gradient-to-br from-pink-100 to-pink-50 aspect-[3/4]">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center p-8">
+                                <svg class="w-24 h-24 text-primary/20 mx-auto mb-4" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+                                </svg>
+                                <p class="text-sm text-slate-400">Product Image</p>
+                            </div>
+                        </div>
+                        <div class="absolute top-4 right-4 bg-cta text-white px-3 py-1 rounded-full text-sm font-semibold">New</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-display text-xl font-semibold mb-2 text-textPrimary">Silk Lace Set</h3>
+                        <p class="text-slate-600 text-sm mb-4">Delicate French lace with silk trim</p>
+                        <div class="flex items-center justify-between">
+                            <span class="font-display text-2xl font-bold text-primary">$89.99</span>
+                            <button onclick="quickAddToCart(1)" class="bg-primary hover:bg-pink-700 text-white px-6 py-2 rounded-full text-sm font-semibold transition-colors duration-200 cursor-pointer">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 2 -->
+                <div class="glass-card rounded-2xl overflow-hidden border border-pink-200 hover-lift cursor-pointer group">
+                    <div class="relative overflow-hidden bg-gradient-to-br from-purple-100 to-pink-50 aspect-[3/4]">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center p-8">
+                                <svg class="w-24 h-24 text-primary/20 mx-auto mb-4" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+                                </svg>
+                                <p class="text-sm text-slate-400">Product Image</p>
+                            </div>
+                        </div>
+                        <div class="absolute top-4 right-4 bg-primary text-white px-3 py-1 rounded-full text-sm font-semibold">Bestseller</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-display text-xl font-semibold mb-2 text-textPrimary">Satin Bodysuit</h3>
+                        <p class="text-slate-600 text-sm mb-4">Luxurious satin with adjustable straps</p>
+                        <div class="flex items-center justify-between">
+                            <span class="font-display text-2xl font-bold text-primary">$129.99</span>
+                            <button onclick="quickAddToCart(2)" class="bg-primary hover:bg-pink-700 text-white px-6 py-2 rounded-full text-sm font-semibold transition-colors duration-200 cursor-pointer">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 3 -->
+                <div class="glass-card rounded-2xl overflow-hidden border border-pink-200 hover-lift cursor-pointer group">
+                    <div class="relative overflow-hidden bg-gradient-to-br from-rose-100 to-pink-50 aspect-[3/4]">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center p-8">
+                                <svg class="w-24 h-24 text-primary/20 mx-auto mb-4" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+                                </svg>
+                                <p class="text-sm text-slate-400">Product Image</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-display text-xl font-semibold mb-2 text-textPrimary">Mesh Teddy</h3>
+                        <p class="text-slate-600 text-sm mb-4">Sheer mesh with floral embroidery</p>
+                        <div class="flex items-center justify-between">
+                            <span class="font-display text-2xl font-bold text-primary">$79.99</span>
+                            <button onclick="quickAddToCart(3)" class="bg-primary hover:bg-pink-700 text-white px-6 py-2 rounded-full text-sm font-semibold transition-colors duration-200 cursor-pointer">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 4 -->
+                <div class="glass-card rounded-2xl overflow-hidden border border-pink-200 hover-lift cursor-pointer group">
+                    <div class="relative overflow-hidden bg-gradient-to-br from-pink-100 to-rose-50 aspect-[3/4]">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center p-8">
+                                <svg class="w-24 h-24 text-primary/20 mx-auto mb-4" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+                                </svg>
+                                <p class="text-sm text-slate-400">Product Image</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-display text-xl font-semibold mb-2 text-textPrimary">Velvet Bralette</h3>
+                        <p class="text-slate-600 text-sm mb-4">Soft velvet with gold hardware</p>
+                        <div class="flex items-center justify-between">
+                            <span class="font-display text-2xl font-bold text-primary">$69.99</span>
+                            <button onclick="quickAddToCart(4)" class="bg-primary hover:bg-pink-700 text-white px-6 py-2 rounded-full text-sm font-semibold transition-colors duration-200 cursor-pointer">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 5 -->
+                <div class="glass-card rounded-2xl overflow-hidden border border-pink-200 hover-lift cursor-pointer group">
+                    <div class="relative overflow-hidden bg-gradient-to-br from-purple-100 to-rose-50 aspect-[3/4]">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center p-8">
+                                <svg class="w-24 h-24 text-primary/20 mx-auto mb-4" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+                                </svg>
+                                <p class="text-sm text-slate-400">Product Image</p>
+                            </div>
+                        </div>
+                        <div class="absolute top-4 right-4 bg-cta text-white px-3 py-1 rounded-full text-sm font-semibold">Sale</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-display text-xl font-semibold mb-2 text-textPrimary">Lace Chemise</h3>
+                        <p class="text-slate-600 text-sm mb-4">Romantic lace with satin bow detail</p>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="font-display text-2xl font-bold text-primary">$59.99</span>
+                                <span class="text-slate-400 line-through ml-2">$89.99</span>
+                            </div>
+                            <button onclick="quickAddToCart(5)" class="bg-primary hover:bg-pink-700 text-white px-6 py-2 rounded-full text-sm font-semibold transition-colors duration-200 cursor-pointer">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 6 -->
+                <div class="glass-card rounded-2xl overflow-hidden border border-pink-200 hover-lift cursor-pointer group">
+                    <div class="relative overflow-hidden bg-gradient-to-br from-rose-100 to-purple-50 aspect-[3/4]">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center p-8">
+                                <svg class="w-24 h-24 text-primary/20 mx-auto mb-4" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+                                </svg>
+                                <p class="text-sm text-slate-400">Product Image</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-display text-xl font-semibold mb-2 text-textPrimary">Corset Set</h3>
+                        <p class="text-slate-600 text-sm mb-4">Structured corset with garter straps</p>
+                        <div class="flex items-center justify-between">
+                            <span class="font-display text-2xl font-bold text-primary">$149.99</span>
+                            <button onclick="quickAddToCart(6)" class="bg-primary hover:bg-pink-700 text-white px-6 py-2 rounded-full text-sm font-semibold transition-colors duration-200 cursor-pointer">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="products.html" class="inline-block bg-cta hover:bg-yellow-600 text-white px-8 py-4 rounded-full font-semibold transition-all duration-200 cursor-pointer shadow-lg hover:shadow-xl">
+                    View All Products
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="glass-card rounded-3xl p-12 border border-pink-200">
+                    <div class="aspect-square bg-gradient-to-br from-primary/20 to-secondary/20 rounded-2xl flex items-center justify-center">
+                        <svg class="w-32 h-32 text-primary/30" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+                        </svg>
+                    </div>
+                </div>
+                
+                <div>
+                    <h2 class="font-display text-4xl md:text-5xl font-bold text-primary mb-6">Our Story</h2>
+                    <p class="text-slate-600 text-lg leading-relaxed mb-6">
+                        At Intimate Elegance, we believe that luxury lingerie is more than just beautiful fabric—it's about how you feel when you wear it. Every piece in our collection is thoughtfully designed to celebrate your unique beauty and empower your confidence.
+                    </p>
+                    <p class="text-slate-600 text-lg leading-relaxed mb-8">
+                        We source only the finest materials from around the world, working with skilled artisans who share our passion for quality and attention to detail. From delicate French lace to sumptuous Italian silk, every element is chosen to provide you with an unforgettable experience.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <div class="flex items-center space-x-2">
+                            <svg class="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                            </svg>
+                            <span class="text-slate-700 font-medium">Premium Materials</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <svg class="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                            </svg>
+                            <span class="text-slate-700 font-medium">Handcrafted Quality</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <svg class="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                            </svg>
+                            <span class="text-slate-700 font-medium">Sustainable Practices</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 px-4 bg-white/50">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="glass-card rounded-3xl p-12 md:p-16 border border-pink-200 shadow-2xl">
+                <h2 class="font-display text-4xl md:text-5xl font-bold text-primary mb-6">
+                    Join Our Exclusive Club
+                </h2>
+                <p class="text-slate-600 text-lg mb-8 max-w-2xl mx-auto">
+                    Subscribe to receive early access to new collections, exclusive offers, and styling tips delivered to your inbox.
+                </p>
+                <form class="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
+                    <input 
+                        type="email" 
+                        placeholder="Enter your email" 
+                        class="flex-1 px-6 py-4 rounded-full border border-pink-200 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white/80"
+                        aria-label="Email address"
+                        required
+                    />
+                    <button 
+                        type="submit"
+                        class="bg-cta hover:bg-yellow-600 text-white px-8 py-4 rounded-full font-semibold transition-all duration-200 cursor-pointer shadow-lg hover:shadow-xl whitespace-nowrap"
+                    >
+                        Subscribe Now
+                    </button>
+                </form>
+                <p class="text-sm text-slate-500 mt-4">We respect your privacy. Unsubscribe anytime.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-gradient-to-br from-primary/5 to-secondary/5 py-16 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <svg class="w-8 h-8 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+                        </svg>
+                        <span class="font-display text-xl font-semibold text-primary">Intimate Elegance</span>
+                    </div>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Luxury lingerie designed to celebrate your beauty and empower your confidence.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-textPrimary mb-4">Shop</h4>
+                    <ul class="space-y-2">
+                        <li><a href="products.html" class="text-slate-600 hover:text-primary transition-colors duration-200 cursor-pointer text-sm">New Arrivals</a></li>
+                        <li><a href="products.html" class="text-slate-600 hover:text-primary transition-colors duration-200 cursor-pointer text-sm">Bestsellers</a></li>
+                        <li><a href="products.html" class="text-slate-600 hover:text-primary transition-colors duration-200 cursor-pointer text-sm">Sale</a></li>
+                        <li><a href="#" class="text-slate-600 hover:text-primary transition-colors duration-200 cursor-pointer text-sm">Gift Cards</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-textPrimary mb-4">Support</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-slate-600 hover:text-primary transition-colors duration-200 cursor-pointer text-sm">Size Guide</a></li>
+                        <li><a href="#" class="text-slate-600 hover:text-primary transition-colors duration-200 cursor-pointer text-sm">Shipping Info</a></li>
+                        <li><a href="#" class="text-slate-600 hover:text-primary transition-colors duration-200 cursor-pointer text-sm">Returns</a></li>
+                        <li><a href="#" class="text-slate-600 hover:text-primary transition-colors duration-200 cursor-pointer text-sm">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-textPrimary mb-4">Follow Us</h4>
+                    <div class="flex space-x-3">
+                        <a href="#" class="w-10 h-10 bg-white rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-200 cursor-pointer shadow-sm" aria-label="Instagram">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-200 cursor-pointer shadow-sm" aria-label="Facebook">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-200 cursor-pointer shadow-sm" aria-label="Pinterest">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0c-6.627 0-12 5.372-12 12 0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146 1.124.347 2.317.535 3.554.535 6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-pink-200 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                    <p class="text-slate-600 text-sm">© 2026 Intimate Elegance. All rights reserved.</p>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-slate-600 hover:text-primary transition-colors duration-200 cursor-pointer text-sm">Privacy Policy</a>
+                        <a href="#" class="text-slate-600 hover:text-primary transition-colors duration-200 cursor-pointer text-sm">Terms of Service</a>
+                        <a href="#" class="text-slate-600 hover:text-primary transition-colors duration-200 cursor-pointer text-sm">Cookie Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button 
+        id="scrollToTop"
+        class="fixed bottom-8 right-8 bg-primary hover:bg-pink-700 text-white w-12 h-12 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 cursor-pointer opacity-0 pointer-events-none flex items-center justify-center"
+        aria-label="Scroll to top"
+    >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+        </svg>
+    </button>
+
+    <script src="js/cart.js"></script>
+    <script src="js/products.js"></script>
+    <script>
+        // Scroll to top button functionality
+        const scrollToTopBtn = document.getElementById('scrollToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.remove('opacity-0', 'pointer-events-none');
+            } else {
+                scrollToTopBtn.classList.add('opacity-0', 'pointer-events-none');
+            }
+        });
+        
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+    <section id="about" class="py-20 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="glass-card rounded-3xl p-12 border border-pink-200">
+                    <div class="aspect-square bg-gradient-to-br from-primary/20 to-secondary/20 rounded-2xl flex items-center justify-center">
+                        <svg class="w-32 h-32 text-primary/30" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+                        </svg>
+                    </div>
+                </div>
+                
+                <div>
+                    <h2 class="font-display text-4xl md:text-5xl font-bold text-primary mb-6">Our Story</h2>
+                    <p class="text-slate-600 text-lg leading-relaxed mb-6">
+                        At Intimate Elegance, we believe that luxury lingerie is more than just beautiful fabric—it's about how you feel when you wear it. Every piece in our collection is thoughtfully designed to celebrate your unique beauty and empower your confidence.
+                    </p>
+                    <p class="text-slate-600 text-lg leading-relaxed mb-8">
+                        We source only the finest materials from around the world, working with skilled artisans who share our passion for quality and attention to detail. From delicate French lace to sumptuous Italian silk, every element is chosen to provide you with an unforgettable experience.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <div class="flex items-center space-x-2">
+                            <svg class="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                            </svg>
+                            <span class="text-slate-700 font-medium">Premium Materials</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <svg class="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                            </svg>
+                            <span class="text-slate-700 font-medium">Handcrafted Quality</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <svg class="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                            </svg>
+                            <span class="text-slate-700 font-medium">Sustainable Practices</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+""
+    <section class="py-20 px-4 bg-white/50">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="glass-card rounded-3xl p-12 md:p-16 border border-pink-200 shadow-2xl">
+                <h2 class="font-display text-4xl md:text-5xl font-bold text-primary mb-6">
+                    Join Our Exclusive Club
+                </h2>
+                <p class="text-slate-600 text-lg mb-8 max-w-2xl mx-auto">
+                    Subscribe to receive early access to new collections, exclusive offers, and styling tips delivered to your inbox.
+                </p>
+                <form class="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
+                    <input 
+                        type="email" 
+                        placeholder="Enter your email" 
+                        class="flex-1 px-6 py-4 rounded-full border border-pink-200 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white/80"
+                        aria-label="Email address"
+                        required
+                    />
+                    <button 
+                        type="submit"
+                        class="bg-cta hover:bg-yellow-600 text-white px-8 py-4 rounded-full font-semibold transition-all duration-200 cursor-pointer shadow-lg hover:shadow-xl whitespace-nowrap"
+                    >
+                        Subscribe Now
+                    </button>
+                </form>
+                <p class="text-sm text-slate-500 mt-4">We respect your privacy. Unsubscribe anytime.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-gradient-to-br from-primary/5 to-secondary/5 py-16 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <svg class="w-8 h-8 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+                        </svg>
+                        <span class="font-display text-xl font-semibold text-primary">Intimate Elegance</span>
+                    </div>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Luxury lingerie designed to celebrate your beauty and empower your confidence.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-textPrimary mb-4">Shop</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-slate-600 hover:text-primary transition-colors duration-200 cursor-pointer text-sm">New Arrivals</a></li>
+                        <li><a href="#" class="text-slate-600 hover:text-primary transition-colors duration-200 cursor-pointer text-sm">Bestsellers</a></li>
+                        <li><a href="#" class="text-slate-600 hover:text-primary transition-colors duration-200 cursor-pointer text-sm">Sale</a></li>
+                        <li><a href="#" class="text-slate-600 hover:text-primary transition-colors duration-200 cursor-pointer text-sm">Gift Cards</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-textPrimary mb-4">Support</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-slate-600 hover:text-primary transition-colors duration-200 cursor-pointer text-sm">Size Guide</a></li>
+                        <li><a href="#" class="text-slate-600 hover:text-primary transition-colors duration-200 cursor-pointer text-sm">Shipping Info</a></li>
+                        <li><a href="#" class="text-slate-600 hover:text-primary transition-colors duration-200 cursor-pointer text-sm">Returns</a></li>
+                        <li><a href="#" class="text-slate-600 hover:text-primary transition-colors duration-200 cursor-pointer text-sm">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-textPrimary mb-4">Follow Us</h4>
+                    <div class="flex space-x-3">
+                        <a href="#" class="w-10 h-10 bg-white rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-200 cursor-pointer shadow-sm" aria-label="Instagram">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-200 cursor-pointer shadow-sm" aria-label="Facebook">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-200 cursor-pointer shadow-sm" aria-label="Pinterest">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+""
+                                <path d="M12 0c-6.627 0-12 5.372-12 12 0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146 1.124.347 2.317.535 3.554.535 6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-pink-200 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                    <p class="text-slate-600 text-sm">© 2026 Intimate Elegance. All rights reserved.</p>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-slate-600 hover:text-primary transition-colors duration-200 cursor-pointer text-sm">Privacy Policy</a>
+                        <a href="#" class="text-slate-600 hover:text-primary transition-colors duration-200 cursor-pointer text-sm">Terms of Service</a>
+                        <a href="#" class="text-slate-600 hover:text-primary transition-colors duration-200 cursor-pointer text-sm">Cookie Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button 
+        id="scrollToTop"
+        class="fixed bottom-8 right-8 bg-primary hover:bg-pink-700 text-white w-12 h-12 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 cursor-pointer opacity-0 pointer-events-none flex items-center justify-center"
+        aria-label="Scroll to top"
+    >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+        </svg>
+    </button>
+
+    <script>
+        // Scroll to top button functionality
+        const scrollToTopBtn = document.getElementById('scrollToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.remove('opacity-0', 'pointer-events-none');
+            } else {
+                scrollToTopBtn.classList.add('opacity-0', 'pointer-events-none');
+            }
+        });
+        
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Products - Intimate Elegance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#DB2777',
+                        secondary: '#F472B6',
+                        cta: '#CA8A04',
+                        background: '#FDF2F8',
+                        textPrimary: '#831843'
+                    },
+                    fontFamily: {
+                        display: ['Playfair Display', 'serif'],
+                        body: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        
+        .glass-card-dark {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        
+        .hover-lift {
+            transition: transform 300ms ease-out, box-shadow 300ms ease-out;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(219, 39, 119, 0.15);
+        }
+    </style>
+</head>
+<body class="font-body bg-background text-textPrimary antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed top-4 left-4 right-4 z-50 glass-card-dark rounded-2xl border border-pink-200 shadow-lg">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="flex items-center space-x-2 cursor-pointer">
+                    <svg class="w-8 h-8 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+                    </svg>
+                    <span class="font-display text-2xl font-semibold text-primary">Intimate Elegance</span>
+                </a>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-sm font-medium hover:text-primary transition-colors duration-200 cursor-pointer">Home</a>
+                    <a href="products.html" class="text-sm font-medium text-primary cursor-pointer">Products</a>
+                    <a href="index.html#about" class="text-sm font-medium hover:text-primary transition-colors duration-200 cursor-pointer">About</a>
+                    <a href="index.html#contact" class="text-sm font-medium hover:text-primary transition-colors duration-200 cursor-pointer">Contact</a>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <button class="p-2 hover:bg-pink-100 rounded-lg transition-colors duration-200 cursor-pointer" aria-label="Search">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                    </button>
+                    <a href="cart.html" class="p-2 hover:bg-pink-100 rounded-lg transition-colors duration-200 cursor-pointer relative" aria-label="Shopping cart">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                        </svg>
+                        <span id="cartCount" class="absolute -top-1 -right-1 bg-primary text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-12 px-4">
+        <div class="max-w-7xl mx-auto text-center">
+            <h1 class="font-display text-5xl md:text-6xl font-bold text-primary mb-4">Our Collection</h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto">Discover luxury lingerie designed to celebrate your beauty</p>
+        </div>
+    </section>
+
+    <!-- Filters & Products -->
+    <section class="py-12 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col lg:flex-row gap-8">
+                <!-- Filters Sidebar -->
+                <aside class="lg:w-64 flex-shrink-0">
+                    <div class="glass-card rounded-2xl p-6 border border-pink-200 sticky top-24">
+                        <h3 class="font-display text-xl font-semibold mb-4 text-textPrimary">Filters</h3>
+                        
+                        <!-- Category Filter -->
+                        <div class="mb-6">
+                            <h4 class="font-semibold text-sm mb-3 text-textPrimary">Category</h4>
+                            <div class="space-y-2">
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 text-primary rounded border-pink-300 focus:ring-primary cursor-pointer" checked>
+                                    <span class="ml-2 text-sm text-slate-600">All Products</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 text-primary rounded border-pink-300 focus:ring-primary cursor-pointer">
+                                    <span class="ml-2 text-sm text-slate-600">Bras & Sets</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 text-primary rounded border-pink-300 focus:ring-primary cursor-pointer">
+                                    <span class="ml-2 text-sm text-slate-600">Bodysuits</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 text-primary rounded border-pink-300 focus:ring-primary cursor-pointer">
+                                    <span class="ml-2 text-sm text-slate-600">Chemises</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="checkbox" class="w-4 h-4 text-primary rounded border-pink-300 focus:ring-primary cursor-pointer">
+                                    <span class="ml-2 text-sm text-slate-600">Corsets</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <!-- Price Filter -->
+                        <div class="mb-6">
+                            <h4 class="font-semibold text-sm mb-3 text-textPrimary">Price Range</h4>
+                            <div class="space-y-2">
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="radio" name="price" class="w-4 h-4 text-primary border-pink-300 focus:ring-primary cursor-pointer" checked>
+                                    <span class="ml-2 text-sm text-slate-600">All Prices</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="radio" name="price" class="w-4 h-4 text-primary border-pink-300 focus:ring-primary cursor-pointer">
+                                    <span class="ml-2 text-sm text-slate-600">Under $50</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="radio" name="price" class="w-4 h-4 text-primary border-pink-300 focus:ring-primary cursor-pointer">
+                                    <span class="ml-2 text-sm text-slate-600">$50 - $100</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="radio" name="price" class="w-4 h-4 text-primary border-pink-300 focus:ring-primary cursor-pointer">
+                                    <span class="ml-2 text-sm text-slate-600">$100+</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <!-- Size Filter -->
+                        <div class="mb-6">
+                            <h4 class="font-semibold text-sm mb-3 text-textPrimary">Size</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <button class="px-3 py-1 border border-pink-300 rounded-lg text-sm hover:bg-primary hover:text-white hover:border-primary transition-colors duration-200 cursor-pointer">XS</button>
+                                <button class="px-3 py-1 border border-pink-300 rounded-lg text-sm hover:bg-primary hover:text-white hover:border-primary transition-colors duration-200 cursor-pointer">S</button>
+                                <button class="px-3 py-1 border border-pink-300 rounded-lg text-sm hover:bg-primary hover:text-white hover:border-primary transition-colors duration-200 cursor-pointer">M</button>
+                                <button class="px-3 py-1 border border-pink-300 rounded-lg text-sm hover:bg-primary hover:text-white hover:border-primary transition-colors duration-200 cursor-pointer">L</button>
+                                <button class="px-3 py-1 border border-pink-300 rounded-lg text-sm hover:bg-primary hover:text-white hover:border-primary transition-colors duration-200 cursor-pointer">XL</button>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 py-2 rounded-lg text-sm font-medium transition-colors duration-200 cursor-pointer">
+                            Clear Filters
+                        </button>
+                    </div>
+                </aside>
+                
+                <!-- Products Grid -->
+                <div class="flex-1">
+                    <div class="flex items-center justify-between mb-6">
+                        <p class="text-slate-600">Showing <span class="font-semibold">12</span> products</p>
+                        <select class="px-4 py-2 border border-pink-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer bg-white">
+                            <option>Sort by: Featured</option>
+                            <option>Price: Low to High</option>
+                            <option>Price: High to Low</option>
+                            <option>Newest First</option>
+                        </select>
+                    </div>
+                    
+                    <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Products will be loaded here by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+</body>
+</html>

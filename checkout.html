@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Intimate Elegance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#DB2777',
+                        secondary: '#F472B6',
+                        cta: '#CA8A04',
+                        background: '#FDF2F8',
+                        textPrimary: '#831843'
+                    },
+                    fontFamily: {
+                        display: ['Playfair Display', 'serif'],
+                        body: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        
+        .glass-card-dark {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+    </style>
+</head>
+<body class="font-body bg-background text-textPrimary antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed top-4 left-4 right-4 z-50 glass-card-dark rounded-2xl border border-pink-200 shadow-lg">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-center">
+                <a href="index.html" class="flex items-center space-x-2 cursor-pointer">
+                    <svg class="w-8 h-8 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+                    </svg>
+                    <span class="font-display text-2xl font-semibold text-primary">Intimate Elegance</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Checkout Content -->
+    <section class="pt-32 pb-20 px-4">
+        <div class="max-w-7xl mx-auto">
+            <h1 class="font-display text-4xl md:text-5xl font-bold text-primary mb-8">Secure Checkout</h1>
+            
+            <!-- Progress Steps -->
+            <div class="mb-12">
+                <div class="flex items-center justify-center space-x-4">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center font-semibold">1</div>
+                        <span class="ml-2 font-medium text-primary">Shipping</span>
+                    </div>
+                    <div class="w-16 h-0.5 bg-pink-300"></div>
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 bg-pink-200 text-slate-600 rounded-full flex items-center justify-center font-semibold">2</div>
+                        <span class="ml-2 font-medium text-slate-600">Payment</span>
+                    </div>
+                    <div class="w-16 h-0.5 bg-pink-300"></div>
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 bg-pink-200 text-slate-600 rounded-full flex items-center justify-center font-semibold">3</div>
+                        <span class="ml-2 font-medium text-slate-600">Review</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Checkout Form -->
+                <div class="lg:col-span-2">
+                    <form id="checkoutForm" class="space-y-6">
+                        <!-- Contact Information -->
+                        <div class="glass-card rounded-2xl p-6 border border-pink-200">
+                            <h2 class="font-display text-2xl font-semibold mb-6 text-textPrimary">Contact Information</h2>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Email Address</label>
+                                    <input type="email" required class="w-full px-4 py-3 border border-pink-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="you@example.com" />
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Phone Number</label>
+                                    <input type="tel" required class="w-full px-4 py-3 border border-pink-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="+1 (555) 000-0000" />
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Shipping Address -->
+                        <div class="glass-card rounded-2xl p-6 border border-pink-200">
+                            <h2 class="font-display text-2xl font-semibold mb-6 text-textPrimary">Shipping Address</h2>
+                            <div class="space-y-4">
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium mb-2">First Name</label>
+                                        <input type="text" required class="w-full px-4 py-3 border border-pink-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" />
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium mb-2">Last Name</label>
+                                        <input type="text" required class="w-full px-4 py-3 border border-pink-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" />
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Address</label>
+                                    <input type="text" required class="w-full px-4 py-3 border border-pink-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Street address" />
+                                </div>
+                                <div>
+                                    <input type="text" class="w-full px-4 py-3 border border-pink-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Apartment, suite, etc. (optional)" />
+                                </div>
+                                <div class="grid grid-cols-3 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium mb-2">City</label>
+                                        <input type="text" required class="w-full px-4 py-3 border border-pink-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" />
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium mb-2">State</label>
+                                        <select required class="w-full px-4 py-3 border border-pink-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer">
+                                            <option value="">Select</option>
+                                            <option>California</option>
+                                            <option>New York</option>
+                                            <option>Texas</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium mb-2">ZIP Code</label>
+                                        <input type="text" required class="w-full px-4 py-3 border border-pink-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Payment Method -->
+                        <div class="glass-card rounded-2xl p-6 border border-pink-200">
+                            <h2 class="font-display text-2xl font-semibold mb-6 text-textPrimary">Payment Method</h2>
+                            <div class="space-y-4">
+                                <div class="flex items-center space-x-4 mb-4">
+                                    <label class="flex items-center cursor-pointer">
+                                        <input type="radio" name="payment" value="card" checked class="w-4 h-4 text-primary cursor-pointer" />
+                                        <span class="ml-2 font-medium">Credit Card</span>
+                                    </label>
+                                    <label class="flex items-center cursor-pointer">
+                                        <input type="radio" name="payment" value="paypal" class="w-4 h-4 text-primary cursor-pointer" />
+                                        <span class="ml-2 font-medium">PayPal</span>
+                                    </label>
+                                </div>
+                                
+                                <div id="cardPayment">
+                                    <div>
+                                        <label class="block text-sm font-medium mb-2">Card Number</label>
+                                        <input type="text" required class="w-full px-4 py-3 border border-pink-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="1234 5678 9012 3456" />
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-4 mt-4">
+                                        <div>
+                                            <label class="block text-sm font-medium mb-2">Expiry Date</label>
+                                            <input type="text" required class="w-full px-4 py-3 border border-pink-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="MM/YY" />
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium mb-2">CVV</label>
+                                            <input type="text" required class="w-full px-4 py-3 border border-pink-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="123" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Order Summary -->
+                <div class="lg:col-span-1">
+                    <div class="glass-card rounded-2xl p-6 border border-pink-200 sticky top-24">
+                        <h2 class="font-display text-2xl font-semibold mb-6 text-textPrimary">Order Summary</h2>
+                        
+                        <div id="orderItems" class="space-y-4 mb-6 max-h-64 overflow-y-auto">
+                            <!-- Order items will be loaded here -->
+                        </div>
+                        
+                        <div class="border-t border-pink-200 pt-4 space-y-3 mb-6">
+                            <div class="flex justify-between text-slate-600">
+                                <span>Subtotal</span>
+                                <span id="subtotal">$0.00</span>
+                            </div>
+                            <div class="flex justify-between text-slate-600">
+                                <span>Shipping</span>
+                                <span class="text-green-600">Free</span>
+                            </div>
+                            <div class="flex justify-between text-slate-600">
+                                <span>Tax</span>
+                                <span id="tax">$0.00</span>
+                            </div>
+                            <div class="border-t border-pink-200 pt-3 flex justify-between font-semibold text-xl">
+                                <span>Total</span>
+                                <span class="text-primary" id="total">$0.00</span>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" form="checkoutForm" class="w-full bg-cta hover:bg-yellow-600 text-white py-4 rounded-full font-semibold transition-all duration-200 cursor-pointer shadow-lg hover:shadow-xl mb-3">
+                            Place Order
+                        </button>
+                        
+                        <div class="flex items-center justify-center space-x-2 text-sm text-slate-600">
+                            <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+                            </svg>
+                            <span>Secure SSL Encrypted Payment</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/cart.js"></script>
+    <script>
+        function loadOrderSummary() {
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const orderItemsContainer = document.getElementById('orderItems');
+            
+            let subtotal = 0;
+            orderItemsContainer.innerHTML = cart.map(item => {
+                subtotal += item.price * item.quantity;
+                return `
+                    <div class="flex items-center space-x-3">
+                        <div class="w-16 h-16 bg-gradient-to-br from-pink-100 to-rose-50 rounded-lg flex-shrink-0"></div>
+                        <div class="flex-1 min-w-0">
+                            <p class="font-semibold text-sm truncate">${item.name}</p>
+                            <p class="text-xs text-slate-600">Qty: ${item.quantity}</p>
+                        </div>
+                        <p class="font-semibold text-primary">$${(item.price * item.quantity).toFixed(2)}</p>
+                    </div>
+                `;
+            }).join('');
+            
+            const tax = subtotal * 0.1;
+            const total = subtotal + tax;
+            
+            document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('tax').textContent = `$${tax.toFixed(2)}`;
+            document.getElementById('total').textContent = `$${total.toFixed(2)}`;
+        }
+        
+        document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Order placed successfully! Thank you for your purchase.');
+            localStorage.removeItem('cart');
+            window.location.href = 'index.html';
+        });
+        
+        loadOrderSummary();
+    </script>
+</body>
+</html>
