@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&family=Allura&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
@@ -21,7 +21,25 @@
                     },
                     fontFamily: {
                         display: ['Playfair Display', 'serif'],
-                        body: ['Inter', 'sans-serif']
+                        body: ['Montserrat', 'sans-serif'],
+                        script: ['Allura', 'cursive']
+                    },
+                    fontSize: {
+                        'h1': '48px',
+                        'h2': '36px',
+                        'h3': '24px',
+                        'body': '16px',
+                        'small': '14px'
+                    },
+                    lineHeight: {
+                        'relaxed': '1.7',
+                        'loose': '1.8'
+                    },
+                    minHeight: {
+                        'touch': '48px'
+                    },
+                    minWidth: {
+                        'touch': '48px'
                     }
                 }
             }
@@ -66,6 +84,28 @@
         .hover-lift:hover {
             transform: translateY(-4px);
             box-shadow: 0 20px 40px rgba(219, 39, 119, 0.15);
+        }
+        
+        /* Touch optimization */
+        @media (hover: none) and (pointer: coarse) {
+            .hover-lift:hover {
+                transform: none;
+            }
+            .hover-lift:active {
+                transform: scale(0.98);
+            }
+        }
+        
+        /* Lazy loading placeholder */
+        img[loading="lazy"] {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
         }
     </style>
 </head>
@@ -113,17 +153,18 @@
         
         <div class="relative z-10 max-w-7xl mx-auto text-center">
             <div class="glass-card rounded-3xl p-8 md:p-16 border border-pink-200 shadow-2xl">
-                <h1 class="font-display text-5xl md:text-7xl font-bold text-primary mb-6 leading-tight">
+                <p class="font-script text-3xl md:text-4xl text-primary mb-4 opacity-90">Where elegance meets desire</p>
+                <h1 class="font-display text-h1 md:text-6xl lg:text-7xl font-bold text-primary mb-6 leading-tight">
                     Embrace Your<br/>Sensuality
                 </h1>
-                <p class="text-lg md:text-xl text-slate-600 mb-8 max-w-2xl mx-auto font-light">
+                <p class="text-body md:text-lg text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed">
                     Discover our curated collection of luxury lingerie designed to make you feel confident, beautiful, and empowered.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="products.html" class="bg-cta hover:bg-yellow-600 text-white px-8 py-4 rounded-full font-semibold transition-all duration-200 cursor-pointer shadow-lg hover:shadow-xl">
+                    <a href="products.html" class="bg-cta hover:bg-yellow-600 text-white px-8 py-4 rounded-full font-semibold transition-all duration-200 cursor-pointer shadow-lg hover:shadow-xl min-h-touch flex items-center justify-center">
                         Shop Collection
                     </a>
-                    <a href="#featured" class="glass-card border border-primary text-primary px-8 py-4 rounded-full font-semibold hover:bg-primary hover:text-white transition-all duration-200 cursor-pointer">
+                    <a href="#featured" class="glass-card border border-primary text-primary px-8 py-4 rounded-full font-semibold hover:bg-primary hover:text-white transition-all duration-200 cursor-pointer min-h-touch flex items-center justify-center">
                         View Lookbook
                     </a>
                 </div>
@@ -135,8 +176,8 @@
     <section id="featured" class="py-20 px-4">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16">
-                <h2 class="font-display text-4xl md:text-5xl font-bold text-primary mb-4">Why Choose Us</h2>
-                <p class="text-slate-600 text-lg max-w-2xl mx-auto">Experience the perfect blend of luxury, comfort, and confidence</p>
+                <h2 class="font-display text-h2 md:text-5xl font-bold text-primary mb-4">Why Choose Us</h2>
+                <p class="text-slate-600 text-body max-w-2xl mx-auto leading-relaxed">Experience the perfect blend of luxury, comfort, and confidence</p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -146,8 +187,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
                         </svg>
                     </div>
-                    <h3 class="font-display text-2xl font-semibold mb-3 text-textPrimary">Premium Quality</h3>
-                    <p class="text-slate-600 leading-relaxed">Handcrafted with the finest fabrics and materials for unmatched comfort and durability.</p>
+                    <h3 class="font-display text-h3 font-semibold mb-3 text-textPrimary">Premium Quality</h3>
+                    <p class="text-slate-600 text-body leading-loose">Handcrafted with the finest fabrics and materials for unmatched comfort and durability.</p>
                 </div>
                 
                 <div class="glass-card rounded-2xl p-8 border border-pink-200 hover-lift cursor-pointer">
@@ -156,8 +197,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
                         </svg>
                     </div>
-                    <h3 class="font-display text-2xl font-semibold mb-3 text-textPrimary">Discreet Shipping</h3>
-                    <p class="text-slate-600 leading-relaxed">Your privacy matters. All orders arrive in unmarked, secure packaging with fast delivery.</p>
+                    <h3 class="font-display text-h3 font-semibold mb-3 text-textPrimary">Discreet Shipping</h3>
+                    <p class="text-slate-600 text-body leading-loose">Your privacy matters. All orders arrive in unmarked, secure packaging with fast delivery.</p>
                 </div>
                 
                 <div class="glass-card rounded-2xl p-8 border border-pink-200 hover-lift cursor-pointer">
@@ -166,8 +207,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                         </svg>
                     </div>
-                    <h3 class="font-display text-2xl font-semibold mb-3 text-textPrimary">Perfect Fit</h3>
-                    <p class="text-slate-600 leading-relaxed">Comprehensive size guide and expert fitting advice to ensure your complete satisfaction.</p>
+                    <h3 class="font-display text-h3 font-semibold mb-3 text-textPrimary">Perfect Fit</h3>
+                    <p class="text-slate-600 text-body leading-loose">Comprehensive size guide and expert fitting advice to ensure your complete satisfaction.</p>
                 </div>
             </div>
         </div>
@@ -177,11 +218,11 @@
     <section id="collections" class="py-20 px-4 bg-white/50">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16">
-                <h2 class="font-display text-4xl md:text-5xl font-bold text-primary mb-4">Featured Collections</h2>
-                <p class="text-slate-600 text-lg max-w-2xl mx-auto">Explore our carefully curated selections for every occasion</p>
+                <h2 class="font-display text-h2 md:text-5xl font-bold text-primary mb-4">Featured Collections</h2>
+                <p class="text-slate-600 text-body max-w-2xl mx-auto leading-relaxed">Explore our carefully curated selections for every occasion</p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
                 <!-- Product Card 1 -->
                 <div class="glass-card rounded-2xl overflow-hidden border border-pink-200 hover-lift cursor-pointer group">
                     <div class="relative overflow-hidden bg-gradient-to-br from-pink-100 to-pink-50 aspect-[3/4]">
@@ -197,10 +238,10 @@
                     </div>
                     <div class="p-6">
                         <h3 class="font-display text-xl font-semibold mb-2 text-textPrimary">Silk Lace Set</h3>
-                        <p class="text-slate-600 text-sm mb-4">Delicate French lace with silk trim</p>
+                        <p class="text-slate-600 text-small mb-4 leading-relaxed">Delicate French lace with silk trim</p>
                         <div class="flex items-center justify-between">
                             <span class="font-display text-2xl font-bold text-primary">$89.99</span>
-                            <button onclick="quickAddToCart(1)" class="bg-primary hover:bg-pink-700 text-white px-6 py-2 rounded-full text-sm font-semibold transition-colors duration-200 cursor-pointer">
+                            <button onclick="quickAddToCart(1)" class="bg-primary hover:bg-pink-700 text-white px-6 py-3 rounded-full text-small font-semibold transition-colors duration-200 cursor-pointer min-h-touch">
                                 Add to Cart
                             </button>
                         </div>
@@ -222,10 +263,10 @@
                     </div>
                     <div class="p-6">
                         <h3 class="font-display text-xl font-semibold mb-2 text-textPrimary">Satin Bodysuit</h3>
-                        <p class="text-slate-600 text-sm mb-4">Luxurious satin with adjustable straps</p>
+                        <p class="text-slate-600 text-small mb-4 leading-relaxed">Luxurious satin with adjustable straps</p>
                         <div class="flex items-center justify-between">
                             <span class="font-display text-2xl font-bold text-primary">$129.99</span>
-                            <button onclick="quickAddToCart(2)" class="bg-primary hover:bg-pink-700 text-white px-6 py-2 rounded-full text-sm font-semibold transition-colors duration-200 cursor-pointer">
+                            <button onclick="quickAddToCart(2)" class="bg-primary hover:bg-pink-700 text-white px-6 py-3 rounded-full text-small font-semibold transition-colors duration-200 cursor-pointer min-h-touch">
                                 Add to Cart
                             </button>
                         </div>
@@ -246,10 +287,10 @@
                     </div>
                     <div class="p-6">
                         <h3 class="font-display text-xl font-semibold mb-2 text-textPrimary">Mesh Teddy</h3>
-                        <p class="text-slate-600 text-sm mb-4">Sheer mesh with floral embroidery</p>
+                        <p class="text-slate-600 text-small mb-4 leading-relaxed">Sheer mesh with floral embroidery</p>
                         <div class="flex items-center justify-between">
                             <span class="font-display text-2xl font-bold text-primary">$79.99</span>
-                            <button onclick="quickAddToCart(3)" class="bg-primary hover:bg-pink-700 text-white px-6 py-2 rounded-full text-sm font-semibold transition-colors duration-200 cursor-pointer">
+                            <button onclick="quickAddToCart(3)" class="bg-primary hover:bg-pink-700 text-white px-6 py-3 rounded-full text-small font-semibold transition-colors duration-200 cursor-pointer min-h-touch">
                                 Add to Cart
                             </button>
                         </div>
@@ -270,10 +311,10 @@
                     </div>
                     <div class="p-6">
                         <h3 class="font-display text-xl font-semibold mb-2 text-textPrimary">Velvet Bralette</h3>
-                        <p class="text-slate-600 text-sm mb-4">Soft velvet with gold hardware</p>
+                        <p class="text-slate-600 text-small mb-4 leading-relaxed">Soft velvet with gold hardware</p>
                         <div class="flex items-center justify-between">
                             <span class="font-display text-2xl font-bold text-primary">$69.99</span>
-                            <button onclick="quickAddToCart(4)" class="bg-primary hover:bg-pink-700 text-white px-6 py-2 rounded-full text-sm font-semibold transition-colors duration-200 cursor-pointer">
+                            <button onclick="quickAddToCart(4)" class="bg-primary hover:bg-pink-700 text-white px-6 py-3 rounded-full text-small font-semibold transition-colors duration-200 cursor-pointer min-h-touch">
                                 Add to Cart
                             </button>
                         </div>
@@ -295,13 +336,13 @@
                     </div>
                     <div class="p-6">
                         <h3 class="font-display text-xl font-semibold mb-2 text-textPrimary">Lace Chemise</h3>
-                        <p class="text-slate-600 text-sm mb-4">Romantic lace with satin bow detail</p>
+                        <p class="text-slate-600 text-small mb-4 leading-relaxed">Romantic lace with satin bow detail</p>
                         <div class="flex items-center justify-between">
                             <div>
                                 <span class="font-display text-2xl font-bold text-primary">$59.99</span>
                                 <span class="text-slate-400 line-through ml-2">$89.99</span>
                             </div>
-                            <button onclick="quickAddToCart(5)" class="bg-primary hover:bg-pink-700 text-white px-6 py-2 rounded-full text-sm font-semibold transition-colors duration-200 cursor-pointer">
+                            <button onclick="quickAddToCart(5)" class="bg-primary hover:bg-pink-700 text-white px-6 py-3 rounded-full text-small font-semibold transition-colors duration-200 cursor-pointer min-h-touch">
                                 Add to Cart
                             </button>
                         </div>
@@ -322,10 +363,10 @@
                     </div>
                     <div class="p-6">
                         <h3 class="font-display text-xl font-semibold mb-2 text-textPrimary">Corset Set</h3>
-                        <p class="text-slate-600 text-sm mb-4">Structured corset with garter straps</p>
+                        <p class="text-slate-600 text-small mb-4 leading-relaxed">Structured corset with garter straps</p>
                         <div class="flex items-center justify-between">
                             <span class="font-display text-2xl font-bold text-primary">$149.99</span>
-                            <button onclick="quickAddToCart(6)" class="bg-primary hover:bg-pink-700 text-white px-6 py-2 rounded-full text-sm font-semibold transition-colors duration-200 cursor-pointer">
+                            <button onclick="quickAddToCart(6)" class="bg-primary hover:bg-pink-700 text-white px-6 py-3 rounded-full text-small font-semibold transition-colors duration-200 cursor-pointer min-h-touch">
                                 Add to Cart
                             </button>
                         </div>
@@ -334,7 +375,7 @@
             </div>
             
             <div class="text-center mt-12">
-                <a href="products.html" class="inline-block bg-cta hover:bg-yellow-600 text-white px-8 py-4 rounded-full font-semibold transition-all duration-200 cursor-pointer shadow-lg hover:shadow-xl">
+                <a href="products.html" class="inline-block bg-cta hover:bg-yellow-600 text-white px-8 py-4 rounded-full font-semibold transition-all duration-200 cursor-pointer shadow-lg hover:shadow-xl min-h-touch">
                     View All Products
                 </a>
             </div>
