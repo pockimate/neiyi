@@ -1,22 +1,20 @@
 <template>
-  <div class="glass-card rounded-2xl overflow-hidden border border-pink-200 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-    <NuxtLink :to="`/products/${product.id}`" class="block">
-      <div class="relative overflow-hidden aspect-[3/4] bg-gradient-to-br from-pink-50 to-purple-50">
-        <img 
-          :src="product.image" 
-          :alt="product.name"
-          class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-          loading="lazy"
-        />
-        <div v-if="product.badge" :class="`absolute top-4 right-4 ${badgeColor} text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg`">
-          {{ product.badge }}
-        </div>
+  <div class="glass-card rounded-2xl overflow-hidden border border-pink-200 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl cursor-pointer" @click="goToProduct">
+    <div class="relative overflow-hidden aspect-[3/4] bg-gradient-to-br from-pink-50 to-purple-50">
+      <img 
+        :src="product.image" 
+        :alt="product.name"
+        class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+        loading="lazy"
+      />
+      <div v-if="product.badge" :class="`absolute top-4 right-4 ${badgeColor} text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg`">
+        {{ product.badge }}
       </div>
-      <div class="p-6">
-        <h3 class="font-display text-xl font-semibold mb-2 text-textPrimary">{{ product.name }}</h3>
-        <p class="text-slate-600 text-sm leading-relaxed">{{ product.description }}</p>
-      </div>
-    </NuxtLink>
+    </div>
+    <div class="p-6">
+      <h3 class="font-display text-xl font-semibold mb-2 text-textPrimary">{{ product.name }}</h3>
+      <p class="text-slate-600 text-sm leading-relaxed">{{ product.description }}</p>
+    </div>
     <div class="px-6 pb-6 flex items-center justify-between gap-4">
       <div v-if="product.originalPrice" class="flex-shrink-0">
         <div class="font-display text-2xl font-bold text-primary">${{ product.price.toFixed(2) }}</div>
@@ -24,7 +22,7 @@
       </div>
       <div v-else class="font-display text-2xl font-bold text-primary flex-shrink-0">${{ product.price.toFixed(2) }}</div>
       <button 
-        @click="handleAddToCart"
+        @click.stop="handleAddToCart"
         class="bg-primary hover:bg-pink-700 text-white px-6 py-3 rounded-full text-sm font-semibold transition-colors duration-200 cursor-pointer whitespace-nowrap"
       >
         Add to Cart
@@ -41,6 +39,7 @@ const props = defineProps<{
   product: Product
 }>()
 
+const router = useRouter()
 const cartStore = useCartStore()
 
 const badgeColor = computed(() => {
@@ -48,6 +47,10 @@ const badgeColor = computed(() => {
   if (props.product.badge === 'Bestseller') return 'bg-primary'
   return 'bg-cta'
 })
+
+const goToProduct = () => {
+  router.push(`/products/${props.product.id}`)
+}
 
 const handleAddToCart = () => {
   cartStore.addToCart({
