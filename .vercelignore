@@ -1,0 +1,28 @@
+# Vercel ignore file
+
+# Design system
+design-system/
+.shared/
+.kiro/
+
+# Development files
+test.html
+check-errors.md
+FIXED.md
+cart-backup.html
+*.bak
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# System files
+.DS_Store
+Thumbs.db
