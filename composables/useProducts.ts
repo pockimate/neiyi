@@ -7,6 +7,7 @@ export interface Product {
   category: string
   badge?: string
   gradient: string
+  image: string
 }
 
 export const useProducts = () => {
@@ -18,7 +19,8 @@ export const useProducts = () => {
       price: 89.99,
       category: 'Bras & Sets',
       badge: 'New',
-      gradient: 'from-pink-100 to-pink-50'
+      gradient: 'from-pink-100 to-pink-50',
+      image: 'https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?w=600&h=800&fit=crop'
     },
     {
       id: 2,
@@ -27,7 +29,8 @@ export const useProducts = () => {
       price: 129.99,
       category: 'Bodysuits',
       badge: 'Bestseller',
-      gradient: 'from-purple-100 to-pink-50'
+      gradient: 'from-purple-100 to-pink-50',
+      image: 'https://images.unsplash.com/photo-1596783074918-c84cb06531ca?w=600&h=800&fit=crop'
     },
     {
       id: 3,
@@ -35,7 +38,8 @@ export const useProducts = () => {
       description: 'Sheer mesh with floral embroidery',
       price: 79.99,
       category: 'Bodysuits',
-      gradient: 'from-rose-100 to-pink-50'
+      gradient: 'from-rose-100 to-pink-50',
+      image: 'https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?w=600&h=800&fit=crop'
     },
     {
       id: 4,
@@ -43,7 +47,8 @@ export const useProducts = () => {
       description: 'Soft velvet with gold hardware',
       price: 69.99,
       category: 'Bras & Sets',
-      gradient: 'from-pink-100 to-rose-50'
+      gradient: 'from-pink-100 to-rose-50',
+      image: 'https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?w=600&h=800&fit=crop&sat=-100'
     },
     {
       id: 5,
@@ -53,7 +58,8 @@ export const useProducts = () => {
       originalPrice: 89.99,
       category: 'Chemises',
       badge: 'Sale',
-      gradient: 'from-purple-100 to-rose-50'
+      gradient: 'from-purple-100 to-rose-50',
+      image: 'https://images.unsplash.com/photo-1596783074918-c84cb06531ca?w=600&h=800&fit=crop&hue=30'
     },
     {
       id: 6,
@@ -61,7 +67,8 @@ export const useProducts = () => {
       description: 'Structured corset with garter straps',
       price: 149.99,
       category: 'Corsets',
-      gradient: 'from-rose-100 to-purple-50'
+      gradient: 'from-rose-100 to-purple-50',
+      image: 'https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?w=600&h=800&fit=crop&hue=60'
     },
     {
       id: 7,
@@ -69,7 +76,8 @@ export const useProducts = () => {
       description: 'Delicate lace with scalloped edges',
       price: 54.99,
       category: 'Bras & Sets',
-      gradient: 'from-pink-100 to-rose-50'
+      gradient: 'from-pink-100 to-rose-50',
+      image: 'https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?w=600&h=800&fit=crop&hue=90'
     },
     {
       id: 8,
@@ -78,7 +86,8 @@ export const useProducts = () => {
       price: 74.99,
       category: 'Chemises',
       badge: 'New',
-      gradient: 'from-purple-100 to-pink-50'
+      gradient: 'from-purple-100 to-pink-50',
+      image: 'https://images.unsplash.com/photo-1596783074918-c84cb06531ca?w=600&h=800&fit=crop&hue=120'
     },
     {
       id: 9,
@@ -86,7 +95,8 @@ export const useProducts = () => {
       description: 'Sheer mesh with strategic coverage',
       price: 94.99,
       category: 'Bodysuits',
-      gradient: 'from-rose-100 to-pink-50'
+      gradient: 'from-rose-100 to-pink-50',
+      image: 'https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?w=600&h=800&fit=crop&hue=150'
     },
     {
       id: 10,
@@ -95,7 +105,8 @@ export const useProducts = () => {
       price: 84.99,
       category: 'Bodysuits',
       badge: 'Bestseller',
-      gradient: 'from-pink-100 to-purple-50'
+      gradient: 'from-pink-100 to-purple-50',
+      image: 'https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?w=600&h=800&fit=crop&hue=180'
     },
     {
       id: 11,
@@ -103,7 +114,8 @@ export const useProducts = () => {
       description: 'Matching robe and chemise set',
       price: 119.99,
       category: 'Chemises',
-      gradient: 'from-purple-100 to-rose-50'
+      gradient: 'from-purple-100 to-rose-50',
+      image: 'https://images.unsplash.com/photo-1596783074918-c84cb06531ca?w=600&h=800&fit=crop&hue=210'
     },
     {
       id: 12,
@@ -112,7 +124,8 @@ export const useProducts = () => {
       price: 159.99,
       category: 'Corsets',
       badge: 'New',
-      gradient: 'from-rose-100 to-pink-50'
+      gradient: 'from-rose-100 to-pink-50',
+      image: 'https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?w=600&h=800&fit=crop&hue=240'
     }
   ]
 

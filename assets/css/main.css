@@ -2,49 +2,142 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700&family=Allura&display=swap');
+
 @layer base {
   body {
-    @apply font-body bg-background text-textPrimary antialiased;
+    @apply font-body text-textPrimary antialiased;
+    background: linear-gradient(to bottom, #fdf2f8 0%, #fce7f3 50%, #fbcfe8 100%);
+    min-height: 100vh;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
   }
 }
 
-@layer utilities {
+@layer components {
+  /* Enhanced Glass Effects */
   .glass-card {
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    @apply bg-white/85 backdrop-blur-2xl border border-white/40;
+    box-shadow: 
+      0 8px 32px 0 rgba(219, 39, 119, 0.08),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
   }
   
   .glass-card-dark {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    @apply bg-white/95 backdrop-blur-2xl border border-white/60;
+    box-shadow: 
+      0 8px 32px 0 rgba(219, 39, 119, 0.12),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.7);
   }
   
+  /* Liquid Gradient Animation */
   .liquid-gradient {
-    background: linear-gradient(135deg, #DB2777 0%, #F472B6 50%, #FDF2F8 100%);
+    background: linear-gradient(
+      135deg, 
+      #fce7f3 0%, 
+      #fbcfe8 20%, 
+      #f9a8d4 40%, 
+      #f472b6 60%, 
+      #ec4899 80%, 
+      #db2777 100%
+    );
     background-size: 200% 200%;
-    animation: liquidFlow 8s ease infinite;
+    animation: liquidFlow 20s ease-in-out infinite;
   }
   
+  /* Enhanced Hover Effects */
   .hover-lift {
-    transition: transform 300ms ease-out, box-shadow 300ms ease-out;
+    @apply transition-all duration-300 ease-out;
   }
   
   .hover-lift:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 40px rgba(219, 39, 119, 0.15);
+    @apply -translate-y-2;
+    box-shadow: 
+      0 20px 40px -12px rgba(219, 39, 119, 0.25),
+      0 8px 16px -8px rgba(219, 39, 119, 0.15);
+  }
+  
+  /* Button Glow Effect */
+  .btn-glow {
+    @apply relative overflow-hidden;
+    box-shadow: 
+      0 4px 15px 0 rgba(202, 138, 4, 0.4),
+      0 1px 3px 0 rgba(202, 138, 4, 0.3);
+  }
+  
+  .btn-glow:hover {
+    box-shadow: 
+      0 8px 25px 0 rgba(202, 138, 4, 0.5),
+      0 4px 10px 0 rgba(202, 138, 4, 0.4);
+  }
+  
+  .btn-glow::before {
+    content: '';
+    @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+    background: linear-gradient(
+      45deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.3) 50%,
+      transparent 70%
+    );
+    transform: translateX(-100%);
+  }
+  
+  .btn-glow:hover::before {
+    @apply opacity-100;
+    animation: shimmer 1.5s infinite;
+  }
+  
+  /* Floating Animation */
+  .float-animation {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  /* Pulse Glow */
+  .pulse-glow {
+    animation: pulseGlow 2s ease-in-out infinite;
+  }
+  
+  /* Gradient Text */
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #db2777 0%, #ec4899 50%, #f472b6 100%);
+  }
+  
+  /* Touch Target */
+  .min-h-touch {
+    min-height: 48px;
+    min-width: 48px;
   }
 }
 
 @keyframes liquidFlow {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+  0% { background-position: 0% 50%; }
+  25% { background-position: 100% 50%; }
+  50% { background-position: 100% 100%; }
+  75% { background-position: 0% 100%; }
+  100% { background-position: 0% 50%; }
 }
 
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { 
+    box-shadow: 0 0 20px rgba(219, 39, 119, 0.3);
+  }
+  50% { 
+    box-shadow: 0 0 40px rgba(219, 39, 119, 0.6);
+  }
 }
 
 /* Touch optimization */

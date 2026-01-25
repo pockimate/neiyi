@@ -1,15 +1,14 @@
 <template>
   <NuxtLink :to="`/products/${product.id}`" class="glass-card rounded-2xl overflow-hidden border border-pink-200 hover-lift cursor-pointer group block">
-    <div :class="`relative overflow-hidden bg-gradient-to-br ${product.gradient} aspect-[3/4]`">
-      <div class="absolute inset-0 flex items-center justify-center">
-        <div class="text-center p-8">
-          <svg class="w-24 h-24 text-primary/20 mx-auto mb-4" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
-          </svg>
-          <p class="text-sm text-slate-400">Product Image</p>
-        </div>
-      </div>
-      <div v-if="product.badge" :class="`absolute top-4 right-4 ${badgeColor} text-white px-3 py-1 rounded-full text-sm font-semibold`">
+    <div class="relative overflow-hidden aspect-[3/4] bg-gradient-to-br from-pink-50 to-purple-50">
+      <img 
+        :src="product.image" 
+        :alt="product.name"
+        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+        loading="lazy"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      <div v-if="product.badge" :class="`absolute top-4 right-4 ${badgeColor} text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg`">
         {{ product.badge }}
       </div>
     </div>

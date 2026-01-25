@@ -4,22 +4,26 @@
     
     <!-- Hero Section -->
     <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 px-4">
-      <div class="absolute inset-0 liquid-gradient opacity-20"></div>
+      <div class="absolute inset-0 liquid-gradient opacity-30"></div>
+      
+      <!-- Floating Decorative Elements -->
+      <div class="absolute top-20 left-10 w-32 h-32 bg-primary/10 rounded-full blur-3xl float-animation"></div>
+      <div class="absolute bottom-20 right-10 w-40 h-40 bg-secondary/10 rounded-full blur-3xl float-animation" style="animation-delay: 2s;"></div>
       
       <div class="relative z-10 max-w-7xl mx-auto text-center">
-        <div class="glass-card rounded-3xl p-8 md:p-16 border border-pink-200 shadow-2xl">
-          <p class="font-script text-3xl md:text-4xl text-primary mb-4 opacity-90">Where elegance meets desire</p>
-          <h1 class="font-display text-h1 md:text-6xl lg:text-7xl font-bold text-primary mb-6 leading-tight">
+        <div class="glass-card rounded-3xl p-8 md:p-16 border border-pink-200 shadow-2xl pulse-glow">
+          <p class="font-script text-3xl md:text-5xl text-primary mb-6 opacity-90 float-animation">Where elegance meets desire</p>
+          <h1 class="font-display text-5xl md:text-6xl lg:text-7xl font-bold gradient-text mb-6 leading-tight">
             Embrace Your<br/>Sensuality
           </h1>
-          <p class="text-body md:text-lg text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+          <p class="text-body md:text-xl text-slate-600 mb-10 max-w-2xl mx-auto leading-relaxed">
             Discover our curated collection of luxury lingerie designed to make you feel confident, beautiful, and empowered.
           </p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <NuxtLink to="/products" class="bg-cta hover:bg-yellow-600 text-white px-8 py-4 rounded-full font-semibold transition-all duration-200 cursor-pointer shadow-lg hover:shadow-xl min-h-touch flex items-center justify-center">
+            <NuxtLink to="/products" class="bg-cta hover:bg-yellow-600 text-white px-10 py-5 rounded-full font-semibold transition-all duration-200 cursor-pointer shadow-lg hover:shadow-2xl min-h-touch flex items-center justify-center btn-glow text-lg">
               Shop Collection
             </NuxtLink>
-            <a href="#featured" class="glass-card border border-primary text-primary px-8 py-4 rounded-full font-semibold hover:bg-primary hover:text-white transition-all duration-200 cursor-pointer min-h-touch flex items-center justify-center">
+            <a href="#featured" class="glass-card border-2 border-primary text-primary px-10 py-5 rounded-full font-semibold hover:bg-primary hover:text-white transition-all duration-300 cursor-pointer min-h-touch flex items-center justify-center text-lg">
               View Lookbook
             </a>
           </div>

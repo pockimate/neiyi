@@ -6,13 +6,13 @@
       <div class="max-w-7xl mx-auto">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <!-- Product Image -->
-          <div :class="`glass-card rounded-3xl overflow-hidden border border-pink-200 bg-gradient-to-br ${product.gradient} aspect-square flex items-center justify-center`">
-            <div class="text-center p-12">
-              <svg class="w-48 h-48 text-primary/20 mx-auto mb-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
-              </svg>
-              <p class="text-slate-400">Product Image</p>
-            </div>
+          <div class="glass-card rounded-3xl overflow-hidden border border-pink-200 aspect-square">
+            <img 
+              v-if="product"
+              :src="product.image" 
+              :alt="product.name"
+              class="w-full h-full object-cover"
+            />
           </div>
           
           <!-- Product Info -->
