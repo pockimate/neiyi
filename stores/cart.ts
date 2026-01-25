@@ -7,6 +7,7 @@ export interface CartItem {
   size: string
   color: string
   quantity: number
+  image?: string
 }
 
 export const useCartStore = defineStore('cart', {

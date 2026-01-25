@@ -55,10 +55,12 @@ const handleAddToCart = () => {
     price: props.product.price,
     size: 'M',
     color: 'Default',
-    quantity: 1
+    quantity: 1,
+    image: props.product.image
   })
   
-  // Show notification
-  alert('Product added to cart!')
+  // Open cart sidebar
+  const isCartOpen = useState('cartSidebarOpen')
+  isCartOpen.value = true
 }
 </script>
