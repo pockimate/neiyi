@@ -10,7 +10,7 @@
         
         <!-- Test Link -->
         <div class="mt-4">
-          <a href="/products/1" class="text-blue-600 underline">Test Link: Go to Product 1</a>
+          <a href="/products/detail?id=1" class="text-blue-600 underline">Test Link: Go to Product 1</a>
         </div>
       </div>
     </section>

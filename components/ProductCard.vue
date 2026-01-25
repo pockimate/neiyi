@@ -1,5 +1,5 @@
 <template>
-  <a :href="`/products/${product.id}`" class="glass-card rounded-2xl overflow-hidden border border-pink-200 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl block no-underline text-inherit">
+  <a :href="`/products/detail?id=${product.id}`" class="glass-card rounded-2xl overflow-hidden border border-pink-200 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl block no-underline text-inherit">
     <div class="relative overflow-hidden aspect-[3/4] bg-gradient-to-br from-pink-50 to-purple-50">
       <img 
         :src="product.image" 
