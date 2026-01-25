@@ -1,5 +1,5 @@
 <template>
-  <div class="glass-card rounded-2xl overflow-hidden border border-pink-200 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl cursor-pointer" @click="goToProduct">
+  <a :href="`/products/${product.id}`" class="glass-card rounded-2xl overflow-hidden border border-pink-200 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl block no-underline">
     <div class="relative overflow-hidden aspect-[3/4] bg-gradient-to-br from-pink-50 to-purple-50">
       <img 
         :src="product.image" 
@@ -22,13 +22,13 @@
       </div>
       <div v-else class="font-display text-2xl font-bold text-primary flex-shrink-0">${{ product.price.toFixed(2) }}</div>
       <button 
-        @click.stop="handleAddToCart"
+        @click.prevent="handleAddToCart"
         class="bg-primary hover:bg-pink-700 text-white px-6 py-3 rounded-full text-sm font-semibold transition-colors duration-200 cursor-pointer whitespace-nowrap"
       >
         Add to Cart
       </button>
     </div>
-  </div>
+  </a>
 </template>
 
 <script setup lang="ts">
@@ -46,11 +46,6 @@ const badgeColor = computed(() => {
   if (props.product.badge === 'Bestseller') return 'bg-primary'
   return 'bg-cta'
 })
-
-const goToProduct = () => {
-  console.log('Navigating to product:', props.product.id)
-  navigateTo(`/products/${props.product.id}`)
-}
 
 const handleAddToCart = () => {
   cartStore.addToCart({
