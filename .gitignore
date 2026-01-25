@@ -22,6 +22,7 @@ npm-debug.log*
 # Backup files
 *-backup.*
 *.bak
+nuxt3-backup/
 
 # Python
 __pycache__/
@@ -32,11 +33,15 @@ __pycache__/
 env/
 venv/
 
-# Node modules (if added later)
+# Node modules
 node_modules/
 
-# Build outputs (if added later)
+# Nuxt
+.nuxt/
+.output/
 dist/
+
+# Build outputs
 build/
 
 # Environment variables
