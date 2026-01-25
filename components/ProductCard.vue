@@ -22,7 +22,7 @@
         </div>
         <span v-else class="font-display text-2xl font-bold text-primary">${{ product.price.toFixed(2) }}</span>
         <button 
-          @click="handleAddToCart"
+          @click.prevent.stop="handleAddToCart"
           class="bg-primary hover:bg-pink-700 text-white px-6 py-3 rounded-full text-small font-semibold transition-colors duration-200 cursor-pointer min-h-touch"
         >
           Add to Cart
