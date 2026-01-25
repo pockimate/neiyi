@@ -16,10 +16,10 @@
           <NuxtLink to="/#featured" class="text-sm font-medium hover:text-primary transition-colors duration-200 cursor-pointer">
             Featured
           </NuxtLink>
-          <NuxtLink to="/#about" class="text-sm font-medium hover:text-primary transition-colors duration-200 cursor-pointer">
+          <NuxtLink to="/about" class="text-sm font-medium hover:text-primary transition-colors duration-200 cursor-pointer">
             About
           </NuxtLink>
-          <NuxtLink to="/#contact" class="text-sm font-medium hover:text-primary transition-colors duration-200 cursor-pointer">
+          <NuxtLink to="/contact" class="text-sm font-medium hover:text-primary transition-colors duration-200 cursor-pointer">
             Contact
           </NuxtLink>
         </div>

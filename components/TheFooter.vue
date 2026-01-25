@@ -18,9 +18,9 @@
           <h3 class="font-display text-lg font-semibold mb-4 text-textPrimary">Shop</h3>
           <ul class="space-y-2">
             <li><NuxtLink to="/products" class="text-slate-600 hover:text-primary transition-colors duration-200 cursor-pointer">All Products</NuxtLink></li>
-            <li><a href="#" class="text-slate-600 hover:text-primary transition-colors duration-200 cursor-pointer">New Arrivals</a></li>
-            <li><a href="#" class="text-slate-600 hover:text-primary transition-colors duration-200 cursor-pointer">Best Sellers</a></li>
-            <li><a href="#" class="text-slate-600 hover:text-primary transition-colors duration-200 cursor-pointer">Sale</a></li>
+            <li><NuxtLink to="/products" class="text-slate-600 hover:text-primary transition-colors duration-200 cursor-pointer">New Arrivals</NuxtLink></li>
+            <li><NuxtLink to="/products" class="text-slate-600 hover:text-primary transition-colors duration-200 cursor-pointer">Best Sellers</NuxtLink></li>
+            <li><NuxtLink to="/products" class="text-slate-600 hover:text-primary transition-colors duration-200 cursor-pointer">Sale</NuxtLink></li>
           </ul>
         </div>
         
@@ -28,10 +28,10 @@
         <div>
           <h3 class="font-display text-lg font-semibold mb-4 text-textPrimary">Support</h3>
           <ul class="space-y-2">
-            <li><a href="#" class="text-slate-600 hover:text-primary transition-colors duration-200 cursor-pointer">Size Guide</a></li>
-            <li><a href="#" class="text-slate-600 hover:text-primary transition-colors duration-200 cursor-pointer">Shipping Info</a></li>
-            <li><a href="#" class="text-slate-600 hover:text-primary transition-colors duration-200 cursor-pointer">Returns</a></li>
-            <li><a href="#" class="text-slate-600 hover:text-primary transition-colors duration-200 cursor-pointer">Contact Us</a></li>
+            <li><NuxtLink to="/size-guide" class="text-slate-600 hover:text-primary transition-colors duration-200 cursor-pointer">Size Guide</NuxtLink></li>
+            <li><NuxtLink to="/shipping" class="text-slate-600 hover:text-primary transition-colors duration-200 cursor-pointer">Shipping Info</NuxtLink></li>
+            <li><NuxtLink to="/returns" class="text-slate-600 hover:text-primary transition-colors duration-200 cursor-pointer">Returns</NuxtLink></li>
+            <li><NuxtLink to="/contact" class="text-slate-600 hover:text-primary transition-colors duration-200 cursor-pointer">Contact Us</NuxtLink></li>
           </ul>
         </div>
         
@@ -63,9 +63,9 @@
       <div class="border-t border-pink-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
         <p class="text-sm text-slate-600">&copy; 2024 Intimate Elegance. All rights reserved.</p>
         <div class="flex gap-6 text-sm text-slate-600">
-          <a href="#" class="hover:text-primary transition-colors duration-200 cursor-pointer">Privacy Policy</a>
-          <a href="#" class="hover:text-primary transition-colors duration-200 cursor-pointer">Terms of Service</a>
-          <a href="#" class="hover:text-primary transition-colors duration-200 cursor-pointer">Cookie Policy</a>
+          <NuxtLink to="/privacy" class="hover:text-primary transition-colors duration-200 cursor-pointer">Privacy Policy</NuxtLink>
+          <NuxtLink to="/terms" class="hover:text-primary transition-colors duration-200 cursor-pointer">Terms of Service</NuxtLink>
+          <NuxtLink to="/privacy" class="hover:text-primary transition-colors duration-200 cursor-pointer">Cookie Policy</NuxtLink>
         </div>
       </div>
     </div>
