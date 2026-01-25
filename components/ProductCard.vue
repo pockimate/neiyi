@@ -39,7 +39,6 @@ const props = defineProps<{
   product: Product
 }>()
 
-const router = useRouter()
 const cartStore = useCartStore()
 
 const badgeColor = computed(() => {
@@ -49,7 +48,8 @@ const badgeColor = computed(() => {
 })
 
 const goToProduct = () => {
-  router.push(`/products/${props.product.id}`)
+  console.log('Navigating to product:', props.product.id)
+  navigateTo(`/products/${props.product.id}`)
 }
 
 const handleAddToCart = () => {
