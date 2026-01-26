@@ -34,42 +34,44 @@ export default defineNuxtConfig({
       theme: {
         extend: {
           colors: {
-            // 品牌主色系 - 玫瑰粉（记忆点）
-            primary: '#DB2777',        // 玫瑰粉 - 品牌识别色
-            primaryDark: '#BE185D',    // 深玫瑰粉 - hover状态
-            primaryLight: '#F472B6',   // 浅玫瑰粉 - 辅助色
+            // 黑白极简风格 - Obsessive风格
+            // 主色系 - 黑色
+            primary: '#000000',        // 纯黑 - 主要文字、按钮、边框
+            primaryDark: '#1A1A1A',    // 深灰 - hover状态
+            primaryLight: '#333333',   // 浅黑 - 次要元素
             
-            // 强调色 - 优雅金（高端感）
-            accent: '#CA8A04',         // 优雅金 - CTA按钮
-            accentDark: '#A16207',     // 深金色 - hover状态
-            accentLight: '#EAB308',    // 亮金色 - 高光
+            // 品牌强调色 - 玫瑰粉（保留识别度）
+            accent: '#E91E63',         // 玫瑰粉 - 仅用于重要CTA和强调
+            accentDark: '#C2185B',     // 深玫瑰粉 - hover状态
+            accentLight: '#F06292',    // 浅玫瑰粉 - 装饰
             
-            // 辅助色系
-            secondary: '#F472B6',      // 次要粉色
-            tertiary: '#EC4899',       // 第三色
+            // 背景色系 - 纯白
+            background: '#FFFFFF',     // 纯白背景
+            backgroundLight: '#FAFAFA', // 极浅灰背景
+            backgroundDark: '#F5F5F5', // 浅灰背景
             
-            // 背景色系
-            background: '#FDF2F8',     // 极浅粉背景
-            backgroundLight: '#FEF3F9', // 更浅背景
-            backgroundDark: '#FCE7F3', // 稍深背景
+            // 文字色系 - 黑色为主
+            textPrimary: '#000000',    // 纯黑 - 主标题
+            textSecondary: '#333333',  // 深灰 - 正文
+            textMuted: '#666666',      // 中灰 - 次要文字
+            textLight: '#999999',      // 浅灰 - 辅助文字
             
-            // 文字色系
-            textPrimary: '#831843',    // 深玫红 - 主标题
-            textSecondary: '#4A4A4A',  // 深灰 - 正文
-            textMuted: '#6B7280',      // 灰色 - 次要文字
+            // 边框色系
+            border: '#E5E5E5',         // 浅灰边框
+            borderDark: '#CCCCCC',     // 深灰边框
             
-            // 中性色系
+            // 中性色系（保持）
             neutral: {
-              50: '#FAFAF9',
-              100: '#F5F5F4',
-              200: '#E7E5E4',
-              300: '#D6D3D1',
-              400: '#A8A29E',
-              500: '#78716C',
-              600: '#57534E',
-              700: '#44403C',
-              800: '#292524',
-              900: '#1C1917'
+              50: '#FAFAFA',
+              100: '#F5F5F5',
+              200: '#E5E5E5',
+              300: '#D4D4D4',
+              400: '#A3A3A3',
+              500: '#737373',
+              600: '#525252',
+              700: '#404040',
+              800: '#262626',
+              900: '#171717'
             },
             
             // 功能色
