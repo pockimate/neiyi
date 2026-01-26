@@ -8,8 +8,9 @@
         <img 
           :src="product.image" 
           :alt="product.name"
-          class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+          class="w-full h-full object-contain transition-transform duration-500 hover:scale-105"
           loading="lazy"
+          style="object-position: center center;"
         />
         <div v-if="product.badge" :class="`absolute top-4 right-4 ${badgeColor} text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg`">
           {{ product.badge }}
@@ -17,7 +18,7 @@
       </div>
       <div class="p-6">
         <h3 class="font-display text-xl font-semibold mb-2 text-textPrimary">{{ product.name }}</h3>
-        <p class="text-slate-600 text-sm leading-relaxed">{{ product.description }}</p>
+        <p class="text-slate-600 text-base leading-relaxed">{{ product.description }}</p>
       </div>
     </a>
     <div class="px-6 pb-6 flex items-center justify-between gap-4" style="position: relative; z-index: 2;">
@@ -28,7 +29,7 @@
       <div v-else class="font-display text-2xl font-bold text-primary flex-shrink-0">${{ product.price.toFixed(2) }}</div>
       <button 
         @click.stop="handleAddToCart"
-        class="bg-primary hover:bg-pink-700 text-white px-6 py-3 rounded-full text-sm font-semibold transition-colors duration-200 cursor-pointer whitespace-nowrap"
+        class="bg-primary hover:bg-pink-700 text-white px-6 py-3 rounded-full font-semibold transition-colors duration-200 cursor-pointer whitespace-nowrap min-h-[48px] min-w-[120px] text-base"
         style="position: relative; z-index: 3; pointer-events: auto;"
       >
         Add to Cart
