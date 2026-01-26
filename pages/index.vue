@@ -3,7 +3,7 @@
     <TheNavbar />
     
     <!-- Hero Carousel Section -->
-    <section class="relative h-screen overflow-hidden pt-10" :class="{ 'pt-0': !showAnnouncementBar }">
+    <section class="relative h-screen overflow-hidden">
       <!-- Carousel Container -->
       <div class="relative h-full">
         <!-- Slides -->
@@ -361,27 +361,6 @@ import { useProducts } from '~/composables/useProducts'
 
 const { products } = useProducts()
 const featuredProducts = products.slice(0, 6)
-
-// Announcement bar state
-const showAnnouncementBar = ref(true)
-
-if (process.client) {
-  onMounted(() => {
-    const checkAnnouncementBar = () => {
-      const closed = localStorage.getItem('announcementBarClosed')
-      showAnnouncementBar.value = closed !== 'true'
-    }
-    
-    checkAnnouncementBar()
-    window.addEventListener('storage', checkAnnouncementBar)
-    const interval = setInterval(checkAnnouncementBar, 500)
-    
-    onUnmounted(() => {
-      window.removeEventListener('storage', checkAnnouncementBar)
-      clearInterval(interval)
-    })
-  })
-}
 
 // Carousel state
 const currentSlide = ref(0)
