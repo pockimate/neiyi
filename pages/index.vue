@@ -6,39 +6,36 @@
     <section class="relative h-screen overflow-hidden">
       <!-- 轮播图片 -->
       <div class="absolute inset-0">
-        <TransitionGroup name="carousel">
-          <div
-            v-for="(slide, index) in slides"
-            v-show="currentSlide === index"
-            :key="index"
-            class="absolute inset-0"
-          >
-            <img 
-              :src="slide.image" 
-              :alt="slide.title"
-              class="w-full h-full object-cover"
-            />
-            <div class="absolute inset-0 bg-black/40"></div>
-          </div>
-        </TransitionGroup>
+        <div
+          v-for="(slide, index) in slides"
+          v-if="currentSlide === index"
+          :key="index"
+          class="absolute inset-0"
+        >
+          <img 
+            :src="slide.image" 
+            :alt="slide.title"
+            class="w-full h-full object-cover"
+          />
+          <div class="absolute inset-0 bg-black/40"></div>
+        </div>
       </div>
       
       <!-- 轮播内容 -->
       <div class="relative z-10 h-full flex items-center justify-center">
         <div class="text-center text-white px-6 max-w-4xl">
-          <TransitionGroup name="fade">
-            <div v-show="currentSlide === index" v-for="(slide, index) in slides" :key="`content-${index}`">
-              <h1 class="text-6xl md:text-8xl font-light mb-8 tracking-widest uppercase">
-                {{ slide.title }}
-              </h1>
-              <p class="text-base md:text-lg font-light mb-12 tracking-widest uppercase">
-                {{ slide.subtitle }}
-              </p>
-              <NuxtLink :to="slide.link" class="btn-primary inline-block">
-                {{ slide.buttonText }}
-              </NuxtLink>
-            </div>
-          </TransitionGroup>
+          <div v-for="(slide, index) in slides" :key="`content-${index}`" 
+               v-if="currentSlide === index">
+            <h1 class="text-6xl md:text-8xl font-light mb-8 tracking-widest uppercase">
+              {{ slide.title }}
+            </h1>
+            <p class="text-base md:text-lg font-light mb-12 tracking-widest uppercase">
+              {{ slide.subtitle }}
+            </p>
+            <NuxtLink :to="slide.link" class="btn-primary inline-block">
+              {{ slide.buttonText }}
+            </NuxtLink>
+          </div>
         </div>
       </div>
       
@@ -134,137 +131,99 @@
     </section>
     
     <!-- Just Irresistible Section - Obsessive风格网格 -->
-    <section class="py-24 px-6 bg-backgroundLight">
+    <section class="py-24 px-6 bg-gray-50">
       <div class="max-w-7xl mx-auto">
         <div class="text-center mb-16">
-          <h2 class="text-4xl font-light text-primary mb-6 tracking-widest uppercase">Just Irresistible</h2>
-          <p class="text-base text-textSecondary max-w-2xl mx-auto">
+          <h2 class="text-4xl font-light text-black mb-6 tracking-widest uppercase">Just Irresistible</h2>
+          <p class="text-base text-gray-600 max-w-2xl mx-auto">
             We know that details make perfection. It's all for your fantastic experiences!
           </p>
         </div>
         
-        <!-- Obsessive风格的图片网格 - 中间大图，周围小图 -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <!-- 简化版网格 - 4列布局 -->
+        <div class="grid grid-cols-4 gap-4">
           <!-- 第一行 -->
-          <!-- 左上 -->
-          <div class="group relative overflow-hidden bg-white border border-border cursor-pointer h-[200px] md:h-[250px]">
+          <div class="group relative overflow-hidden bg-gray-200 cursor-pointer h-64">
             <img 
               src="https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f?w=400&h=400&fit=crop" 
               alt="Collection 1"
               class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             />
-            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
           </div>
           
-          <!-- 上中 -->
-          <div class="group relative overflow-hidden bg-white border border-border cursor-pointer h-[200px] md:h-[250px]">
+          <div class="group relative overflow-hidden bg-gray-200 cursor-pointer h-64">
             <img 
               src="https://images.unsplash.com/photo-1596783074918-c84cb06531ca?w=400&h=400&fit=crop" 
               alt="Collection 2"
               class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             />
-            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
           </div>
           
-          <!-- 中间大图 - 占据2行2列 -->
-          <div class="col-span-2 row-span-2 group relative overflow-hidden bg-black border border-border cursor-pointer h-[404px] md:h-[504px]">
-            <!-- 可以替换为视频 -->
+          <!-- 大图 - 占2列2行 -->
+          <div class="col-span-2 row-span-2 group relative overflow-hidden bg-black cursor-pointer">
             <img 
-              src="https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f?w=800&h=1000&fit=crop&sat=-50" 
+              src="https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f?w=800&h=800&fit=crop&sat=-50" 
               alt="Featured"
               class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
             <div class="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-300"></div>
-            <!-- 播放按钮图标 -->
             <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <div class="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <div class="w-20 h-20 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                <svg class="w-10 h-10 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M8 5v14l11-7z"/>
                 </svg>
               </div>
             </div>
           </div>
           
-          <!-- 右上 -->
-          <div class="group relative overflow-hidden bg-white border border-border cursor-pointer h-[200px] md:h-[250px]">
+          <!-- 第二行 -->
+          <div class="group relative overflow-hidden bg-gray-200 cursor-pointer h-64">
             <img 
-              src="https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f?w=400&h=400&fit=crop&hue=30" 
+              src="https://images.unsplash.com/photo-1596783074918-c84cb06531ca?w=400&h=400&fit=crop&hue=30" 
               alt="Collection 3"
               class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             />
-            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
           </div>
           
-          <!-- 第二行 -->
-          <!-- 左下 -->
-          <div class="group relative overflow-hidden bg-white border border-border cursor-pointer h-[200px] md:h-[250px]">
+          <div class="group relative overflow-hidden bg-gray-200 cursor-pointer h-64">
             <img 
-              src="https://images.unsplash.com/photo-1596783074918-c84cb06531ca?w=400&h=400&fit=crop&hue=30" 
+              src="https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f?w=400&h=400&fit=crop&hue=60" 
               alt="Collection 4"
               class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             />
-            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
-          </div>
-          
-          <!-- 下中 -->
-          <div class="group relative overflow-hidden bg-white border border-border cursor-pointer h-[200px] md:h-[250px]">
-            <img 
-              src="https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f?w=400&h=400&fit=crop&hue=60" 
-              alt="Collection 5"
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-            />
-            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
-          </div>
-          
-          <!-- 右下 -->
-          <div class="group relative overflow-hidden bg-white border border-border cursor-pointer h-[200px] md:h-[250px]">
-            <img 
-              src="https://images.unsplash.com/photo-1596783074918-c84cb06531ca?w=400&h=400&fit=crop&hue=60" 
-              alt="Collection 6"
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-            />
-            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
           </div>
           
           <!-- 第三行 -->
-          <!-- 底部左 -->
-          <div class="group relative overflow-hidden bg-white border border-border cursor-pointer h-[200px] md:h-[250px]">
+          <div class="group relative overflow-hidden bg-gray-200 cursor-pointer h-64">
             <img 
               src="https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f?w=400&h=400&fit=crop&hue=90" 
+              alt="Collection 5"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            />
+          </div>
+          
+          <div class="group relative overflow-hidden bg-gray-200 cursor-pointer h-64">
+            <img 
+              src="https://images.unsplash.com/photo-1596783074918-c84cb06531ca?w=400&h=400&fit=crop&hue=90" 
+              alt="Collection 6"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            />
+          </div>
+          
+          <div class="group relative overflow-hidden bg-gray-200 cursor-pointer h-64">
+            <img 
+              src="https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f?w=400&h=400&fit=crop&hue=120" 
               alt="Collection 7"
               class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             />
-            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
           </div>
           
-          <!-- 底部中左 -->
-          <div class="group relative overflow-hidden bg-white border border-border cursor-pointer h-[200px] md:h-[250px]">
+          <div class="group relative overflow-hidden bg-gray-200 cursor-pointer h-64">
             <img 
-              src="https://images.unsplash.com/photo-1596783074918-c84cb06531ca?w=400&h=400&fit=crop&hue=90" 
+              src="https://images.unsplash.com/photo-1596783074918-c84cb06531ca?w=400&h=400&fit=crop&hue=120" 
               alt="Collection 8"
               class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             />
-            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
-          </div>
-          
-          <!-- 底部中右 -->
-          <div class="group relative overflow-hidden bg-white border border-border cursor-pointer h-[200px] md:h-[250px]">
-            <img 
-              src="https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f?w=400&h=400&fit=crop&hue=120" 
-              alt="Collection 9"
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-            />
-            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
-          </div>
-          
-          <!-- 底部右 -->
-          <div class="group relative overflow-hidden bg-white border border-border cursor-pointer h-[200px] md:h-[250px]">
-            <img 
-              src="https://images.unsplash.com/photo-1596783074918-c84cb06531ca?w=400&h=400&fit=crop&hue=120" 
-              alt="Collection 10"
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-            />
-            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
           </div>
         </div>
       </div>
@@ -406,29 +365,3 @@ onUnmounted(() => {
 })
 </script>
 
-<style scoped>
-/* 轮播图过渡效果 */
-.carousel-enter-active,
-.carousel-leave-active {
-  transition: opacity 1s ease;
-}
-
-.carousel-enter-from {
-  opacity: 0;
-}
-
-.carousel-leave-to {
-  opacity: 0;
-}
-
-/* 内容淡入淡出 */
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>
