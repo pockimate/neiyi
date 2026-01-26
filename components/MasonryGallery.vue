@@ -47,7 +47,7 @@
 
     <!-- 加载更多按钮 -->
     <div class="text-center mt-12 md:mt-16">
-      <button @click="loadMore" class="bg-accent hover:bg-accentDark text-white font-semibold px-8 py-3 inline-block transition-colors duration-300 uppercase tracking-wider text-sm">
+      <button @click="loadMore" class="btn-secondary inline-block">
         Load More Photos
       </button>
     </div>

@@ -119,7 +119,7 @@
         </div>
         
         <div class="text-center mt-12 md:mt-16">
-          <NuxtLink to="/products" class="bg-accent hover:bg-accentDark text-white font-semibold px-8 py-3 inline-block transition-colors duration-300 uppercase tracking-wider text-sm">
+          <NuxtLink to="/products" class="btn-secondary inline-block">
             View All Products
           </NuxtLink>
         </div>
@@ -198,7 +198,7 @@
             placeholder="Enter your e-mail address"
             class="flex-1 px-6 py-3 border border-border bg-white text-primary focus:outline-none focus:border-accent transition-colors"
           />
-          <button type="submit" class="bg-accent hover:bg-accentDark text-white font-semibold px-8 py-3 transition-colors duration-300 uppercase tracking-wider text-sm">
+          <button type="submit" class="btn-primary whitespace-nowrap">
             SUBSCRIBE
           </button>
         </form>
