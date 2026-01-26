@@ -34,31 +34,31 @@ export default defineNuxtConfig({
       theme: {
         extend: {
           colors: {
-            // 黑白极简风格 - Obsessive风格
-            // 主色系 - 黑色
-            primary: '#000000',        // 纯黑 - 主要文字、按钮、边框
-            primaryDark: '#1A1A1A',    // 深灰 - hover状态
-            primaryLight: '#333333',   // 浅黑 - 次要元素
+            // Obsessive风格 - 柔和优雅配色
+            // 主色系 - 深色调
+            primary: '#2C2C2C',        // 深灰 - 主要文字、按钮
+            primaryDark: '#1A1A1A',    // 更深灰 - hover状态
+            primaryLight: '#4A4A4A',   // 中灰 - 次要元素
             
-            // 品牌强调色 - 玫瑰粉（保留识别度）
-            accent: '#E91E63',         // 玫瑰粉 - 仅用于重要CTA和强调
-            accentDark: '#C2185B',     // 深玫瑰粉 - hover状态
-            accentLight: '#F06292',    // 浅玫瑰粉 - 装饰
+            // 品牌强调色 - 柔和粉色
+            accent: '#D4A5A5',         // 柔和玫瑰粉 - 强调色
+            accentDark: '#B88B8B',     // 深玫瑰粉 - hover状态
+            accentLight: '#E8C5C5',    // 浅玫瑰粉 - 装饰
             
-            // 背景色系 - 纯白
-            background: '#FFFFFF',     // 纯白背景
-            backgroundLight: '#FAFAFA', // 极浅灰背景
-            backgroundDark: '#F5F5F5', // 浅灰背景
+            // 背景色系 - 柔和白色
+            background: '#FAFAFA',     // 柔和白背景
+            backgroundLight: '#FFFFFF', // 纯白背景
+            backgroundDark: '#F0F0F0', // 浅灰背景
             
-            // 文字色系 - 黑色为主
-            textPrimary: '#000000',    // 纯黑 - 主标题
-            textSecondary: '#333333',  // 深灰 - 正文
-            textMuted: '#666666',      // 中灰 - 次要文字
-            textLight: '#999999',      // 浅灰 - 辅助文字
+            // 文字色系 - 柔和深色
+            textPrimary: '#2C2C2C',    // 深灰 - 主标题
+            textSecondary: '#5A5A5A',  // 中灰 - 正文
+            textMuted: '#8A8A8A',      // 浅灰 - 次要文字
+            textLight: '#B0B0B0',      // 更浅灰 - 辅助文字
             
             // 边框色系
-            border: '#E5E5E5',         // 浅灰边框
-            borderDark: '#CCCCCC',     // 深灰边框
+            border: '#E0E0E0',         // 柔和边框
+            borderDark: '#C0C0C0',     // 深边框
             
             // 中性色系（保持）
             neutral: {

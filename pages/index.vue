@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white min-h-screen">
+  <div class="bg-backgroundLight min-h-screen">
     <TheNavbar />
     
     <!-- 1. Hero Carousel - 全屏轮播图 -->
@@ -72,7 +72,7 @@
     </section>
     
     <!-- 2. Categories - 分类导航 -->
-    <section class="py-16 md:py-24 px-6 bg-white">
+    <section class="py-16 md:py-24 px-6 bg-backgroundLight">
       <div class="max-w-7xl mx-auto">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
           <NuxtLink 
@@ -98,13 +98,13 @@
     </section>
     
     <!-- 3. Featured Products -->
-    <section class="py-16 md:py-24 px-6 bg-gray-50">
+    <section class="py-16 md:py-24 px-6 bg-background">
       <div class="max-w-7xl mx-auto">
         <div class="text-center mb-12 md:mb-16">
-          <h2 class="text-3xl md:text-4xl font-light text-black mb-4 tracking-widest uppercase">
+          <h2 class="text-3xl md:text-4xl font-light text-primary mb-4 tracking-widest uppercase">
             Featured Collection
           </h2>
-          <div class="w-16 h-px bg-black mx-auto"></div>
+          <div class="w-16 h-px bg-primary mx-auto"></div>
         </div>
         
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
@@ -154,13 +154,13 @@
     </section>
     
     <!-- 5. Image Grid - "Just Irresistible" -->
-    <section class="py-16 md:py-24 px-6 bg-white">
+    <section class="py-16 md:py-24 px-6 bg-backgroundLight">
       <div class="max-w-7xl mx-auto">
         <div class="text-center mb-12 md:mb-16">
-          <h2 class="text-3xl md:text-4xl font-light text-black mb-4 md:mb-6 tracking-widest uppercase">
+          <h2 class="text-3xl md:text-4xl font-light text-primary mb-4 md:mb-6 tracking-widest uppercase">
             Just Irresistible
           </h2>
-          <p class="text-sm md:text-base text-gray-600 max-w-2xl mx-auto">
+          <p class="text-sm md:text-base text-textSecondary max-w-2xl mx-auto">
             We know that details make perfection. It's all for your fantastic experiences!
           </p>
         </div>
@@ -170,7 +170,7 @@
     </section>
     
     <!-- 6. Newsletter Signup -->
-    <section class="py-16 md:py-24 px-6 bg-black text-white">
+    <section class="py-16 md:py-24 px-6 bg-primary text-white">
       <div class="max-w-3xl mx-auto text-center">
         <h2 class="text-3xl md:text-4xl font-light mb-4 md:mb-6 tracking-widest uppercase">
           Stay Connected
@@ -193,18 +193,18 @@
     </section>
     
     <!-- 7. Our Story -->
-    <section class="py-16 md:py-24 px-6 bg-white">
+    <section class="py-16 md:py-24 px-6 bg-backgroundLight">
       <div class="max-w-3xl mx-auto text-center">
-        <h2 class="text-3xl md:text-4xl font-light text-black mb-6 md:mb-8 tracking-widest uppercase">
+        <h2 class="text-3xl md:text-4xl font-light text-primary mb-6 md:mb-8 tracking-widest uppercase">
           Our Story
         </h2>
-        <div class="w-16 h-px bg-black mx-auto mb-8 md:mb-12"></div>
-        <p class="text-gray-600 leading-loose mb-6 md:mb-8 text-sm md:text-base">
+        <div class="w-16 h-px bg-primary mx-auto mb-8 md:mb-12"></div>
+        <p class="text-textSecondary leading-loose mb-6 md:mb-8 text-sm md:text-base">
           We believe every woman deserves to feel beautiful, confident, and empowered. 
           Our journey began with a simple mission: to create luxury lingerie that celebrates 
           femininity in all its forms.
         </p>
-        <p class="text-gray-600 leading-loose mb-8 md:mb-12 text-sm md:text-base">
+        <p class="text-textSecondary leading-loose mb-8 md:mb-12 text-sm md:text-base">
           Each piece in our collection is thoughtfully designed and crafted with premium materials, 
           ensuring both comfort and elegance.
         </p>
