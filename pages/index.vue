@@ -101,37 +101,74 @@
       </div>
     </section>
     
-    <!-- Categories -->
-    <section class="py-24 px-6 bg-backgroundLight">
-      <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-16">
-          <h2 class="text-4xl font-light text-primary mb-4 tracking-widest uppercase">Shop by Category</h2>
-          <div class="w-16 h-px bg-primary mx-auto"></div>
-        </div>
-        
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-          <NuxtLink 
-            v-for="category in categories" 
-            :key="category.name"
-            :to="category.link"
-            class="group"
-          >
-            <div class="aspect-square bg-white border border-border overflow-hidden mb-4">
-              <img 
-                :src="category.image" 
-                :alt="category.name"
-                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-            </div>
-            <h3 class="text-xs font-semibold text-center text-primary uppercase tracking-widest">
-              {{ category.name }}
-            </h3>
+    <!-- Video/Image Showcase - Obsessive风格 -->
+    <section class="relative h-screen overflow-hidden">
+      <!-- 背景视频或图片 -->
+      <div class="absolute inset-0">
+        <!-- 使用图片代替视频（可以替换为video标签） -->
+        <img 
+          src="https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f?w=1920&h=1080&fit=crop&sat=-50" 
+          alt="Showcase"
+          class="w-full h-full object-cover"
+        />
+        <div class="absolute inset-0 bg-black/50"></div>
+      </div>
+      
+      <!-- 内容 -->
+      <div class="relative z-10 h-full flex items-center justify-center">
+        <div class="text-center text-white px-6 max-w-4xl">
+          <h2 class="text-5xl md:text-7xl font-light mb-8 tracking-widest uppercase">
+            EVERYTHING
+          </h2>
+          <p class="text-2xl md:text-4xl font-light mb-12 tracking-wider">
+            For your <span class="italic">pleasure</span>
+          </p>
+          <p class="text-base md:text-lg mb-12 max-w-2xl mx-auto leading-relaxed">
+            Are you looking for amazing lingerie that will let you feel real delight? At Intimate Elegance you'll find unique designs with a pinch of spice!
+          </p>
+          <NuxtLink to="/products" class="btn-primary inline-block">
+            SEE MORE
           </NuxtLink>
         </div>
       </div>
     </section>
     
-    <!-- About Section -->
+    <!-- Just Irresistible Section -->
+    <section class="py-24 px-6 bg-backgroundLight">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-light text-primary mb-6 tracking-widest uppercase">Just Irresistible</h2>
+          <p class="text-base text-textSecondary max-w-2xl mx-auto">
+            We know that details make perfection. It's all for your fantastic experiences!
+          </p>
+        </div>
+        
+        <!-- 3列图片网格 -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div 
+            v-for="(item, index) in showcaseItems" 
+            :key="index"
+            class="group cursor-pointer"
+          >
+            <div class="aspect-[3/4] bg-white border border-border overflow-hidden mb-4">
+              <img 
+                :src="item.image" 
+                :alt="item.title"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+            </div>
+            <h3 class="text-lg font-semibold text-center text-primary uppercase tracking-wider mb-2">
+              {{ item.title }}
+            </h3>
+            <p class="text-sm text-center text-textMuted">
+              {{ item.description }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- About Section - 简化版 -->
     <section class="py-24 px-6">
       <div class="max-w-3xl mx-auto text-center">
         <h2 class="text-4xl font-light text-primary mb-8 tracking-widest uppercase">Our Story</h2>
@@ -236,6 +273,25 @@ const categories = [
     name: 'Corsets',
     image: 'https://images.unsplash.com/photo-1596783074918-c84cb06531ca?w=400&h=400&fit=crop',
     link: '/products?category=corsets'
+  }
+]
+
+// Showcase展示项
+const showcaseItems = [
+  {
+    image: 'https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f?w=600&h=800&fit=crop',
+    title: 'Elegant Lace',
+    description: 'Delicate designs for special moments'
+  },
+  {
+    image: 'https://images.unsplash.com/photo-1596783074918-c84cb06531ca?w=600&h=800&fit=crop',
+    title: 'Sensual Silk',
+    description: 'Luxurious comfort meets style'
+  },
+  {
+    image: 'https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f?w=600&h=800&fit=crop&sat=-50',
+    title: 'Bold & Beautiful',
+    description: 'Make a statement with confidence'
   }
 ]
 
