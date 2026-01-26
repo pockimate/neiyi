@@ -144,9 +144,10 @@
         </div>
         
         <!-- Obsessive风格的图片网格 - 中间大图，周围小图 -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[200px] md:auto-rows-[250px]">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <!-- 第一行 -->
           <!-- 左上 -->
-          <div class="group relative overflow-hidden bg-white border border-border cursor-pointer">
+          <div class="group relative overflow-hidden bg-white border border-border cursor-pointer h-[200px] md:h-[250px]">
             <img 
               src="https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f?w=400&h=400&fit=crop" 
               alt="Collection 1"
@@ -156,7 +157,7 @@
           </div>
           
           <!-- 上中 -->
-          <div class="group relative overflow-hidden bg-white border border-border cursor-pointer">
+          <div class="group relative overflow-hidden bg-white border border-border cursor-pointer h-[200px] md:h-[250px]">
             <img 
               src="https://images.unsplash.com/photo-1596783074918-c84cb06531ca?w=400&h=400&fit=crop" 
               alt="Collection 2"
@@ -166,7 +167,7 @@
           </div>
           
           <!-- 中间大图 - 占据2行2列 -->
-          <div class="col-span-2 row-span-2 group relative overflow-hidden bg-black border border-border cursor-pointer">
+          <div class="col-span-2 row-span-2 group relative overflow-hidden bg-black border border-border cursor-pointer h-[404px] md:h-[504px]">
             <!-- 可以替换为视频 -->
             <img 
               src="https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f?w=800&h=1000&fit=crop&sat=-50" 
@@ -174,7 +175,7 @@
               class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
             <div class="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-300"></div>
-            <!-- 可选：添加播放按钮图标 -->
+            <!-- 播放按钮图标 -->
             <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               <div class="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
                 <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -185,7 +186,7 @@
           </div>
           
           <!-- 右上 -->
-          <div class="group relative overflow-hidden bg-white border border-border cursor-pointer">
+          <div class="group relative overflow-hidden bg-white border border-border cursor-pointer h-[200px] md:h-[250px]">
             <img 
               src="https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f?w=400&h=400&fit=crop&hue=30" 
               alt="Collection 3"
@@ -194,8 +195,9 @@
             <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
           </div>
           
+          <!-- 第二行 -->
           <!-- 左下 -->
-          <div class="group relative overflow-hidden bg-white border border-border cursor-pointer">
+          <div class="group relative overflow-hidden bg-white border border-border cursor-pointer h-[200px] md:h-[250px]">
             <img 
               src="https://images.unsplash.com/photo-1596783074918-c84cb06531ca?w=400&h=400&fit=crop&hue=30" 
               alt="Collection 4"
@@ -205,7 +207,7 @@
           </div>
           
           <!-- 下中 -->
-          <div class="group relative overflow-hidden bg-white border border-border cursor-pointer">
+          <div class="group relative overflow-hidden bg-white border border-border cursor-pointer h-[200px] md:h-[250px]">
             <img 
               src="https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f?w=400&h=400&fit=crop&hue=60" 
               alt="Collection 5"
@@ -215,7 +217,7 @@
           </div>
           
           <!-- 右下 -->
-          <div class="group relative overflow-hidden bg-white border border-border cursor-pointer">
+          <div class="group relative overflow-hidden bg-white border border-border cursor-pointer h-[200px] md:h-[250px]">
             <img 
               src="https://images.unsplash.com/photo-1596783074918-c84cb06531ca?w=400&h=400&fit=crop&hue=60" 
               alt="Collection 6"
@@ -224,8 +226,9 @@
             <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
           </div>
           
+          <!-- 第三行 -->
           <!-- 底部左 -->
-          <div class="group relative overflow-hidden bg-white border border-border cursor-pointer">
+          <div class="group relative overflow-hidden bg-white border border-border cursor-pointer h-[200px] md:h-[250px]">
             <img 
               src="https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f?w=400&h=400&fit=crop&hue=90" 
               alt="Collection 7"
@@ -235,7 +238,7 @@
           </div>
           
           <!-- 底部中左 -->
-          <div class="group relative overflow-hidden bg-white border border-border cursor-pointer">
+          <div class="group relative overflow-hidden bg-white border border-border cursor-pointer h-[200px] md:h-[250px]">
             <img 
               src="https://images.unsplash.com/photo-1596783074918-c84cb06531ca?w=400&h=400&fit=crop&hue=90" 
               alt="Collection 8"
@@ -245,7 +248,7 @@
           </div>
           
           <!-- 底部中右 -->
-          <div class="group relative overflow-hidden bg-white border border-border cursor-pointer">
+          <div class="group relative overflow-hidden bg-white border border-border cursor-pointer h-[200px] md:h-[250px]">
             <img 
               src="https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f?w=400&h=400&fit=crop&hue=120" 
               alt="Collection 9"
@@ -255,7 +258,7 @@
           </div>
           
           <!-- 底部右 -->
-          <div class="group relative overflow-hidden bg-white border border-border cursor-pointer">
+          <div class="group relative overflow-hidden bg-white border border-border cursor-pointer h-[200px] md:h-[250px]">
             <img 
               src="https://images.unsplash.com/photo-1596783074918-c84cb06531ca?w=400&h=400&fit=crop&hue=120" 
               alt="Collection 10"
