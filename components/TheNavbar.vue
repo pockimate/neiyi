@@ -25,7 +25,11 @@
         </div>
         
         <div class="flex items-center space-x-4">
-          <button class="p-2 hover:bg-pink-100 rounded-lg transition-colors duration-200 cursor-pointer" aria-label="Search">
+          <button 
+            @click="toggleSearch"
+            class="p-2 hover:bg-pink-100 rounded-lg transition-colors duration-200 cursor-pointer" 
+            aria-label="Search"
+          >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
             </svg>
@@ -40,16 +44,121 @@
           </NuxtLink>
         </div>
       </div>
+      
+      <!-- Search Bar -->
+      <Transition name="slide-down">
+        <div v-if="isSearchOpen" class="mt-4 pt-4 border-t border-pink-200">
+          <div class="relative">
+            <input
+              v-model="searchQuery"
+              type="text"
+              placeholder="Search products..."
+              class="w-full px-4 py-3 pl-12 bg-white border-2 border-pink-200 rounded-xl focus:border-primary focus:outline-none"
+              @keyup.enter="handleSearch"
+            />
+            <svg class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+            <button
+              v-if="searchQuery"
+              @click="clearSearch"
+              class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+          
+          <!-- Search Results -->
+          <div v-if="searchResults.length > 0 && searchQuery" class="mt-3 max-h-96 overflow-y-auto">
+            <NuxtLink
+              v-for="product in searchResults"
+              :key="product.id"
+              :to="`/product-detail?id=${product.id}`"
+              @click="closeSearch"
+              class="flex items-center gap-4 p-3 hover:bg-pink-50 rounded-lg transition-colors duration-200 cursor-pointer"
+            >
+              <img :src="product.image" :alt="product.name" class="w-16 h-16 object-cover rounded-lg" />
+              <div class="flex-1">
+                <p class="font-semibold text-textPrimary">{{ product.name }}</p>
+                <p class="text-sm text-slate-600">{{ product.category }}</p>
+              </div>
+              <p class="font-bold text-primary">${{ product.price.toFixed(2) }}</p>
+            </NuxtLink>
+          </div>
+          
+          <div v-else-if="searchQuery && searchResults.length === 0" class="mt-3 text-center py-8 text-slate-500">
+            No products found for "{{ searchQuery }}"
+          </div>
+        </div>
+      </Transition>
     </div>
   </nav>
 </template>
 
 <script setup lang="ts">
 import { useCartStore } from '~/stores/cart'
+import { useProducts } from '~/composables/useProducts'
 
 const cartStore = useCartStore()
+const { products } = useProducts()
+
+const isSearchOpen = ref(false)
+const searchQuery = ref('')
+
+const toggleSearch = () => {
+  isSearchOpen.value = !isSearchOpen.value
+  if (!isSearchOpen.value) {
+    searchQuery.value = ''
+  }
+}
+
+const closeSearch = () => {
+  isSearchOpen.value = false
+  searchQuery.value = ''
+}
+
+const clearSearch = () => {
+  searchQuery.value = ''
+}
+
+const searchResults = computed(() => {
+  if (!searchQuery.value) return []
+  
+  const query = searchQuery.value.toLowerCase()
+  return products.filter(p => 
+    p.name.toLowerCase().includes(query) ||
+    p.description.toLowerCase().includes(query) ||
+    p.category.toLowerCase().includes(query)
+  ).slice(0, 5) // Limit to 5 results
+})
+
+const handleSearch = () => {
+  if (searchQuery.value && searchResults.value.length > 0) {
+    navigateTo(`/product-detail?id=${searchResults.value[0].id}`)
+    closeSearch()
+  }
+}
 
 onMounted(() => {
   cartStore.loadCart()
 })
 </script>
+
+<style scoped>
+.slide-down-enter-active,
+.slide-down-leave-active {
+  transition: all 0.3s ease;
+}
+
+.slide-down-enter-from {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.slide-down-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+</style>

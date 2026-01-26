@@ -47,22 +47,72 @@
             <div class="glass-card rounded-2xl p-6 border border-pink-200 sticky top-24">
               <h2 class="font-display text-2xl font-semibold mb-6 text-textPrimary">Order Summary</h2>
               
+              <!-- Coupon Code -->
+              <div class="mb-6">
+                <label class="block text-sm font-semibold mb-2 text-textPrimary">Promo Code</label>
+                <div class="flex gap-2">
+                  <input
+                    v-model="couponCode"
+                    type="text"
+                    placeholder="Enter code"
+                    class="flex-1 px-4 py-2 border-2 border-pink-200 rounded-lg focus:border-primary focus:outline-none"
+                    :disabled="appliedCoupon !== null"
+                  />
+                  <button
+                    v-if="!appliedCoupon"
+                    @click="applyCoupon"
+                    class="px-6 py-2 bg-primary hover:bg-pink-700 text-white rounded-lg font-semibold transition-colors duration-200 cursor-pointer"
+                  >
+                    Apply
+                  </button>
+                  <button
+                    v-else
+                    @click="removeCoupon"
+                    class="px-6 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg font-semibold transition-colors duration-200 cursor-pointer"
+                  >
+                    Remove
+                  </button>
+                </div>
+                <p v-if="couponError" class="text-sm text-red-500 mt-1">{{ couponError }}</p>
+                <p v-if="appliedCoupon" class="text-sm text-green-600 mt-1">
+                  ✓ {{ appliedCoupon.code }} applied - {{ appliedCoupon.discount }}% off
+                </p>
+              </div>
+              
               <div class="space-y-3 mb-6">
                 <div class="flex justify-between text-slate-600">
                   <span>Subtotal</span>
                   <span>${{ cartStore.subtotal.toFixed(2) }}</span>
                 </div>
-                <div class="flex justify-between text-slate-600">
-                  <span>Shipping</span>
-                  <span class="text-green-600">Free</span>
+                <div v-if="appliedCoupon" class="flex justify-between text-green-600">
+                  <span>Discount ({{ appliedCoupon.discount }}%)</span>
+                  <span>-${{ discountAmount.toFixed(2) }}</span>
                 </div>
                 <div class="flex justify-between text-slate-600">
-                  <span>Tax</span>
-                  <span>${{ cartStore.tax.toFixed(2) }}</span>
+                  <span>Shipping</span>
+                  <span v-if="cartStore.subtotal >= 100" class="text-green-600">Free</span>
+                  <span v-else>${{ shippingCost.toFixed(2) }}</span>
+                </div>
+                <div class="flex justify-between text-slate-600">
+                  <span>Tax (10%)</span>
+                  <span>${{ taxAmount.toFixed(2) }}</span>
                 </div>
                 <div class="border-t border-pink-200 pt-3 flex justify-between font-semibold text-lg">
                   <span>Total</span>
-                  <span class="text-primary">${{ cartStore.total.toFixed(2) }}</span>
+                  <span class="text-primary">${{ finalTotal.toFixed(2) }}</span>
+                </div>
+              </div>
+              
+              <!-- Free Shipping Progress -->
+              <div v-if="cartStore.subtotal < 100" class="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                <p class="text-sm text-yellow-800 mb-2">
+                  Add <span class="font-bold">${{ (100 - cartStore.subtotal).toFixed(2) }}</span> more for free shipping!
+                </p>
+                <div class="w-full h-2 bg-yellow-200 rounded-full overflow-hidden">
+                  <div 
+                    class="h-full bg-yellow-500 transition-all duration-300"
+                    :style="{ width: `${(cartStore.subtotal / 100) * 100}%` }"
+                  ></div>
                 </div>
               </div>
               
@@ -73,6 +123,28 @@
               <NuxtLink to="/products" class="block w-full border-2 border-primary text-primary hover:bg-primary hover:text-white py-4 rounded-full font-semibold text-center transition-all duration-200 cursor-pointer">
                 Continue Shopping
               </NuxtLink>
+              
+              <!-- Trust Badges -->
+              <div class="mt-6 pt-6 border-t border-pink-200 space-y-3">
+                <div class="flex items-center gap-3 text-sm text-slate-600">
+                  <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                  </svg>
+                  <span>Secure checkout</span>
+                </div>
+                <div class="flex items-center gap-3 text-sm text-slate-600">
+                  <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                  </svg>
+                  <span>30-day returns</span>
+                </div>
+                <div class="flex items-center gap-3 text-sm text-slate-600">
+                  <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                  </svg>
+                  <span>Free shipping over $100</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -87,6 +159,57 @@
 import { useCartStore } from '~/stores/cart'
 
 const cartStore = useCartStore()
+
+// Coupon functionality
+const couponCode = ref('')
+const appliedCoupon = ref<{ code: string; discount: number } | null>(null)
+const couponError = ref('')
+
+// Available coupons (in real app, this would come from backend)
+const availableCoupons = [
+  { code: 'SAVE10', discount: 10 },
+  { code: 'SAVE20', discount: 20 },
+  { code: 'WELCOME15', discount: 15 }
+]
+
+const applyCoupon = () => {
+  const coupon = availableCoupons.find(c => c.code.toUpperCase() === couponCode.value.toUpperCase())
+  
+  if (coupon) {
+    appliedCoupon.value = coupon
+    couponError.value = ''
+  } else {
+    couponError.value = 'Invalid coupon code'
+  }
+}
+
+const removeCoupon = () => {
+  appliedCoupon.value = null
+  couponCode.value = ''
+  couponError.value = ''
+}
+
+// Calculations
+const discountAmount = computed(() => {
+  if (!appliedCoupon.value) return 0
+  return cartStore.subtotal * (appliedCoupon.value.discount / 100)
+})
+
+const shippingCost = computed(() => {
+  return cartStore.subtotal >= 100 ? 0 : 9.99
+})
+
+const subtotalAfterDiscount = computed(() => {
+  return cartStore.subtotal - discountAmount.value
+})
+
+const taxAmount = computed(() => {
+  return subtotalAfterDiscount.value * 0.1
+})
+
+const finalTotal = computed(() => {
+  return subtotalAfterDiscount.value + shippingCost.value + taxAmount.value
+})
 
 onMounted(() => {
   cartStore.loadCart()

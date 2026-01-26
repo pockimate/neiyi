@@ -4,7 +4,27 @@
     
     <section class="pt-32 pb-20 px-4">
       <div class="max-w-7xl mx-auto">
-        <h1 class="font-display text-4xl md:text-5xl font-bold text-primary mb-8">Checkout</h1>
+        <!-- Progress Steps -->
+        <div class="mb-8">
+          <div class="flex items-center justify-center gap-4">
+            <div class="flex items-center">
+              <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-semibold">1</div>
+              <span class="ml-2 font-semibold text-primary">Cart</span>
+            </div>
+            <div class="w-16 h-0.5 bg-primary"></div>
+            <div class="flex items-center">
+              <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-semibold">2</div>
+              <span class="ml-2 font-semibold text-primary">Checkout</span>
+            </div>
+            <div class="w-16 h-0.5 bg-gray-300"></div>
+            <div class="flex items-center">
+              <div class="w-10 h-10 rounded-full bg-gray-300 text-gray-600 flex items-center justify-center font-semibold">3</div>
+              <span class="ml-2 text-gray-600">Complete</span>
+            </div>
+          </div>
+        </div>
+        
+        <h1 class="font-display text-4xl md:text-5xl font-bold text-primary mb-8 text-center">Checkout</h1>
         
         <div v-if="cartStore.items.length === 0" class="glass-card rounded-2xl p-12 border border-pink-200 text-center">
           <h3 class="font-display text-2xl font-semibold mb-2 text-textPrimary">Your cart is empty</h3>
@@ -22,22 +42,32 @@
               <h2 class="font-display text-2xl font-semibold mb-6 text-textPrimary">Contact Information</h2>
               <div class="space-y-4">
                 <div>
-                  <label class="block text-sm font-medium mb-2 text-slate-700">Email</label>
+                  <label class="block text-sm font-medium mb-2 text-slate-700">Email *</label>
                   <input 
                     v-model="form.email"
                     type="email" 
-                    class="w-full px-4 py-3 border border-pink-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    :class="[
+                      'w-full px-4 py-3 border-2 rounded-lg focus:outline-none transition-colors',
+                      errors.email ? 'border-red-500' : 'border-pink-200 focus:border-primary'
+                    ]"
                     placeholder="your@email.com"
+                    @blur="validateField('email')"
                   />
+                  <p v-if="errors.email" class="text-sm text-red-500 mt-1">{{ errors.email }}</p>
                 </div>
                 <div>
-                  <label class="block text-sm font-medium mb-2 text-slate-700">Phone</label>
+                  <label class="block text-sm font-medium mb-2 text-slate-700">Phone *</label>
                   <input 
                     v-model="form.phone"
                     type="tel" 
-                    class="w-full px-4 py-3 border border-pink-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    :class="[
+                      'w-full px-4 py-3 border-2 rounded-lg focus:outline-none transition-colors',
+                      errors.phone ? 'border-red-500' : 'border-pink-200 focus:border-primary'
+                    ]"
                     placeholder="+1 (555) 000-0000"
+                    @blur="validateField('phone')"
                   />
+                  <p v-if="errors.phone" class="text-sm text-red-500 mt-1">{{ errors.phone }}</p>
                 </div>
               </div>
             </div>
@@ -48,56 +78,112 @@
               <div class="space-y-4">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label class="block text-sm font-medium mb-2 text-slate-700">First Name</label>
+                    <label class="block text-sm font-medium mb-2 text-slate-700">First Name *</label>
                     <input 
                       v-model="form.firstName"
                       type="text" 
-                      class="w-full px-4 py-3 border border-pink-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                      :class="[
+                        'w-full px-4 py-3 border-2 rounded-lg focus:outline-none transition-colors',
+                        errors.firstName ? 'border-red-500' : 'border-pink-200 focus:border-primary'
+                      ]"
+                      @blur="validateField('firstName')"
                     />
+                    <p v-if="errors.firstName" class="text-sm text-red-500 mt-1">{{ errors.firstName }}</p>
                   </div>
                   <div>
-                    <label class="block text-sm font-medium mb-2 text-slate-700">Last Name</label>
+                    <label class="block text-sm font-medium mb-2 text-slate-700">Last Name *</label>
                     <input 
                       v-model="form.lastName"
                       type="text" 
-                      class="w-full px-4 py-3 border border-pink-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                      :class="[
+                        'w-full px-4 py-3 border-2 rounded-lg focus:outline-none transition-colors',
+                        errors.lastName ? 'border-red-500' : 'border-pink-200 focus:border-primary'
+                      ]"
+                      @blur="validateField('lastName')"
                     />
+                    <p v-if="errors.lastName" class="text-sm text-red-500 mt-1">{{ errors.lastName }}</p>
                   </div>
                 </div>
                 <div>
-                  <label class="block text-sm font-medium mb-2 text-slate-700">Address</label>
+                  <label class="block text-sm font-medium mb-2 text-slate-700">Address *</label>
                   <input 
                     v-model="form.address"
                     type="text" 
-                    class="w-full px-4 py-3 border border-pink-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    :class="[
+                      'w-full px-4 py-3 border-2 rounded-lg focus:outline-none transition-colors',
+                      errors.address ? 'border-red-500' : 'border-pink-200 focus:border-primary'
+                    ]"
                     placeholder="Street address"
+                    @blur="validateField('address')"
+                  />
+                  <p v-if="errors.address" class="text-sm text-red-500 mt-1">{{ errors.address }}</p>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-2 text-slate-700">Apartment, suite, etc. (optional)</label>
+                  <input 
+                    v-model="form.apartment"
+                    type="text" 
+                    class="w-full px-4 py-3 border-2 border-pink-200 rounded-lg focus:outline-none focus:border-primary"
                   />
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
-                    <label class="block text-sm font-medium mb-2 text-slate-700">City</label>
+                    <label class="block text-sm font-medium mb-2 text-slate-700">City *</label>
                     <input 
                       v-model="form.city"
                       type="text" 
-                      class="w-full px-4 py-3 border border-pink-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                      :class="[
+                        'w-full px-4 py-3 border-2 rounded-lg focus:outline-none transition-colors',
+                        errors.city ? 'border-red-500' : 'border-pink-200 focus:border-primary'
+                      ]"
+                      @blur="validateField('city')"
                     />
+                    <p v-if="errors.city" class="text-sm text-red-500 mt-1">{{ errors.city }}</p>
                   </div>
                   <div>
-                    <label class="block text-sm font-medium mb-2 text-slate-700">State</label>
+                    <label class="block text-sm font-medium mb-2 text-slate-700">State *</label>
                     <input 
                       v-model="form.state"
                       type="text" 
-                      class="w-full px-4 py-3 border border-pink-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                      :class="[
+                        'w-full px-4 py-3 border-2 rounded-lg focus:outline-none transition-colors',
+                        errors.state ? 'border-red-500' : 'border-pink-200 focus:border-primary'
+                      ]"
+                      @blur="validateField('state')"
                     />
+                    <p v-if="errors.state" class="text-sm text-red-500 mt-1">{{ errors.state }}</p>
                   </div>
                   <div>
-                    <label class="block text-sm font-medium mb-2 text-slate-700">ZIP Code</label>
+                    <label class="block text-sm font-medium mb-2 text-slate-700">ZIP Code *</label>
                     <input 
                       v-model="form.zipCode"
                       type="text" 
-                      class="w-full px-4 py-3 border border-pink-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                      :class="[
+                        'w-full px-4 py-3 border-2 rounded-lg focus:outline-none transition-colors',
+                        errors.zipCode ? 'border-red-500' : 'border-pink-200 focus:border-primary'
+                      ]"
+                      @blur="validateField('zipCode')"
                     />
+                    <p v-if="errors.zipCode" class="text-sm text-red-500 mt-1">{{ errors.zipCode }}</p>
                   </div>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-2 text-slate-700">Country *</label>
+                  <select 
+                    v-model="form.country"
+                    :class="[
+                      'w-full px-4 py-3 border-2 rounded-lg focus:outline-none transition-colors cursor-pointer',
+                      errors.country ? 'border-red-500' : 'border-pink-200 focus:border-primary'
+                    ]"
+                    @blur="validateField('country')"
+                  >
+                    <option value="">Select a country</option>
+                    <option value="US">United States</option>
+                    <option value="CA">Canada</option>
+                    <option value="UK">United Kingdom</option>
+                    <option value="AU">Australia</option>
+                  </select>
+                  <p v-if="errors.country" class="text-sm text-red-500 mt-1">{{ errors.country }}</p>
                 </div>
               </div>
             </div>
@@ -106,36 +192,77 @@
             <div class="glass-card rounded-2xl p-6 border border-pink-200">
               <h2 class="font-display text-2xl font-semibold mb-6 text-textPrimary">Payment Method</h2>
               <div class="space-y-4">
-                <div>
-                  <label class="block text-sm font-medium mb-2 text-slate-700">Card Number</label>
-                  <input 
-                    v-model="form.cardNumber"
-                    type="text" 
-                    class="w-full px-4 py-3 border border-pink-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                    placeholder="1234 5678 9012 3456"
-                  />
+                <div class="flex gap-4">
+                  <button
+                    v-for="method in paymentMethods"
+                    :key="method.id"
+                    @click="form.paymentMethod = method.id"
+                    :class="[
+                      'flex-1 p-4 border-2 rounded-lg transition-all duration-200 cursor-pointer',
+                      form.paymentMethod === method.id
+                        ? 'border-primary bg-primary/5'
+                        : 'border-pink-200 hover:border-primary'
+                    ]"
+                  >
+                    <div class="flex items-center justify-center gap-2">
+                      <component :is="method.icon" class="w-6 h-6" />
+                      <span class="font-semibold">{{ method.name }}</span>
+                    </div>
+                  </button>
                 </div>
-                <div class="grid grid-cols-2 gap-4">
+                
+                <!-- Credit Card Form -->
+                <div v-if="form.paymentMethod === 'card'" class="space-y-4 pt-4">
                   <div>
-                    <label class="block text-sm font-medium mb-2 text-slate-700">Expiry Date</label>
+                    <label class="block text-sm font-medium mb-2 text-slate-700">Card Number *</label>
                     <input 
-                      v-model="form.expiryDate"
+                      v-model="form.cardNumber"
                       type="text" 
-                      class="w-full px-4 py-3 border border-pink-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                      placeholder="MM/YY"
+                      class="w-full px-4 py-3 border-2 border-pink-200 rounded-lg focus:outline-none focus:border-primary"
+                      placeholder="1234 5678 9012 3456"
+                      maxlength="19"
                     />
                   </div>
-                  <div>
-                    <label class="block text-sm font-medium mb-2 text-slate-700">CVV</label>
-                    <input 
-                      v-model="form.cvv"
-                      type="text" 
-                      class="w-full px-4 py-3 border border-pink-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                      placeholder="123"
-                    />
+                  <div class="grid grid-cols-2 gap-4">
+                    <div>
+                      <label class="block text-sm font-medium mb-2 text-slate-700">Expiry Date *</label>
+                      <input 
+                        v-model="form.cardExpiry"
+                        type="text" 
+                        class="w-full px-4 py-3 border-2 border-pink-200 rounded-lg focus:outline-none focus:border-primary"
+                        placeholder="MM/YY"
+                        maxlength="5"
+                      />
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium mb-2 text-slate-700">CVV *</label>
+                      <input 
+                        v-model="form.cardCvv"
+                        type="text" 
+                        class="w-full px-4 py-3 border-2 border-pink-200 rounded-lg focus:outline-none focus:border-primary"
+                        placeholder="123"
+                        maxlength="4"
+                      />
+                    </div>
                   </div>
+                </div>
+                
+                <!-- PayPal Info -->
+                <div v-if="form.paymentMethod === 'paypal'" class="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                  <p class="text-sm text-blue-800">You will be redirected to PayPal to complete your purchase.</p>
                 </div>
               </div>
+            </div>
+            
+            <!-- Order Notes -->
+            <div class="glass-card rounded-2xl p-6 border border-pink-200">
+              <h2 class="font-display text-2xl font-semibold mb-4 text-textPrimary">Order Notes (Optional)</h2>
+              <textarea
+                v-model="form.notes"
+                rows="4"
+                class="w-full px-4 py-3 border-2 border-pink-200 rounded-lg focus:outline-none focus:border-primary resize-none"
+                placeholder="Any special instructions for your order?"
+              ></textarea>
             </div>
           </div>
           
@@ -144,10 +271,20 @@
             <div class="glass-card rounded-2xl p-6 border border-pink-200 sticky top-24">
               <h2 class="font-display text-2xl font-semibold mb-6 text-textPrimary">Order Summary</h2>
               
-              <div class="space-y-4 mb-6">
-                <div v-for="(item, index) in cartStore.items" :key="index" class="flex justify-between text-sm">
-                  <span class="text-slate-600">{{ item.name }} ({{ item.quantity }}x)</span>
-                  <span class="font-semibold">${{ (item.price * item.quantity).toFixed(2) }}</span>
+              <!-- Cart Items -->
+              <div class="space-y-4 mb-6 max-h-64 overflow-y-auto">
+                <div v-for="(item, index) in cartStore.items" :key="index" class="flex gap-3">
+                  <div class="w-16 h-16 bg-gradient-to-br from-pink-100 to-rose-50 rounded-lg flex-shrink-0 relative">
+                    <img v-if="item.image" :src="item.image" :alt="item.name" class="w-full h-full object-cover rounded-lg" />
+                    <span class="absolute -top-2 -right-2 w-6 h-6 bg-primary text-white text-xs rounded-full flex items-center justify-center">
+                      {{ item.quantity }}
+                    </span>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <p class="font-semibold text-sm text-textPrimary truncate">{{ item.name }}</p>
+                    <p class="text-xs text-slate-600">{{ item.size }} • {{ item.color }}</p>
+                    <p class="text-sm font-bold text-primary">${{ (item.price * item.quantity).toFixed(2) }}</p>
+                  </div>
                 </div>
               </div>
               
@@ -171,28 +308,39 @@
               </div>
               
               <button 
-                @click="handlePlaceOrder"
-                class="w-full bg-cta hover:bg-yellow-600 text-white py-4 rounded-full font-semibold transition-all duration-200 cursor-pointer shadow-lg hover:shadow-xl mb-3 min-h-touch"
+                @click="handleSubmit"
+                :disabled="isSubmitting"
+                :class="[
+                  'w-full py-4 rounded-full font-semibold text-center transition-all duration-200 shadow-lg hover:shadow-xl mb-3',
+                  isSubmitting 
+                    ? 'bg-gray-400 cursor-not-allowed' 
+                    : 'bg-cta hover:bg-yellow-600 text-white cursor-pointer'
+                ]"
               >
-                Place Order
+                <span v-if="!isSubmitting">Place Order</span>
+                <span v-else class="flex items-center justify-center gap-2">
+                  <svg class="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Processing...
+                </span>
               </button>
               
               <NuxtLink to="/cart" class="block w-full border-2 border-primary text-primary hover:bg-primary hover:text-white py-4 rounded-full font-semibold text-center transition-all duration-200 cursor-pointer">
                 Back to Cart
               </NuxtLink>
               
-              <div class="mt-6 flex items-center justify-center gap-4 text-slate-400">
-                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+              <!-- Security Badges -->
+              <div class="mt-6 pt-6 border-t border-pink-200 flex items-center justify-center gap-4">
+                <svg class="w-8 h-8 text-slate-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                 </svg>
-                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
-                </svg>
-                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
-                </svg>
+                <div class="text-xs text-slate-600">
+                  <p class="font-semibold">Secure Checkout</p>
+                  <p>SSL Encrypted</p>
+                </div>
               </div>
-              <p class="text-xs text-center text-slate-400 mt-2">Secure payment processing</p>
             </div>
           </div>
         </div>
@@ -207,36 +355,143 @@
 import { useCartStore } from '~/stores/cart'
 
 const cartStore = useCartStore()
+const router = useRouter()
 
+// Form data
 const form = reactive({
   email: '',
   phone: '',
   firstName: '',
   lastName: '',
   address: '',
+  apartment: '',
   city: '',
   state: '',
   zipCode: '',
+  country: '',
+  paymentMethod: 'card',
   cardNumber: '',
-  expiryDate: '',
-  cvv: ''
+  cardExpiry: '',
+  cardCvv: '',
+  notes: ''
 })
 
-const handlePlaceOrder = () => {
-  // Validate form
-  if (!form.email || !form.firstName || !form.lastName || !form.address) {
-    alert('Please fill in all required fields')
+// Validation errors
+const errors = reactive<Record<string, string>>({})
+
+// Payment methods
+const paymentMethods = [
+  { 
+    id: 'card', 
+    name: 'Credit Card',
+    icon: 'svg'
+  },
+  { 
+    id: 'paypal', 
+    name: 'PayPal',
+    icon: 'svg'
+  }
+]
+
+const isSubmitting = ref(false)
+
+// Validation rules
+const validateField = (field: string) => {
+  errors[field] = ''
+  
+  switch (field) {
+    case 'email':
+      if (!form.email) {
+        errors.email = 'Email is required'
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+        errors.email = 'Please enter a valid email'
+      }
+      break
+    case 'phone':
+      if (!form.phone) {
+        errors.phone = 'Phone is required'
+      }
+      break
+    case 'firstName':
+      if (!form.firstName) {
+        errors.firstName = 'First name is required'
+      }
+      break
+    case 'lastName':
+      if (!form.lastName) {
+        errors.lastName = 'Last name is required'
+      }
+      break
+    case 'address':
+      if (!form.address) {
+        errors.address = 'Address is required'
+      }
+      break
+    case 'city':
+      if (!form.city) {
+        errors.city = 'City is required'
+      }
+      break
+    case 'state':
+      if (!form.state) {
+        errors.state = 'State is required'
+      }
+      break
+    case 'zipCode':
+      if (!form.zipCode) {
+        errors.zipCode = 'ZIP code is required'
+      }
+      break
+    case 'country':
+      if (!form.country) {
+        errors.country = 'Country is required'
+      }
+      break
+  }
+}
+
+const validateForm = () => {
+  const requiredFields = ['email', 'phone', 'firstName', 'lastName', 'address', 'city', 'state', 'zipCode', 'country']
+  
+  requiredFields.forEach(field => validateField(field))
+  
+  return Object.keys(errors).every(key => !errors[key])
+}
+
+const handleSubmit = async () => {
+  if (!validateForm()) {
+    // Scroll to first error
+    const firstError = Object.keys(errors).find(key => errors[key])
+    if (firstError) {
+      alert('Please fill in all required fields')
+    }
     return
   }
   
-  // In a real app, this would process the payment
-  alert('Order placed successfully! Thank you for your purchase.')
+  isSubmitting.value = true
+  
+  // Simulate API call
+  await new Promise(resolve => setTimeout(resolve, 2000))
+  
+  // Create order data
+  const orderData = {
+    ...form,
+    items: cartStore.items,
+    subtotal: cartStore.subtotal,
+    tax: cartStore.tax,
+    total: cartStore.total,
+    orderNumber: Math.random().toString(36).substr(2, 9).toUpperCase(),
+    date: new Date().toISOString()
+  }
+  
+  // Save order to localStorage (in real app, send to backend)
+  localStorage.setItem('lastOrder', JSON.stringify(orderData))
   
   // Clear cart
   cartStore.clearCart()
   
-  // Redirect to home
-  navigateTo('/')
+  // Redirect to success page
+  router.push('/order-success')
 }
 
 onMounted(() => {

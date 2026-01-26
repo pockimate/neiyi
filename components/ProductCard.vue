@@ -1,6 +1,9 @@
 <template>
-  <div class="glass-card rounded-2xl overflow-hidden border border-pink-200 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-    <a :href="`/products/detail?id=${product.id}`" class="block no-underline text-inherit">
+  <div class="glass-card rounded-2xl overflow-hidden border border-pink-200 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl relative">
+    <a 
+      :href="`/product-detail?id=${product.id}`" 
+      class="block cursor-pointer"
+    >
       <div class="relative overflow-hidden aspect-[3/4] bg-gradient-to-br from-pink-50 to-purple-50">
         <img 
           :src="product.image" 
@@ -17,15 +20,16 @@
         <p class="text-slate-600 text-sm leading-relaxed">{{ product.description }}</p>
       </div>
     </a>
-    <div class="px-6 pb-6 flex items-center justify-between gap-4">
+    <div class="px-6 pb-6 flex items-center justify-between gap-4" style="position: relative; z-index: 2;">
       <div v-if="product.originalPrice" class="flex-shrink-0">
         <div class="font-display text-2xl font-bold text-primary">${{ product.price.toFixed(2) }}</div>
         <div class="text-slate-400 line-through text-sm">${{ product.originalPrice.toFixed(2) }}</div>
       </div>
       <div v-else class="font-display text-2xl font-bold text-primary flex-shrink-0">${{ product.price.toFixed(2) }}</div>
       <button 
-        @click="handleAddToCart"
+        @click.stop="handleAddToCart"
         class="bg-primary hover:bg-pink-700 text-white px-6 py-3 rounded-full text-sm font-semibold transition-colors duration-200 cursor-pointer whitespace-nowrap"
+        style="position: relative; z-index: 3; pointer-events: auto;"
       >
         Add to Cart
       </button>
@@ -49,7 +53,10 @@ const badgeColor = computed(() => {
   return 'bg-cta'
 })
 
-const handleAddToCart = () => {
+const handleAddToCart = (event: Event) => {
+  event.stopPropagation() // Prevent click from bubbling to parent
+  event.preventDefault() // Prevent navigation
+  
   cartStore.addToCart({
     id: props.product.id,
     name: props.product.name,
