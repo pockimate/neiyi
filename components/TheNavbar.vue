@@ -138,7 +138,11 @@
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
             </svg>
-            <span v-if="cartStore.cartCount > 0" class="absolute -top-1 -right-1 bg-primary text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+            <span 
+              v-if="cartStore.cartCount > 0" 
+              :class="['absolute -top-1 -right-1 bg-accent text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold', cartBadgeAnimate ? 'cart-badge-bounce' : '']"
+              :key="cartStore.cartCount"
+            >
               {{ cartStore.cartCount }}
             </span>
           </NuxtLink>
@@ -210,6 +214,17 @@ const isUserMenuOpen = ref(false)
 const isLoggedIn = ref(false)
 const userName = ref('')
 const userEmail = ref('')
+const cartBadgeAnimate = ref(false)
+
+// Watch cart count changes to trigger animation
+watch(() => cartStore.cartCount, (newCount, oldCount) => {
+  if (newCount > oldCount) {
+    cartBadgeAnimate.value = true
+    setTimeout(() => {
+      cartBadgeAnimate.value = false
+    }, 600)
+  }
+})
 
 const toggleSearch = () => {
   isSearchOpen.value = !isSearchOpen.value

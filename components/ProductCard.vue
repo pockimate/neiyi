@@ -1,5 +1,5 @@
 <template>
-  <div class="glass-card rounded-2xl overflow-hidden border border-pink-200 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl relative">
+  <div class="glass-card rounded-2xl overflow-hidden border border-pink-200 product-card-hover relative">
     <a 
       :href="`/product-detail?id=${product.id}`" 
       class="block cursor-pointer"
@@ -8,11 +8,16 @@
         <img 
           :src="product.image" 
           :alt="product.name"
-          class="w-full h-full object-contain transition-transform duration-500 hover:scale-105"
+          class="w-full h-full object-contain transition-all duration-700 hover:scale-110 image-fade-in"
+          :class="{ 'loaded': imageLoaded }"
           loading="lazy"
           style="object-position: center center;"
+          @load="imageLoaded = true"
         />
-        <div v-if="product.badge" :class="`absolute top-4 right-4 ${badgeClass} text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg`">
+        <!-- 骨架屏 -->
+        <div v-if="!imageLoaded" class="absolute inset-0 skeleton"></div>
+        
+        <div v-if="product.badge" :class="`absolute top-4 right-4 ${badgeClass} text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg transform transition-transform duration-300 hover:scale-110`">
           {{ product.badge }}
         </div>
       </div>
@@ -47,6 +52,7 @@ const props = defineProps<{
 }>()
 
 const cartStore = useCartStore()
+const imageLoaded = ref(false)
 
 const badgeClass = computed(() => {
   if (props.product.badge === 'Sale') return 'badge-sale'

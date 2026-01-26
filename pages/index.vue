@@ -96,15 +96,15 @@
     </section>
 
     <!-- Features Section -->
-    <section id="featured" class="py-20 px-4">
+    <section id="featured" class="py-20 px-4 bg-white">
       <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-16">
+        <div class="text-center mb-16 fade-in-scroll" data-scroll>
           <h2 class="font-display text-h2 md:text-5xl font-bold text-primary mb-4">Why Choose Us</h2>
           <p class="text-slate-600 text-body max-w-2xl mx-auto leading-relaxed">Experience the perfect blend of luxury, comfort, and confidence</p>
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div class="glass-card rounded-2xl p-8 border border-pink-200 hover-lift cursor-pointer">
+          <div class="glass-card rounded-2xl p-8 border border-pink-200 hover-lift cursor-pointer fade-in-scroll" data-scroll data-delay="100">
             <div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6">
               <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
@@ -138,9 +138,9 @@
     </section>
 
     <!-- Shop by Category -->
-    <section class="py-20 px-4 bg-gradient-to-b from-pink-50 to-white">
+    <section class="py-20 px-4 bg-gradient-to-b from-backgroundLight to-white">
       <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-16">
+        <div class="text-center mb-16 fade-in-scroll" data-scroll>
           <h2 class="font-display text-h2 md:text-5xl font-bold text-primary mb-4">Shop by Category</h2>
           <p class="text-slate-600 text-body max-w-2xl mx-auto leading-relaxed">Find your perfect style</p>
         </div>
@@ -190,9 +190,9 @@
     </section>
 
     <!-- Featured Products -->
-    <section class="py-20 px-4 bg-white/50">
+    <section class="py-20 px-4 bg-white">
       <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-16">
+        <div class="text-center mb-16 fade-in-scroll" data-scroll>
           <h2 class="font-display text-h2 md:text-5xl font-bold text-primary mb-4">Featured Collections</h2>
           <p class="text-slate-600 text-body max-w-2xl mx-auto leading-relaxed">Explore our carefully curated selections for every occasion</p>
         </div>
@@ -214,9 +214,9 @@
     </section>
 
     <!-- Customer Testimonials -->
-    <section class="py-20 px-4 bg-gradient-to-b from-white to-pink-50">
+    <section class="py-20 px-4 bg-gradient-to-b from-backgroundLight to-background">
       <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-16">
+        <div class="text-center mb-16 fade-in-scroll" data-scroll>
           <h2 class="font-display text-h2 md:text-5xl font-bold text-primary mb-4">What Our Customers Say</h2>
           <p class="text-slate-600 text-body max-w-2xl mx-auto leading-relaxed">Join thousands of confident women who trust us</p>
         </div>
@@ -279,41 +279,45 @@
       </div>
     </section>
 
-    <!-- Brand Story -->
-    <section class="py-20 px-4 bg-white">
-      <div class="max-w-6xl mx-auto">
+    <!-- Brand Story - 深色背景形成对比 -->
+    <section class="py-20 px-4 bg-gradient-to-br from-neutral-800 to-neutral-900 text-white relative overflow-hidden">
+      <!-- 装饰性渐变 -->
+      <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-primary/10 to-transparent"></div>
+      <div class="absolute bottom-0 left-0 w-1/2 h-full bg-gradient-to-r from-accent/10 to-transparent"></div>
+      
+      <div class="max-w-6xl mx-auto relative z-10">
         <div class="grid md:grid-cols-2 gap-12 items-center">
-          <div>
-            <p class="font-script text-3xl text-primary mb-4">Our Story</p>
-            <h2 class="font-display text-h2 md:text-4xl font-bold text-textPrimary mb-6">Crafted with Love & Passion</h2>
-            <p class="text-slate-600 text-body mb-6 leading-relaxed">
+          <div class="slide-in-left" data-scroll>
+            <p class="font-script text-3xl text-primaryLight mb-4">Our Story</p>
+            <h2 class="font-display text-h2 md:text-4xl font-bold text-white mb-6">Crafted with Love & Passion</h2>
+            <p class="text-gray-300 text-body mb-6 leading-relaxed">
               We believe every woman deserves to feel beautiful, confident, and empowered. Our journey began with a simple mission: to create luxury lingerie that celebrates femininity in all its forms.
             </p>
-            <p class="text-slate-600 text-body mb-6 leading-relaxed">
+            <p class="text-gray-300 text-body mb-6 leading-relaxed">
               Each piece in our collection is thoughtfully designed and crafted with premium materials, ensuring both comfort and elegance. From delicate lace to sumptuous silk, we source only the finest fabrics to create lingerie that feels as good as it looks.
             </p>
             <div class="flex flex-wrap gap-8 mt-8">
               <div>
-                <p class="font-display text-3xl font-bold text-primary">10K+</p>
-                <p class="text-slate-600 text-sm">Happy Customers</p>
+                <p class="font-display text-3xl font-bold text-accent">10K+</p>
+                <p class="text-gray-400 text-sm">Happy Customers</p>
               </div>
               <div>
-                <p class="font-display text-3xl font-bold text-primary">500+</p>
-                <p class="text-slate-600 text-sm">Unique Designs</p>
+                <p class="font-display text-3xl font-bold text-accent">500+</p>
+                <p class="text-gray-400 text-sm">Unique Designs</p>
               </div>
               <div>
-                <p class="font-display text-3xl font-bold text-primary">98%</p>
-                <p class="text-slate-600 text-sm">Satisfaction Rate</p>
+                <p class="font-display text-3xl font-bold text-accent">98%</p>
+                <p class="text-gray-400 text-sm">Satisfaction Rate</p>
               </div>
             </div>
           </div>
-          <div class="relative">
-            <div class="glass-card rounded-3xl p-8 border border-pink-200 aspect-square flex items-center justify-center">
+          <div class="relative slide-in-right" data-scroll>
+            <div class="glass-card rounded-3xl p-8 border border-white/20 aspect-square flex items-center justify-center bg-white/5 backdrop-blur-xl">
               <div class="text-center">
-                <svg class="w-32 h-32 mx-auto text-primary/20 mb-4" fill="currentColor" viewBox="0 0 24 24">
+                <svg class="w-32 h-32 mx-auto text-primaryLight mb-4" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
                 </svg>
-                <p class="font-script text-2xl text-primary">Made with love</p>
+                <p class="font-script text-2xl text-primaryLight">Made with love</p>
               </div>
             </div>
           </div>
@@ -322,9 +326,9 @@
     </section>
 
     <!-- Newsletter -->
-    <section class="py-20 px-4 bg-gradient-to-br from-pink-100 via-rose-50 to-purple-100">
+    <section class="py-20 px-4 bg-gradient-to-br from-backgroundLight via-background to-backgroundDark">
       <div class="max-w-4xl mx-auto text-center">
-        <div class="glass-card rounded-3xl p-8 md:p-12 border border-pink-200">
+        <div class="glass-card rounded-3xl p-8 md:p-12 border border-pink-200 fade-in-scroll" data-scroll>
           <p class="font-script text-3xl text-primary mb-4">Stay Connected</p>
           <h2 class="font-display text-h2 md:text-4xl font-bold text-textPrimary mb-4">Join Our VIP List</h2>
           <p class="text-slate-600 text-body mb-8 max-w-2xl mx-auto leading-relaxed">
@@ -435,6 +439,32 @@ onMounted(() => {
 onUnmounted(() => {
   stopAutoplay()
 })
+
+// Scroll animation observer
+if (process.client) {
+  onMounted(() => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    }
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const delay = entry.target.getAttribute('data-delay') || 0
+          setTimeout(() => {
+            entry.target.classList.add('visible')
+          }, parseInt(delay))
+          observer.unobserve(entry.target)
+        }
+      })
+    }, observerOptions)
+    
+    // Observe all elements with data-scroll attribute
+    const scrollElements = document.querySelectorAll('[data-scroll]')
+    scrollElements.forEach((el) => observer.observe(el))
+  })
+}
 </script>
 
 
