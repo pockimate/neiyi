@@ -1,18 +1,61 @@
 <template>
-  <nav class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-border">
+  <nav 
+    :class="[
+      'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+      isScrolled ? 'bg-white border-b border-border shadow-sm' : 'bg-transparent'
+    ]"
+  >
     <div class="max-w-7xl mx-auto px-6 py-5">
       <div class="flex items-center justify-between">
         <!-- Logo -->
-        <NuxtLink to="/" class="text-xl font-semibold text-primary tracking-wider cursor-pointer">
+        <NuxtLink 
+          to="/" 
+          :class="[
+            'text-xl font-semibold tracking-wider cursor-pointer transition-colors duration-300',
+            isScrolled ? 'text-primary' : 'text-white'
+          ]"
+        >
           INTIMATE ELEGANCE
         </NuxtLink>
         
         <!-- 主导航 - 桌面端 -->
         <div class="hidden md:flex items-center gap-8">
-          <NuxtLink to="/products" class="nav-link">Shop All</NuxtLink>
-          <NuxtLink to="/products?filter=new" class="nav-link">New In</NuxtLink>
-          <NuxtLink to="/products?filter=bestsellers" class="nav-link">Bestsellers</NuxtLink>
-          <NuxtLink to="/about" class="nav-link">About</NuxtLink>
+          <NuxtLink 
+            to="/products" 
+            :class="[
+              'nav-link transition-colors duration-300',
+              isScrolled ? 'text-primary' : 'text-white'
+            ]"
+          >
+            Shop All
+          </NuxtLink>
+          <NuxtLink 
+            to="/products?filter=new" 
+            :class="[
+              'nav-link transition-colors duration-300',
+              isScrolled ? 'text-primary' : 'text-white'
+            ]"
+          >
+            New In
+          </NuxtLink>
+          <NuxtLink 
+            to="/products?filter=bestsellers" 
+            :class="[
+              'nav-link transition-colors duration-300',
+              isScrolled ? 'text-primary' : 'text-white'
+            ]"
+          >
+            Bestsellers
+          </NuxtLink>
+          <NuxtLink 
+            to="/about" 
+            :class="[
+              'nav-link transition-colors duration-300',
+              isScrolled ? 'text-primary' : 'text-white'
+            ]"
+          >
+            About
+          </NuxtLink>
         </div>
         
         <!-- 右侧图标 -->
@@ -20,7 +63,10 @@
           <!-- 搜索 -->
           <button 
             @click="toggleSearch"
-            class="p-2 hover:opacity-60 transition-opacity cursor-pointer" 
+            :class="[
+              'p-2 hover:opacity-60 transition-all duration-300 cursor-pointer',
+              isScrolled ? 'text-primary' : 'text-white'
+            ]"
             aria-label="Search"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -32,7 +78,10 @@
           <NuxtLink 
             v-if="!isLoggedIn"
             to="/login" 
-            class="p-2 hover:opacity-60 transition-opacity cursor-pointer"
+            :class="[
+              'p-2 hover:opacity-60 transition-all duration-300 cursor-pointer',
+              isScrolled ? 'text-primary' : 'text-white'
+            ]"
             aria-label="Account"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -43,7 +92,10 @@
           <button
             v-else
             @click="toggleUserMenu"
-            class="p-2 hover:opacity-60 transition-opacity cursor-pointer"
+            :class="[
+              'p-2 hover:opacity-60 transition-all duration-300 cursor-pointer',
+              isScrolled ? 'text-primary' : 'text-white'
+            ]"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
@@ -141,6 +193,9 @@
         </div>
       </div>
     </Transition>
+    
+    <!-- 购物车侧边栏 -->
+    <CartSidebar :isOpen="isCartOpen" @close="isCartOpen = false" />
   </nav>
 </template>
 
@@ -151,6 +206,9 @@ import { useProducts } from '~/composables/useProducts'
 const cartStore = useCartStore()
 const { products } = useProducts()
 
+// 滚动状态
+const isScrolled = ref(false)
+
 const isSearchOpen = ref(false)
 const searchQuery = ref('')
 const isUserMenuOpen = ref(false)
@@ -158,6 +216,12 @@ const isMobileMenuOpen = ref(false)
 const isLoggedIn = ref(false)
 const userName = ref('')
 const userEmail = ref('')
+const isCartOpen = ref(false)
+
+// 监听滚动
+const handleScroll = () => {
+  isScrolled.value = window.scrollY > 50
+}
 
 const toggleSearch = () => {
   isSearchOpen.value = !isSearchOpen.value
@@ -180,6 +244,10 @@ const closeMobileMenu = () => {
 
 const closeUserMenu = () => {
   isUserMenuOpen.value = false
+}
+
+const toggleCart = () => {
+  isCartOpen.value = !isCartOpen.value
 }
 
 const handleLogout = () => {
@@ -218,6 +286,18 @@ const checkAuth = () => {
 onMounted(() => {
   cartStore.loadCart()
   checkAuth()
+  
+  // 添加滚动监听
+  if (process.client) {
+    window.addEventListener('scroll', handleScroll)
+  }
+})
+
+onUnmounted(() => {
+  // 移除滚动监听
+  if (process.client) {
+    window.removeEventListener('scroll', handleScroll)
+  }
 })
 </script>
 

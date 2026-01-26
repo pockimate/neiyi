@@ -2,27 +2,79 @@
   <div class="bg-white min-h-screen">
     <TheNavbar />
     
-    <!-- Hero Section - 全屏从顶部开始 -->
-    <section class="relative h-screen flex items-center justify-center bg-black">
+    <!-- Hero Carousel - 全屏轮播图 -->
+    <section class="relative h-screen overflow-hidden">
+      <!-- 轮播图片 -->
       <div class="absolute inset-0">
-        <img 
-          src="https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f?w=1920&h=1080&fit=crop" 
-          alt="Hero"
-          class="w-full h-full object-cover opacity-60"
-        />
+        <TransitionGroup name="carousel">
+          <div
+            v-for="(slide, index) in slides"
+            v-show="currentSlide === index"
+            :key="index"
+            class="absolute inset-0"
+          >
+            <img 
+              :src="slide.image" 
+              :alt="slide.title"
+              class="w-full h-full object-cover"
+            />
+            <div class="absolute inset-0 bg-black/40"></div>
+          </div>
+        </TransitionGroup>
       </div>
       
-      <div class="relative z-10 text-center text-white px-6">
-        <h1 class="text-6xl md:text-8xl font-light mb-8 tracking-widest uppercase">
-          INTIMATE ELEGANCE
-        </h1>
-        <p class="text-base md:text-lg font-light mb-12 tracking-widest uppercase">
-          Luxury Lingerie Collection
-        </p>
-        <NuxtLink to="/products" class="btn-primary inline-block">
-          Explore Collection
-        </NuxtLink>
+      <!-- 轮播内容 -->
+      <div class="relative z-10 h-full flex items-center justify-center">
+        <div class="text-center text-white px-6 max-w-4xl">
+          <TransitionGroup name="fade">
+            <div v-show="currentSlide === index" v-for="(slide, index) in slides" :key="`content-${index}`">
+              <h1 class="text-6xl md:text-8xl font-light mb-8 tracking-widest uppercase">
+                {{ slide.title }}
+              </h1>
+              <p class="text-base md:text-lg font-light mb-12 tracking-widest uppercase">
+                {{ slide.subtitle }}
+              </p>
+              <NuxtLink :to="slide.link" class="btn-primary inline-block">
+                {{ slide.buttonText }}
+              </NuxtLink>
+            </div>
+          </TransitionGroup>
+        </div>
       </div>
+      
+      <!-- 轮播指示器 -->
+      <div class="absolute bottom-12 left-0 right-0 z-20 flex justify-center gap-3">
+        <button
+          v-for="(slide, index) in slides"
+          :key="`dot-${index}`"
+          @click="goToSlide(index)"
+          :class="[
+            'w-2 h-2 transition-all duration-300 cursor-pointer',
+            currentSlide === index ? 'bg-white w-8' : 'bg-white/50'
+          ]"
+          :aria-label="`Go to slide ${index + 1}`"
+        ></button>
+      </div>
+      
+      <!-- 左右箭头 -->
+      <button
+        @click="prevSlide"
+        class="absolute left-6 top-1/2 -translate-y-1/2 z-20 p-3 text-white hover:bg-white/10 transition-colors cursor-pointer"
+        aria-label="Previous slide"
+      >
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 19l-7-7 7-7"/>
+        </svg>
+      </button>
+      <button
+        @click="nextSlide"
+        class="absolute right-6 top-1/2 -translate-y-1/2 z-20 p-3 text-white hover:bg-white/10 transition-colors cursor-pointer"
+        aria-label="Next slide"
+      >
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 5l7 7-7 7"/>
+        </svg>
+      </button>
     </section>
     
     <!-- Featured Products -->
@@ -106,6 +158,64 @@ import { useProducts } from '~/composables/useProducts'
 const { products } = useProducts()
 const featuredProducts = products.slice(0, 8)
 
+// 轮播图数据
+const slides = [
+  {
+    image: 'https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f?w=1920&h=1080&fit=crop',
+    title: 'INTIMATE ELEGANCE',
+    subtitle: 'Luxury Lingerie Collection',
+    buttonText: 'Explore Collection',
+    link: '/products'
+  },
+  {
+    image: 'https://images.unsplash.com/photo-1596783074918-c84cb06531ca?w=1920&h=1080&fit=crop',
+    title: 'NEW ARRIVALS',
+    subtitle: 'Discover Latest Designs',
+    buttonText: 'Shop New',
+    link: '/products?filter=new'
+  },
+  {
+    image: 'https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f?w=1920&h=1080&fit=crop&sat=-100',
+    title: 'BESTSELLERS',
+    subtitle: 'Most Loved Pieces',
+    buttonText: 'View Bestsellers',
+    link: '/products?filter=bestsellers'
+  }
+]
+
+const currentSlide = ref(0)
+let autoplayInterval: NodeJS.Timeout | null = null
+
+// 下一张
+const nextSlide = () => {
+  currentSlide.value = (currentSlide.value + 1) % slides.length
+}
+
+// 上一张
+const prevSlide = () => {
+  currentSlide.value = currentSlide.value === 0 ? slides.length - 1 : currentSlide.value - 1
+}
+
+// 跳转到指定幻灯片
+const goToSlide = (index: number) => {
+  currentSlide.value = index
+}
+
+// 自动播放
+const startAutoplay = () => {
+  autoplayInterval = setInterval(() => {
+    nextSlide()
+  }, 5000) // 5秒切换
+}
+
+const stopAutoplay = () => {
+  if (autoplayInterval) {
+    clearInterval(autoplayInterval)
+    autoplayInterval = null
+  }
+}
+
+// 分类数据
 const categories = [
   {
     name: 'Bras & Sets',
@@ -128,4 +238,39 @@ const categories = [
     link: '/products?category=corsets'
   }
 ]
+
+onMounted(() => {
+  startAutoplay()
+})
+
+onUnmounted(() => {
+  stopAutoplay()
+})
 </script>
+
+<style scoped>
+/* 轮播图过渡效果 */
+.carousel-enter-active,
+.carousel-leave-active {
+  transition: opacity 1s ease;
+}
+
+.carousel-enter-from {
+  opacity: 0;
+}
+
+.carousel-leave-to {
+  opacity: 0;
+}
+
+/* 内容淡入淡出 */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
