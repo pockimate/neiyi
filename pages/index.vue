@@ -3,7 +3,7 @@
     <TheNavbar />
     
     <!-- Hero Carousel Section -->
-    <section class="relative h-screen overflow-hidden pt-20">
+    <section class="relative h-screen overflow-hidden">
       <!-- Carousel Container -->
       <div class="relative h-full">
         <!-- Slides -->
