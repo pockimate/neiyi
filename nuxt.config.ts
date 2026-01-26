@@ -34,11 +34,14 @@ export default defineNuxtConfig({
       theme: {
         extend: {
           colors: {
-            primary: '#DB2777',
-            secondary: '#F472B6',
-            cta: '#CA8A04',
-            background: '#FDF2F8',
-            textPrimary: '#831843'
+            primary: '#E91E63',        // 更鲜艳的粉色（Material Pink 500）
+            primaryDark: '#C2185B',    // 深粉色（Material Pink 700）
+            secondary: '#F06292',      // 次要粉色（Material Pink 300）
+            cta: '#FFA726',            // 更明亮的橙色（Material Orange 400）
+            background: '#F8C6D7',     // 更深的粉色背景
+            backgroundLight: '#FCE4EC', // 浅粉色背景（Material Pink 50）
+            textPrimary: '#880E4F',    // 深玫红文字（Material Pink 900）
+            textSecondary: '#4A4A4A'   // 深灰色次要文字
           },
           fontFamily: {
             display: ['Playfair Display', 'serif'],
@@ -61,6 +64,11 @@ export default defineNuxtConfig({
           },
           minWidth: {
             'touch': '48px'
+          },
+          boxShadow: {
+            'card': '0 8px 24px rgba(0, 0, 0, 0.1)',
+            'card-hover': '0 12px 32px rgba(0, 0, 0, 0.15)',
+            'glass': '0 8px 32px rgba(0, 0, 0, 0.12)'
           }
         }
       }
