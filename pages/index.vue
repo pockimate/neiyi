@@ -2,39 +2,38 @@
   <div class="bg-white min-h-screen">
     <TheNavbar />
     
-    <!-- Hero Section -->
-    <section class="relative h-screen flex items-center justify-center bg-white pt-20">
+    <!-- Hero Section - 全屏从顶部开始 -->
+    <section class="relative h-screen flex items-center justify-center bg-black">
       <div class="absolute inset-0">
         <img 
           src="https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f?w=1920&h=1080&fit=crop" 
           alt="Hero"
-          class="w-full h-full object-cover"
+          class="w-full h-full object-cover opacity-60"
         />
-        <div class="absolute inset-0 bg-black/30"></div>
       </div>
       
-      <div class="relative z-10 text-center text-white px-4">
-        <h1 class="text-5xl md:text-7xl font-light mb-6 tracking-wider">
+      <div class="relative z-10 text-center text-white px-6">
+        <h1 class="text-6xl md:text-8xl font-light mb-8 tracking-widest uppercase">
           INTIMATE ELEGANCE
         </h1>
-        <p class="text-lg md:text-xl font-light mb-8 tracking-wide">
-          Discover Luxury Lingerie
+        <p class="text-base md:text-lg font-light mb-12 tracking-widest uppercase">
+          Luxury Lingerie Collection
         </p>
         <NuxtLink to="/products" class="btn-primary inline-block">
-          Shop Collection
+          Explore Collection
         </NuxtLink>
       </div>
     </section>
     
     <!-- Featured Products -->
-    <section class="py-20 px-6">
+    <section class="py-24 px-6">
       <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl font-light text-primary mb-4 tracking-wider">FEATURED COLLECTION</h2>
-          <p class="text-sm text-textMuted">Explore our carefully curated selections</p>
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-light text-primary mb-4 tracking-widest uppercase">Featured Collection</h2>
+          <div class="w-16 h-px bg-primary mx-auto"></div>
         </div>
         
-        <div class="grid-products">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           <ProductCard 
             v-for="product in featuredProducts" 
             :key="product.id" 
@@ -42,7 +41,7 @@
           />
         </div>
         
-        <div class="text-center mt-12">
+        <div class="text-center mt-16">
           <NuxtLink to="/products" class="btn-secondary inline-block">
             View All Products
           </NuxtLink>
@@ -51,27 +50,28 @@
     </section>
     
     <!-- Categories -->
-    <section class="py-20 px-6 bg-backgroundLight">
+    <section class="py-24 px-6 bg-backgroundLight">
       <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl font-light text-primary mb-4 tracking-wider">SHOP BY CATEGORY</h2>
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-light text-primary mb-4 tracking-widest uppercase">Shop by Category</h2>
+          <div class="w-16 h-px bg-primary mx-auto"></div>
         </div>
         
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
           <NuxtLink 
             v-for="category in categories" 
             :key="category.name"
             :to="category.link"
             class="group"
           >
-            <div class="aspect-square bg-white border border-border overflow-hidden mb-3">
+            <div class="aspect-square bg-white border border-border overflow-hidden mb-4">
               <img 
                 :src="category.image" 
                 :alt="category.name"
-                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
             </div>
-            <h3 class="text-sm font-semibold text-center text-primary uppercase tracking-wider">
+            <h3 class="text-xs font-semibold text-center text-primary uppercase tracking-widest">
               {{ category.name }}
             </h3>
           </NuxtLink>
@@ -80,13 +80,14 @@
     </section>
     
     <!-- About Section -->
-    <section class="py-20 px-6">
-      <div class="max-w-4xl mx-auto text-center">
-        <h2 class="text-3xl font-light text-primary mb-6 tracking-wider">OUR STORY</h2>
-        <p class="text-textSecondary leading-relaxed mb-6">
+    <section class="py-24 px-6">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-4xl font-light text-primary mb-8 tracking-widest uppercase">Our Story</h2>
+        <div class="w-16 h-px bg-primary mx-auto mb-12"></div>
+        <p class="text-textSecondary leading-loose mb-8 text-base">
           We believe every woman deserves to feel beautiful, confident, and empowered. Our journey began with a simple mission: to create luxury lingerie that celebrates femininity in all its forms.
         </p>
-        <p class="text-textSecondary leading-relaxed mb-8">
+        <p class="text-textSecondary leading-loose mb-12 text-base">
           Each piece in our collection is thoughtfully designed and crafted with premium materials, ensuring both comfort and elegance.
         </p>
         <NuxtLink to="/about" class="btn-secondary inline-block">
