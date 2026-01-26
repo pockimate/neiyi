@@ -34,16 +34,21 @@ export default defineNuxtConfig({
       theme: {
         extend: {
           colors: {
-            // Obsessive风格 - 柔和优雅配色
+            // Obsessive风格 - 三色配色方案
             // 主色系 - 深色调
             primary: '#2C2C2C',        // 深灰 - 主要文字、按钮
             primaryDark: '#1A1A1A',    // 更深灰 - hover状态
             primaryLight: '#4A4A4A',   // 中灰 - 次要元素
             
-            // 品牌强调色 - 柔和粉色
-            accent: '#D4A5A5',         // 柔和玫瑰粉 - 强调色
-            accentDark: '#B88B8B',     // 深玫瑰粉 - hover状态
-            accentLight: '#E8C5C5',    // 浅玫瑰粉 - 装饰
+            // 品牌强调色 - 金棕色/古铜色（Obsessive标志性颜色）
+            accent: '#C9A882',         // 金棕色 - 主要强调色
+            accentDark: '#B8956F',     // 深金棕 - hover状态
+            accentLight: '#D9B896',    // 浅金棕 - 装饰
+            
+            // 次要强调色 - 柔和粉色（保留）
+            rose: '#D4A5A5',           // 柔和玫瑰粉
+            roseDark: '#B88B8B',       // 深玫瑰粉
+            roseLight: '#E8C5C5',      // 浅玫瑰粉
             
             // 背景色系 - 柔和白色
             background: '#FAFAFA',     // 柔和白背景

@@ -101,10 +101,13 @@
     <section class="py-16 md:py-24 px-6 bg-background">
       <div class="max-w-7xl mx-auto">
         <div class="text-center mb-12 md:mb-16">
+          <p class="text-xs md:text-sm text-accent font-semibold mb-3 tracking-widest uppercase">
+            Discover Our Collection
+          </p>
           <h2 class="text-3xl md:text-4xl font-light text-primary mb-4 tracking-widest uppercase">
             Featured Collection
           </h2>
-          <div class="w-16 h-px bg-primary mx-auto"></div>
+          <div class="w-16 h-px bg-accent mx-auto"></div>
         </div>
         
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
@@ -116,7 +119,7 @@
         </div>
         
         <div class="text-center mt-12 md:mt-16">
-          <NuxtLink to="/products" class="btn-secondary inline-block">
+          <NuxtLink to="/products" class="bg-accent hover:bg-accentDark text-white font-semibold px-8 py-3 inline-block transition-colors duration-300 uppercase tracking-wider text-sm">
             View All Products
           </NuxtLink>
         </div>
@@ -177,25 +180,35 @@
     </section>
     
     <!-- 7. Newsletter Signup -->
-    <section class="py-16 md:py-24 px-6 bg-primary text-white">
+    <section class="py-16 md:py-24 px-6 bg-backgroundLight text-primary">
       <div class="max-w-3xl mx-auto text-center">
+        <p class="text-xs md:text-sm text-accent font-semibold mb-3 tracking-widest uppercase">
+          Sign Up For
+        </p>
         <h2 class="text-3xl md:text-4xl font-light mb-4 md:mb-6 tracking-widest uppercase">
-          Stay Connected
+          Newsletter Obsessive
         </h2>
-        <p class="text-sm md:text-base text-gray-300 mb-8 md:mb-12">
-          Subscribe to our newsletter for exclusive offers and new arrivals
+        <p class="text-xs md:text-sm text-textMuted mb-8 md:mb-12 tracking-wide">
+          GET AN EXCLUSIVE 10% DISCOUNT WHEN SHOPPING FOR MIN. 50 EURO
         </p>
         
         <form class="flex flex-col md:flex-row gap-4 max-w-xl mx-auto">
           <input 
             type="email" 
-            placeholder="Enter your email"
-            class="flex-1 px-6 py-3 bg-white text-black focus:outline-none"
+            placeholder="Enter your e-mail address"
+            class="flex-1 px-6 py-3 border border-border bg-white text-primary focus:outline-none focus:border-accent transition-colors"
           />
-          <button type="submit" class="btn-primary whitespace-nowrap">
+          <button type="submit" class="bg-accent hover:bg-accentDark text-white font-semibold px-8 py-3 transition-colors duration-300 uppercase tracking-wider text-sm">
             SUBSCRIBE
           </button>
         </form>
+        
+        <div class="mt-6 flex items-center justify-center gap-2 text-xs text-textMuted">
+          <input type="checkbox" id="newsletter-consent" class="w-4 h-4" />
+          <label for="newsletter-consent">
+            I subscribe to the newsletter in accordance. Regulations.
+          </label>
+        </div>
       </div>
     </section>
     

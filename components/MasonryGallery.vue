@@ -2,11 +2,14 @@
   <div class="w-full">
     <!-- 标题 -->
     <div class="text-center mb-12 md:mb-16">
+      <p class="text-xs md:text-sm text-accent font-semibold mb-3 tracking-widest uppercase">
+        Join #ObsessiveLingerie
+      </p>
       <h2 class="text-3xl md:text-5xl font-light text-primary mb-4 tracking-widest uppercase">
         Your Photos
       </h2>
       <p class="text-sm md:text-base text-textSecondary max-w-3xl mx-auto">
-        Join #ObsessiveLingerie to inspire others. Tag @ObsessiveLingerie and add #YesObsessive on social for a chance to be featured in our galleries.
+        Tag @ObsessiveLingerie and add #YesObsessive on social for a chance to be featured in our galleries.
       </p>
     </div>
 
@@ -44,7 +47,7 @@
 
     <!-- 加载更多按钮 -->
     <div class="text-center mt-12 md:mt-16">
-      <button @click="loadMore" class="btn-secondary inline-block">
+      <button @click="loadMore" class="bg-accent hover:bg-accentDark text-white font-semibold px-8 py-3 inline-block transition-colors duration-300 uppercase tracking-wider text-sm">
         Load More Photos
       </button>
     </div>
