@@ -5,47 +5,49 @@
     <!-- 1. Hero Carousel - 全屏轮播图 -->
     <section class="relative h-screen overflow-hidden">
       <div class="absolute inset-0">
-        <div
-          v-for="(slide, index) in slides"
-          v-if="currentSlide === index"
-          :key="index"
-          class="absolute inset-0"
-        >
-          <img 
-            :src="slide.image" 
-            :alt="slide.title"
-            class="w-full h-full object-cover"
-          />
-          <div class="absolute inset-0 bg-black/40"></div>
-        </div>
+        <template v-for="(slide, slideIndex) in slides" :key="slideIndex">
+          <div
+            v-if="currentSlide === slideIndex"
+            class="absolute inset-0"
+          >
+            <img 
+              :src="slide.image" 
+              :alt="slide.title"
+              class="w-full h-full object-cover"
+            />
+            <div class="absolute inset-0 bg-black/40"></div>
+          </div>
+        </template>
       </div>
       
-      <div class="relative z-10 h-full flex items-center justify-center">
-        <div class="text-center text-white px-6 max-w-4xl">
-          <div v-for="(slide, index) in slides" :key="`content-${index}`" v-if="currentSlide === index">
-            <h1 class="text-5xl md:text-8xl font-light mb-8 tracking-widest uppercase">
-              {{ slide.title }}
-            </h1>
-            <p class="text-sm md:text-lg font-light mb-12 tracking-widest uppercase">
-              {{ slide.subtitle }}
-            </p>
-            <NuxtLink :to="slide.link" class="btn-primary inline-block">
-              {{ slide.buttonText }}
-            </NuxtLink>
-          </div>
+      <div class="relative z-10 h-full flex items-center">
+        <div class="max-w-7xl mx-auto px-6 w-full">
+          <template v-for="(slide, slideIndex) in slides" :key="`content-${slideIndex}`">
+            <div v-if="currentSlide === slideIndex" class="max-w-2xl">
+              <h1 class="text-5xl md:text-8xl font-light mb-6 md:mb-8 tracking-widest uppercase text-white">
+                {{ slide.title }}
+              </h1>
+              <p class="text-sm md:text-lg font-light mb-8 md:mb-12 tracking-widest uppercase text-white">
+                {{ slide.subtitle }}
+              </p>
+              <NuxtLink :to="slide.link" class="btn-primary inline-block">
+                {{ slide.buttonText }}
+              </NuxtLink>
+            </div>
+          </template>
         </div>
       </div>
       
       <div class="absolute bottom-12 left-0 right-0 z-20 flex justify-center gap-3">
         <button
-          v-for="(slide, index) in slides"
-          :key="`dot-${index}`"
-          @click="goToSlide(index)"
+          v-for="(slide, slideIndex) in slides"
+          :key="`dot-${slideIndex}`"
+          @click="goToSlide(slideIndex)"
           :class="[
             'w-2 h-2 transition-all duration-300 cursor-pointer',
-            currentSlide === index ? 'bg-white w-8' : 'bg-white/50'
+            currentSlide === slideIndex ? 'bg-white w-8' : 'bg-white/50'
           ]"
-          :aria-label="`Go to slide ${index + 1}`"
+          :aria-label="`Go to slide ${slideIndex + 1}`"
         ></button>
       </div>
       
@@ -74,10 +76,10 @@
       <div class="max-w-7xl mx-auto">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
           <NuxtLink 
-            v-for="category in categories" 
-            :key="category.name"
+            v-for="(category, catIndex) in categories" 
+            :key="catIndex"
             :to="category.link"
-            class="group relative overflow-hidden aspect-square cursor-pointer"
+            class="group relative overflow-hidden cursor-pointer h-64 md:h-80"
           >
             <img 
               :src="category.image" 
