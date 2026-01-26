@@ -169,7 +169,14 @@
       </div>
     </section>
     
-    <!-- 6. Newsletter Signup -->
+    <!-- 6. Masonry Gallery - "Your Photos" -->
+    <section class="py-16 md:py-24 px-6 bg-background">
+      <div class="max-w-7xl mx-auto">
+        <MasonryGallery />
+      </div>
+    </section>
+    
+    <!-- 7. Newsletter Signup -->
     <section class="py-16 md:py-24 px-6 bg-primary text-white">
       <div class="max-w-3xl mx-auto text-center">
         <h2 class="text-3xl md:text-4xl font-light mb-4 md:mb-6 tracking-widest uppercase">
@@ -192,7 +199,7 @@
       </div>
     </section>
     
-    <!-- 7. Our Story -->
+    <!-- 8. Our Story -->
     <section class="py-16 md:py-24 px-6 bg-backgroundLight">
       <div class="max-w-3xl mx-auto text-center">
         <h2 class="text-3xl md:text-4xl font-light text-primary mb-6 md:mb-8 tracking-widest uppercase">
