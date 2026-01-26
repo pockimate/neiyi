@@ -1,80 +1,80 @@
 <template>
-  <div>
+  <div class="bg-white min-h-screen">
     <TheNavbar />
     
-    <section class="pt-32 pb-20 px-4">
+    <section class="pt-32 pb-20 px-6">
       <div class="max-w-7xl mx-auto">
         <!-- Progress Steps -->
-        <div class="mb-8">
+        <div class="mb-12">
           <div class="flex items-center justify-center gap-4">
             <div class="flex items-center">
-              <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-semibold">1</div>
-              <span class="ml-2 font-semibold text-primary">Cart</span>
+              <div class="w-8 h-8 bg-primary text-white flex items-center justify-center text-xs font-semibold">1</div>
+              <span class="ml-2 text-xs uppercase tracking-wide text-primary">Cart</span>
             </div>
-            <div class="w-16 h-0.5 bg-primary"></div>
+            <div class="w-12 h-px bg-primary"></div>
             <div class="flex items-center">
-              <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-semibold">2</div>
-              <span class="ml-2 font-semibold text-primary">Checkout</span>
+              <div class="w-8 h-8 bg-primary text-white flex items-center justify-center text-xs font-semibold">2</div>
+              <span class="ml-2 text-xs uppercase tracking-wide text-primary">Checkout</span>
             </div>
-            <div class="w-16 h-0.5 bg-gray-300"></div>
+            <div class="w-12 h-px bg-border"></div>
             <div class="flex items-center">
-              <div class="w-10 h-10 rounded-full bg-gray-300 text-gray-600 flex items-center justify-center font-semibold">3</div>
-              <span class="ml-2 text-gray-600">Complete</span>
+              <div class="w-8 h-8 bg-border text-textMuted flex items-center justify-center text-xs font-semibold">3</div>
+              <span class="ml-2 text-xs uppercase tracking-wide text-textMuted">Complete</span>
             </div>
           </div>
         </div>
         
-        <h1 class="font-display text-4xl md:text-5xl font-bold text-primary mb-8 text-center">Checkout</h1>
+        <h1 class="text-3xl font-light text-primary mb-12 text-center uppercase tracking-wider">Checkout</h1>
         
-        <div v-if="cartStore.items.length === 0" class="glass-card rounded-2xl p-12 border border-pink-200 text-center">
-          <h3 class="font-display text-2xl font-semibold mb-2 text-textPrimary">Your cart is empty</h3>
-          <p class="text-slate-600 mb-6">Add some items before checking out</p>
-          <NuxtLink to="/products" class="inline-block bg-cta hover:bg-yellow-600 text-white px-8 py-3 rounded-full font-semibold transition-all duration-200 cursor-pointer">
-            Shop Now
+        <div v-if="cartStore.items.length === 0" class="text-center py-20">
+          <h3 class="text-xl font-light mb-4 text-primary uppercase tracking-wide">Your cart is empty</h3>
+          <p class="text-sm text-textMuted mb-8">Add some items before checking out</p>
+          <NuxtLink to="/products" class="btn-primary inline-block">
+            Continue Shopping
           </NuxtLink>
         </div>
 
-        <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-12">
           <!-- Checkout Form -->
-          <div class="lg:col-span-2 space-y-6">
+          <div class="lg:col-span-2 space-y-8">
             <!-- Contact Information -->
-            <div class="glass-card rounded-2xl p-6 border border-pink-200">
-              <h2 class="font-display text-2xl font-semibold mb-6 text-textPrimary">Contact Information</h2>
-              <div class="space-y-4">
+            <div class="border border-border p-8">
+              <h2 class="text-xl font-light mb-8 text-primary uppercase tracking-wider">Contact Information</h2>
+              <div class="space-y-6">
                 <div>
-                  <label class="block text-sm font-medium mb-2 text-slate-700">Email *</label>
+                  <label class="block text-xs font-semibold mb-3 text-primary uppercase tracking-wide">Email *</label>
                   <input 
                     v-model="form.email"
                     type="email" 
                     :class="[
-                      'w-full px-4 py-3 border-2 rounded-lg focus:outline-none transition-colors',
-                      errors.email ? 'border-red-500' : 'border-pink-200 focus:border-primary'
+                      'w-full px-4 py-3 border focus:outline-none transition-colors text-sm',
+                      errors.email ? 'border-accent' : 'border-border focus:border-primary'
                     ]"
                     placeholder="your@email.com"
                     @blur="validateField('email')"
                   />
-                  <p v-if="errors.email" class="text-sm text-red-500 mt-1">{{ errors.email }}</p>
+                  <p v-if="errors.email" class="text-xs text-accent mt-2">{{ errors.email }}</p>
                 </div>
                 <div>
-                  <label class="block text-sm font-medium mb-2 text-slate-700">Phone *</label>
+                  <label class="block text-xs font-semibold mb-3 text-primary uppercase tracking-wide">Phone *</label>
                   <input 
                     v-model="form.phone"
                     type="tel" 
                     :class="[
-                      'w-full px-4 py-3 border-2 rounded-lg focus:outline-none transition-colors',
-                      errors.phone ? 'border-red-500' : 'border-pink-200 focus:border-primary'
+                      'w-full px-4 py-3 border focus:outline-none transition-colors text-sm',
+                      errors.phone ? 'border-accent' : 'border-border focus:border-primary'
                     ]"
                     placeholder="+1 (555) 000-0000"
                     @blur="validateField('phone')"
                   />
-                  <p v-if="errors.phone" class="text-sm text-red-500 mt-1">{{ errors.phone }}</p>
+                  <p v-if="errors.phone" class="text-xs text-accent mt-2">{{ errors.phone }}</p>
                 </div>
               </div>
             </div>
             
             <!-- Shipping Address -->
-            <div class="glass-card rounded-2xl p-6 border border-pink-200">
-              <h2 class="font-display text-2xl font-semibold mb-6 text-textPrimary">Shipping Address</h2>
+            <div class="border border-border p-8">
+              <h2 class="text-xl font-light mb-8 text-primary uppercase tracking-wider">Shipping Address</h2>
               <div class="space-y-4">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
