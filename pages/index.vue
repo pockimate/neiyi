@@ -41,7 +41,7 @@
                   <div class="flex flex-col sm:flex-row gap-4 animate-fade-in-up" style="animation-delay: 0.4s;">
                     <NuxtLink
                       :to="slide.ctaLink"
-                      class="bg-primary hover:bg-primaryDark text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 cursor-pointer shadow-lg hover:shadow-2xl min-h-[48px] flex items-center justify-center text-lg"
+                      class="btn-accent flex items-center justify-center text-lg glow-accent"
                     >
                       {{ slide.ctaText }}
                     </NuxtLink>
@@ -206,7 +206,7 @@
         </div>
         
         <div class="text-center mt-12">
-          <NuxtLink to="/products" class="inline-block bg-cta hover:bg-yellow-600 text-white px-8 py-4 rounded-full font-semibold transition-all duration-200 cursor-pointer shadow-lg hover:shadow-xl min-h-touch">
+          <NuxtLink to="/products" class="inline-block btn-accent glow-accent">
             View All Products
           </NuxtLink>
         </div>
@@ -338,7 +338,7 @@
             />
             <button 
               type="submit" 
-              class="bg-cta hover:bg-yellow-600 text-white px-8 py-4 rounded-full font-semibold transition-all duration-200 cursor-pointer shadow-lg hover:shadow-xl min-h-touch whitespace-nowrap"
+              class="btn-accent glow-accent whitespace-nowrap"
             >
               Subscribe Now
             </button>

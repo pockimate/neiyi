@@ -12,7 +12,7 @@
           loading="lazy"
           style="object-position: center center;"
         />
-        <div v-if="product.badge" :class="`absolute top-4 right-4 ${badgeColor} text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg`">
+        <div v-if="product.badge" :class="`absolute top-4 right-4 ${badgeClass} text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg`">
           {{ product.badge }}
         </div>
       </div>
@@ -29,7 +29,7 @@
       <div v-else class="font-display text-2xl font-bold text-primary flex-shrink-0">${{ product.price.toFixed(2) }}</div>
       <button 
         @click.stop="handleAddToCart"
-        class="bg-primary hover:bg-pink-700 text-white px-6 py-3 rounded-full font-semibold transition-colors duration-200 cursor-pointer whitespace-nowrap min-h-[48px] min-w-[120px] text-base"
+        class="btn-accent glow-accent whitespace-nowrap min-w-[120px]"
         style="position: relative; z-index: 3; pointer-events: auto;"
       >
         Add to Cart
@@ -48,10 +48,11 @@ const props = defineProps<{
 
 const cartStore = useCartStore()
 
-const badgeColor = computed(() => {
-  if (props.product.badge === 'Sale') return 'bg-cta'
-  if (props.product.badge === 'Bestseller') return 'bg-primary'
-  return 'bg-cta'
+const badgeClass = computed(() => {
+  if (props.product.badge === 'Sale') return 'badge-sale'
+  if (props.product.badge === 'Bestseller') return 'badge-new'
+  if (props.product.badge === 'New') return 'badge-new'
+  return 'badge-sale'
 })
 
 const handleAddToCart = (event: Event) => {

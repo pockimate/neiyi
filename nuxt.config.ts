@@ -34,14 +34,49 @@ export default defineNuxtConfig({
       theme: {
         extend: {
           colors: {
-            primary: '#E91E63',        // 更鲜艳的粉色（Material Pink 500）
-            primaryDark: '#C2185B',    // 深粉色（Material Pink 700）
-            secondary: '#F06292',      // 次要粉色（Material Pink 300）
-            cta: '#FFA726',            // 更明亮的橙色（Material Orange 400）
-            background: '#F8C6D7',     // 更深的粉色背景
-            backgroundLight: '#FCE4EC', // 浅粉色背景（Material Pink 50）
-            textPrimary: '#880E4F',    // 深玫红文字（Material Pink 900）
-            textSecondary: '#4A4A4A'   // 深灰色次要文字
+            // 品牌主色系 - 玫瑰粉（记忆点）
+            primary: '#DB2777',        // 玫瑰粉 - 品牌识别色
+            primaryDark: '#BE185D',    // 深玫瑰粉 - hover状态
+            primaryLight: '#F472B6',   // 浅玫瑰粉 - 辅助色
+            
+            // 强调色 - 优雅金（高端感）
+            accent: '#CA8A04',         // 优雅金 - CTA按钮
+            accentDark: '#A16207',     // 深金色 - hover状态
+            accentLight: '#EAB308',    // 亮金色 - 高光
+            
+            // 辅助色系
+            secondary: '#F472B6',      // 次要粉色
+            tertiary: '#EC4899',       // 第三色
+            
+            // 背景色系
+            background: '#FDF2F8',     // 极浅粉背景
+            backgroundLight: '#FEF3F9', // 更浅背景
+            backgroundDark: '#FCE7F3', // 稍深背景
+            
+            // 文字色系
+            textPrimary: '#831843',    // 深玫红 - 主标题
+            textSecondary: '#4A4A4A',  // 深灰 - 正文
+            textMuted: '#6B7280',      // 灰色 - 次要文字
+            
+            // 中性色系
+            neutral: {
+              50: '#FAFAF9',
+              100: '#F5F5F4',
+              200: '#E7E5E4',
+              300: '#D6D3D1',
+              400: '#A8A29E',
+              500: '#78716C',
+              600: '#57534E',
+              700: '#44403C',
+              800: '#292524',
+              900: '#1C1917'
+            },
+            
+            // 功能色
+            success: '#10B981',        // 成功绿
+            warning: '#F59E0B',        // 警告橙
+            error: '#EF4444',          // 错误红
+            info: '#3B82F6'            // 信息蓝
           },
           fontFamily: {
             display: ['Playfair Display', 'serif'],
