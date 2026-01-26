@@ -1,5 +1,6 @@
 <template>
   <div>
+    <AnnouncementBar />
     <NuxtPage />
     <CartSidebar :is-open="isCartOpen" @close="isCartOpen = false" />
   </div>

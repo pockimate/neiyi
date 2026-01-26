@@ -1,5 +1,5 @@
 <template>
-  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/70 backdrop-blur-lg border-b border-white/20 shadow-lg">
+  <nav class="fixed top-10 left-0 right-0 z-50 bg-white/70 backdrop-blur-lg border-b border-white/20 shadow-lg transition-all duration-300" :class="{ 'top-0': !showAnnouncementBar }">
     <div class="max-w-7xl mx-auto px-6 py-4">
       <div class="flex items-center justify-between">
         <NuxtLink to="/" class="flex items-center space-x-2 cursor-pointer">
@@ -215,6 +215,30 @@ const isLoggedIn = ref(false)
 const userName = ref('')
 const userEmail = ref('')
 const cartBadgeAnimate = ref(false)
+const showAnnouncementBar = ref(true)
+
+// Watch for announcement bar closure
+if (process.client) {
+  onMounted(() => {
+    const checkAnnouncementBar = () => {
+      const closed = localStorage.getItem('announcementBarClosed')
+      showAnnouncementBar.value = closed !== 'true'
+    }
+    
+    checkAnnouncementBar()
+    
+    // Watch for storage changes
+    window.addEventListener('storage', checkAnnouncementBar)
+    
+    // Also check periodically in case it's closed in the same tab
+    const interval = setInterval(checkAnnouncementBar, 500)
+    
+    onUnmounted(() => {
+      window.removeEventListener('storage', checkAnnouncementBar)
+      clearInterval(interval)
+    })
+  })
+}
 
 // Watch cart count changes to trigger animation
 watch(() => cartStore.cartCount, (newCount, oldCount) => {
