@@ -2,31 +2,95 @@
   <div>
     <TheNavbar />
     
-    <!-- Hero Section -->
-    <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 px-4">
-      <div class="absolute inset-0 liquid-gradient opacity-30"></div>
-      
-      <!-- Floating Decorative Elements -->
-      <div class="absolute top-20 left-10 w-32 h-32 bg-primary/10 rounded-full blur-3xl float-animation"></div>
-      <div class="absolute bottom-20 right-10 w-40 h-40 bg-secondary/10 rounded-full blur-3xl float-animation" style="animation-delay: 2s;"></div>
-      
-      <div class="relative z-10 max-w-7xl mx-auto text-center">
-        <div class="glass-card rounded-3xl p-8 md:p-16 border border-pink-200 shadow-2xl pulse-glow">
-          <p class="font-script text-3xl md:text-5xl text-primary mb-6 opacity-90 float-animation">Where elegance meets desire</p>
-          <h1 class="font-display text-5xl md:text-6xl lg:text-7xl font-bold gradient-text mb-6 leading-tight">
-            Embrace Your<br/>Sensuality
-          </h1>
-          <p class="text-body md:text-xl text-slate-600 mb-10 max-w-2xl mx-auto leading-relaxed">
-            Discover our curated collection of luxury lingerie designed to make you feel confident, beautiful, and empowered.
-          </p>
-          <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <NuxtLink to="/products" class="bg-cta hover:bg-yellow-600 text-white px-10 py-5 rounded-full font-semibold transition-all duration-200 cursor-pointer shadow-lg hover:shadow-2xl min-h-touch flex items-center justify-center btn-glow text-lg">
-              Shop Collection
-            </NuxtLink>
-            <a href="#featured" class="glass-card border-2 border-primary text-primary px-10 py-5 rounded-full font-semibold hover:bg-primary hover:text-white transition-all duration-300 cursor-pointer min-h-touch flex items-center justify-center text-lg">
-              View Lookbook
-            </a>
+    <!-- Hero Carousel Section -->
+    <section class="relative h-screen overflow-hidden pt-20">
+      <!-- Carousel Container -->
+      <div class="relative h-full">
+        <!-- Slides -->
+        <TransitionGroup name="slide">
+          <div
+            v-for="(slide, index) in carouselSlides"
+            :key="slide.id"
+            v-show="currentSlide === index"
+            class="absolute inset-0 w-full h-full"
+          >
+            <!-- Background Image -->
+            <div class="absolute inset-0">
+              <img
+                :src="slide.image"
+                :alt="slide.title"
+                class="w-full h-full object-cover"
+              />
+              <!-- Overlay Gradient -->
+              <div class="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent"></div>
+            </div>
+            
+            <!-- Content -->
+            <div class="relative h-full flex items-center">
+              <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+                <div class="max-w-2xl">
+                  <p class="font-script text-2xl md:text-4xl text-pink-300 mb-4 animate-fade-in">
+                    {{ slide.subtitle }}
+                  </p>
+                  <h1 class="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight animate-fade-in-up">
+                    {{ slide.title }}
+                  </h1>
+                  <p class="text-lg md:text-xl text-gray-200 mb-8 leading-relaxed animate-fade-in-up" style="animation-delay: 0.2s;">
+                    {{ slide.description }}
+                  </p>
+                  <div class="flex flex-col sm:flex-row gap-4 animate-fade-in-up" style="animation-delay: 0.4s;">
+                    <NuxtLink
+                      :to="slide.ctaLink"
+                      class="bg-primary hover:bg-primaryDark text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 cursor-pointer shadow-lg hover:shadow-2xl min-h-[48px] flex items-center justify-center text-lg"
+                    >
+                      {{ slide.ctaText }}
+                    </NuxtLink>
+                    <NuxtLink
+                      to="/products"
+                      class="bg-white/10 backdrop-blur-sm border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-primary transition-all duration-300 cursor-pointer min-h-[48px] flex items-center justify-center text-lg"
+                    >
+                      View All
+                    </NuxtLink>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+        </TransitionGroup>
+        
+        <!-- Navigation Arrows -->
+        <button
+          @click="prevSlide"
+          class="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white p-3 rounded-full transition-all duration-300 cursor-pointer"
+          aria-label="Previous slide"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        
+        <button
+          @click="nextSlide"
+          class="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white p-3 rounded-full transition-all duration-300 cursor-pointer"
+          aria-label="Next slide"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </button>
+        
+        <!-- Dots Indicator -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-3">
+          <button
+            v-for="(slide, index) in carouselSlides"
+            :key="`dot-${slide.id}`"
+            @click="goToSlide(index)"
+            :class="[
+              'w-3 h-3 rounded-full transition-all duration-300 cursor-pointer',
+              currentSlide === index ? 'bg-white w-8' : 'bg-white/50 hover:bg-white/75'
+            ]"
+            :aria-label="`Go to slide ${index + 1}`"
+          ></button>
         </div>
       </div>
     </section>
@@ -293,4 +357,144 @@ import { useProducts } from '~/composables/useProducts'
 
 const { products } = useProducts()
 const featuredProducts = products.slice(0, 6)
+
+// Carousel state
+const currentSlide = ref(0)
+const autoplayInterval = ref<NodeJS.Timeout | null>(null)
+
+// Carousel slides data
+const carouselSlides = [
+  {
+    id: 1,
+    image: 'https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f?w=1920&h=1080&fit=crop',
+    title: 'Embrace Your Sensuality',
+    subtitle: 'Where elegance meets desire',
+    description: 'Discover our curated collection of luxury lingerie designed to make you feel confident, beautiful, and empowered.',
+    ctaText: 'Shop Collection',
+    ctaLink: '/products'
+  },
+  {
+    id: 2,
+    image: 'https://images.unsplash.com/photo-1596783074918-c84cb06531ca?w=1920&h=1080&fit=crop',
+    title: 'New Arrivals',
+    subtitle: 'Fresh & Exclusive',
+    description: 'Explore our latest collection featuring the finest fabrics and most elegant designs.',
+    ctaText: 'Discover New',
+    ctaLink: '/products'
+  },
+  {
+    id: 3,
+    image: 'https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f?w=1920&h=1080&fit=crop&sat=-100',
+    title: 'Timeless Elegance',
+    subtitle: 'Classic Beauty',
+    description: 'Indulge in our signature pieces that celebrate your natural beauty and confidence.',
+    ctaText: 'Shop Now',
+    ctaLink: '/products'
+  }
+]
+
+// Carousel functions
+const nextSlide = () => {
+  currentSlide.value = (currentSlide.value + 1) % carouselSlides.length
+  resetAutoplay()
+}
+
+const prevSlide = () => {
+  currentSlide.value = currentSlide.value === 0 ? carouselSlides.length - 1 : currentSlide.value - 1
+  resetAutoplay()
+}
+
+const goToSlide = (index: number) => {
+  currentSlide.value = index
+  resetAutoplay()
+}
+
+const startAutoplay = () => {
+  autoplayInterval.value = setInterval(() => {
+    nextSlide()
+  }, 5000) // Change slide every 5 seconds
+}
+
+const stopAutoplay = () => {
+  if (autoplayInterval.value) {
+    clearInterval(autoplayInterval.value)
+    autoplayInterval.value = null
+  }
+}
+
+const resetAutoplay = () => {
+  stopAutoplay()
+  startAutoplay()
+}
+
+// Lifecycle
+onMounted(() => {
+  startAutoplay()
+})
+
+onUnmounted(() => {
+  stopAutoplay()
+})
 </script>
+
+
+<style scoped>
+/* Carousel Slide Transitions */
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.8s ease-in-out;
+}
+
+.slide-enter-from {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+.slide-leave-to {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+/* Fade In Animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.8s ease-out forwards;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out forwards;
+}
+
+/* Float Animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.float-animation {
+  animation: float 6s ease-in-out infinite;
+}
+</style>
