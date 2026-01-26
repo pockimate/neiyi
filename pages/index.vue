@@ -2,9 +2,8 @@
   <div class="bg-white min-h-screen">
     <TheNavbar />
     
-    <!-- Hero Carousel - 全屏轮播图 -->
+    <!-- 1. Hero Carousel - 全屏轮播图 -->
     <section class="relative h-screen overflow-hidden">
-      <!-- 轮播图片 -->
       <div class="absolute inset-0">
         <div
           v-for="(slide, index) in slides"
@@ -21,15 +20,13 @@
         </div>
       </div>
       
-      <!-- 轮播内容 -->
       <div class="relative z-10 h-full flex items-center justify-center">
         <div class="text-center text-white px-6 max-w-4xl">
-          <div v-for="(slide, index) in slides" :key="`content-${index}`" 
-               v-if="currentSlide === index">
-            <h1 class="text-6xl md:text-8xl font-light mb-8 tracking-widest uppercase">
+          <div v-for="(slide, index) in slides" :key="`content-${index}`" v-if="currentSlide === index">
+            <h1 class="text-5xl md:text-8xl font-light mb-8 tracking-widest uppercase">
               {{ slide.title }}
             </h1>
-            <p class="text-base md:text-lg font-light mb-12 tracking-widest uppercase">
+            <p class="text-sm md:text-lg font-light mb-12 tracking-widest uppercase">
               {{ slide.subtitle }}
             </p>
             <NuxtLink :to="slide.link" class="btn-primary inline-block">
@@ -39,7 +36,6 @@
         </div>
       </div>
       
-      <!-- 轮播指示器 -->
       <div class="absolute bottom-12 left-0 right-0 z-20 flex justify-center gap-3">
         <button
           v-for="(slide, index) in slides"
@@ -53,7 +49,6 @@
         ></button>
       </div>
       
-      <!-- 左右箭头 -->
       <button
         @click="prevSlide"
         class="absolute left-6 top-1/2 -translate-y-1/2 z-20 p-3 text-white hover:bg-white/10 transition-colors cursor-pointer"
@@ -74,15 +69,43 @@
       </button>
     </section>
     
-    <!-- Featured Products -->
-    <section class="py-24 px-6">
+    <!-- 2. Categories - 分类导航 -->
+    <section class="py-16 md:py-24 px-6 bg-white">
       <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-16">
-          <h2 class="text-4xl font-light text-primary mb-4 tracking-widest uppercase">Featured Collection</h2>
-          <div class="w-16 h-px bg-primary mx-auto"></div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+          <NuxtLink 
+            v-for="category in categories" 
+            :key="category.name"
+            :to="category.link"
+            class="group relative overflow-hidden aspect-square cursor-pointer"
+          >
+            <img 
+              :src="category.image" 
+              :alt="category.name"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            />
+            <div class="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors duration-300"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <h3 class="text-white text-lg md:text-2xl font-light tracking-widest uppercase">
+                {{ category.name }}
+              </h3>
+            </div>
+          </NuxtLink>
+        </div>
+      </div>
+    </section>
+    
+    <!-- 3. Featured Products -->
+    <section class="py-16 md:py-24 px-6 bg-gray-50">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-12 md:mb-16">
+          <h2 class="text-3xl md:text-4xl font-light text-black mb-4 tracking-widest uppercase">
+            Featured Collection
+          </h2>
+          <div class="w-16 h-px bg-black mx-auto"></div>
         </div>
         
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
           <ProductCard 
             v-for="product in featuredProducts" 
             :key="product.id" 
@@ -90,7 +113,7 @@
           />
         </div>
         
-        <div class="text-center mt-16">
+        <div class="text-center mt-12 md:mt-16">
           <NuxtLink to="/products" class="btn-secondary inline-block">
             View All Products
           </NuxtLink>
@@ -98,147 +121,90 @@
       </div>
     </section>
     
-    <!-- Video/Image Showcase - Obsessive风格 -->
+    <!-- 4. Full Screen Banner - "EVERYTHING For your pleasure" -->
     <section class="relative h-screen overflow-hidden">
-      <!-- 背景视频或图片 -->
       <div class="absolute inset-0">
-        <!-- 使用图片代替视频（可以替换为video标签） -->
         <img 
           src="https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f?w=1920&h=1080&fit=crop&sat=-50" 
-          alt="Showcase"
+          alt="Everything for your pleasure"
           class="w-full h-full object-cover"
         />
         <div class="absolute inset-0 bg-black/50"></div>
       </div>
       
-      <!-- 内容 -->
       <div class="relative z-10 h-full flex items-center justify-center">
         <div class="text-center text-white px-6 max-w-4xl">
-          <h2 class="text-5xl md:text-7xl font-light mb-8 tracking-widest uppercase">
+          <h2 class="text-4xl md:text-7xl font-light mb-6 md:mb-8 tracking-widest uppercase">
             EVERYTHING
           </h2>
-          <p class="text-2xl md:text-4xl font-light mb-12 tracking-wider">
+          <p class="text-xl md:text-4xl font-light mb-8 md:mb-12 tracking-wider">
             For your <span class="italic">pleasure</span>
           </p>
-          <p class="text-base md:text-lg mb-12 max-w-2xl mx-auto leading-relaxed">
-            Are you looking for amazing lingerie that will let you feel real delight? At Intimate Elegance you'll find unique designs with a pinch of spice!
+          <p class="text-sm md:text-lg mb-8 md:mb-12 max-w-2xl mx-auto leading-relaxed">
+            Are you looking for amazing lingerie that will let you feel real delight? 
+            At Intimate Elegance you'll find unique designs with a pinch of spice!
           </p>
           <NuxtLink to="/products" class="btn-primary inline-block">
-            SEE MORE
+            DISCOVER MORE
           </NuxtLink>
         </div>
       </div>
     </section>
     
-    <!-- Just Irresistible Section - Obsessive风格网格 -->
-    <section class="py-24 px-6 bg-gray-50">
+    <!-- 5. Image Grid - "Just Irresistible" -->
+    <section class="py-16 md:py-24 px-6 bg-white">
       <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-16">
-          <h2 class="text-4xl font-light text-black mb-6 tracking-widest uppercase">Just Irresistible</h2>
-          <p class="text-base text-gray-600 max-w-2xl mx-auto">
+        <div class="text-center mb-12 md:mb-16">
+          <h2 class="text-3xl md:text-4xl font-light text-black mb-4 md:mb-6 tracking-widest uppercase">
+            Just Irresistible
+          </h2>
+          <p class="text-sm md:text-base text-gray-600 max-w-2xl mx-auto">
             We know that details make perfection. It's all for your fantastic experiences!
           </p>
         </div>
         
-        <!-- 简化版网格 - 4列布局 -->
-        <div class="grid grid-cols-4 gap-4">
-          <!-- 第一行 -->
-          <div class="group relative overflow-hidden bg-gray-200 cursor-pointer h-64">
-            <img 
-              src="https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f?w=400&h=400&fit=crop" 
-              alt="Collection 1"
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-            />
-          </div>
-          
-          <div class="group relative overflow-hidden bg-gray-200 cursor-pointer h-64">
-            <img 
-              src="https://images.unsplash.com/photo-1596783074918-c84cb06531ca?w=400&h=400&fit=crop" 
-              alt="Collection 2"
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-            />
-          </div>
-          
-          <!-- 大图 - 占2列2行 -->
-          <div class="col-span-2 row-span-2 group relative overflow-hidden bg-black cursor-pointer">
-            <img 
-              src="https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f?w=800&h=800&fit=crop&sat=-50" 
-              alt="Featured"
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-            <div class="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-300"></div>
-            <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <div class="w-20 h-20 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                <svg class="w-10 h-10 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z"/>
-                </svg>
-              </div>
-            </div>
-          </div>
-          
-          <!-- 第二行 -->
-          <div class="group relative overflow-hidden bg-gray-200 cursor-pointer h-64">
-            <img 
-              src="https://images.unsplash.com/photo-1596783074918-c84cb06531ca?w=400&h=400&fit=crop&hue=30" 
-              alt="Collection 3"
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-            />
-          </div>
-          
-          <div class="group relative overflow-hidden bg-gray-200 cursor-pointer h-64">
-            <img 
-              src="https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f?w=400&h=400&fit=crop&hue=60" 
-              alt="Collection 4"
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-            />
-          </div>
-          
-          <!-- 第三行 -->
-          <div class="group relative overflow-hidden bg-gray-200 cursor-pointer h-64">
-            <img 
-              src="https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f?w=400&h=400&fit=crop&hue=90" 
-              alt="Collection 5"
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-            />
-          </div>
-          
-          <div class="group relative overflow-hidden bg-gray-200 cursor-pointer h-64">
-            <img 
-              src="https://images.unsplash.com/photo-1596783074918-c84cb06531ca?w=400&h=400&fit=crop&hue=90" 
-              alt="Collection 6"
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-            />
-          </div>
-          
-          <div class="group relative overflow-hidden bg-gray-200 cursor-pointer h-64">
-            <img 
-              src="https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f?w=400&h=400&fit=crop&hue=120" 
-              alt="Collection 7"
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-            />
-          </div>
-          
-          <div class="group relative overflow-hidden bg-gray-200 cursor-pointer h-64">
-            <img 
-              src="https://images.unsplash.com/photo-1596783074918-c84cb06531ca?w=400&h=400&fit=crop&hue=120" 
-              alt="Collection 8"
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-            />
-          </div>
-        </div>
+        <ImageGrid />
       </div>
     </section>
     
-    <!-- About Section - 简化版 -->
-    <section class="py-24 px-6">
+    <!-- 6. Newsletter Signup -->
+    <section class="py-16 md:py-24 px-6 bg-black text-white">
       <div class="max-w-3xl mx-auto text-center">
-        <h2 class="text-4xl font-light text-primary mb-8 tracking-widest uppercase">Our Story</h2>
-        <div class="w-16 h-px bg-primary mx-auto mb-12"></div>
-        <p class="text-textSecondary leading-loose mb-8 text-base">
-          We believe every woman deserves to feel beautiful, confident, and empowered. Our journey began with a simple mission: to create luxury lingerie that celebrates femininity in all its forms.
+        <h2 class="text-3xl md:text-4xl font-light mb-4 md:mb-6 tracking-widest uppercase">
+          Stay Connected
+        </h2>
+        <p class="text-sm md:text-base text-gray-300 mb-8 md:mb-12">
+          Subscribe to our newsletter for exclusive offers and new arrivals
         </p>
-        <p class="text-textSecondary leading-loose mb-12 text-base">
-          Each piece in our collection is thoughtfully designed and crafted with premium materials, ensuring both comfort and elegance.
+        
+        <form class="flex flex-col md:flex-row gap-4 max-w-xl mx-auto">
+          <input 
+            type="email" 
+            placeholder="Enter your email"
+            class="flex-1 px-6 py-3 bg-white text-black focus:outline-none"
+          />
+          <button type="submit" class="btn-primary whitespace-nowrap">
+            SUBSCRIBE
+          </button>
+        </form>
+      </div>
+    </section>
+    
+    <!-- 7. Our Story -->
+    <section class="py-16 md:py-24 px-6 bg-white">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl md:text-4xl font-light text-black mb-6 md:mb-8 tracking-widest uppercase">
+          Our Story
+        </h2>
+        <div class="w-16 h-px bg-black mx-auto mb-8 md:mb-12"></div>
+        <p class="text-gray-600 leading-loose mb-6 md:mb-8 text-sm md:text-base">
+          We believe every woman deserves to feel beautiful, confident, and empowered. 
+          Our journey began with a simple mission: to create luxury lingerie that celebrates 
+          femininity in all its forms.
+        </p>
+        <p class="text-gray-600 leading-loose mb-8 md:mb-12 text-sm md:text-base">
+          Each piece in our collection is thoughtfully designed and crafted with premium materials, 
+          ensuring both comfort and elegance.
         </p>
         <NuxtLink to="/about" class="btn-secondary inline-block">
           Learn More
@@ -281,42 +247,10 @@ const slides = [
   }
 ]
 
-const currentSlide = ref(0)
-let autoplayInterval: NodeJS.Timeout | null = null
-
-// 下一张
-const nextSlide = () => {
-  currentSlide.value = (currentSlide.value + 1) % slides.length
-}
-
-// 上一张
-const prevSlide = () => {
-  currentSlide.value = currentSlide.value === 0 ? slides.length - 1 : currentSlide.value - 1
-}
-
-// 跳转到指定幻灯片
-const goToSlide = (index: number) => {
-  currentSlide.value = index
-}
-
-// 自动播放
-const startAutoplay = () => {
-  autoplayInterval = setInterval(() => {
-    nextSlide()
-  }, 5000) // 5秒切换
-}
-
-const stopAutoplay = () => {
-  if (autoplayInterval) {
-    clearInterval(autoplayInterval)
-    autoplayInterval = null
-  }
-}
-
 // 分类数据
 const categories = [
   {
-    name: 'Bras & Sets',
+    name: 'Bras',
     image: 'https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f?w=400&h=400&fit=crop',
     link: '/products?category=bras'
   },
@@ -327,34 +261,43 @@ const categories = [
   },
   {
     name: 'Chemises',
-    image: 'https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f?w=400&h=400&fit=crop',
+    image: 'https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f?w=400&h=400&fit=crop&hue=30',
     link: '/products?category=chemises'
   },
   {
     name: 'Corsets',
-    image: 'https://images.unsplash.com/photo-1596783074918-c84cb06531ca?w=400&h=400&fit=crop',
+    image: 'https://images.unsplash.com/photo-1596783074918-c84cb06531ca?w=400&h=400&fit=crop&hue=30',
     link: '/products?category=corsets'
   }
 ]
 
-// Showcase展示项
-const showcaseItems = [
-  {
-    image: 'https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f?w=600&h=800&fit=crop',
-    title: 'Elegant Lace',
-    description: 'Delicate designs for special moments'
-  },
-  {
-    image: 'https://images.unsplash.com/photo-1596783074918-c84cb06531ca?w=600&h=800&fit=crop',
-    title: 'Sensual Silk',
-    description: 'Luxurious comfort meets style'
-  },
-  {
-    image: 'https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f?w=600&h=800&fit=crop&sat=-50',
-    title: 'Bold & Beautiful',
-    description: 'Make a statement with confidence'
+const currentSlide = ref(0)
+let autoplayInterval: NodeJS.Timeout | null = null
+
+const nextSlide = () => {
+  currentSlide.value = (currentSlide.value + 1) % slides.length
+}
+
+const prevSlide = () => {
+  currentSlide.value = currentSlide.value === 0 ? slides.length - 1 : currentSlide.value - 1
+}
+
+const goToSlide = (index: number) => {
+  currentSlide.value = index
+}
+
+const startAutoplay = () => {
+  autoplayInterval = setInterval(() => {
+    nextSlide()
+  }, 5000)
+}
+
+const stopAutoplay = () => {
+  if (autoplayInterval) {
+    clearInterval(autoplayInterval)
+    autoplayInterval = null
   }
-]
+}
 
 onMounted(() => {
   startAutoplay()
@@ -364,4 +307,3 @@ onUnmounted(() => {
   stopAutoplay()
 })
 </script>
-
