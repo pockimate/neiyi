@@ -153,9 +153,6 @@
       </div>
     </section>
     
-      </div>
-    </section>
-    
     <TheFooter />
   </div>
 </template>
