@@ -37,12 +37,13 @@
           </svg>
           <h3 class="text-base font-light mb-3 text-primary uppercase tracking-wide">Your cart is empty</h3>
           <p class="text-xs text-textMuted mb-6">Add some items to get started</p>
-          <button 
+          <BaseButton 
+            variant="primary"
+            size="md"
             @click="close"
-            class="btn-primary"
           >
             Continue Shopping
-          </button>
+          </BaseButton>
         </div>
 
         <!-- Cart Items List -->
@@ -129,20 +130,26 @@
 
         <!-- Action Buttons -->
         <div class="space-y-3">
-          <NuxtLink 
+          <BaseButton 
+            tag="NuxtLink"
             to="/checkout"
+            variant="primary"
+            size="md"
+            block
             @click="close"
-            class="btn-primary block w-full text-center"
           >
             Checkout
-          </NuxtLink>
-          <NuxtLink 
+          </BaseButton>
+          <BaseButton 
+            tag="NuxtLink"
             to="/cart"
+            variant="secondary"
+            size="md"
+            block
             @click="close"
-            class="btn-secondary block w-full text-center"
           >
             View Cart
-          </NuxtLink>
+          </BaseButton>
         </div>
       </div>
     </div>

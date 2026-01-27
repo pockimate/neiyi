@@ -59,10 +59,10 @@ const buttonStyle = computed(() => {
   // Variant styles
   const variantStyles = {
     primary: {
-      background: 'linear-gradient(135deg, #D4AF37 0%, #B8860B 100%)',
+      background: 'linear-gradient(135deg, #C9A882 0%, #B8956F 100%)',
       color: '#FFFFFF',
       border: 'none',
-      boxShadow: '0 4px 12px rgba(212, 175, 55, 0.3)'
+      boxShadow: '0 4px 12px rgba(201, 168, 130, 0.3)'
     },
     secondary: {
       background: 'transparent',
@@ -116,12 +116,12 @@ const handleClick = (event: MouseEvent) => {
 }
 
 .button-primary:hover:not(:disabled) {
-  background: linear-gradient(135deg, #B8860B 0%, #8B6914 100%) !important;
-  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.4) !important;
+  background: linear-gradient(135deg, #B8956F 0%, #9A7B5C 100%) !important;
+  box-shadow: 0 8px 24px rgba(201, 168, 130, 0.4) !important;
 }
 
 .button-secondary:hover:not(:disabled) {
-  background: #000000 !important;
+  background: #1A1A1A !important;
   color: #FFFFFF !important;
 }
 
