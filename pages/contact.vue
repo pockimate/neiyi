@@ -6,10 +6,10 @@
     <Breadcrumb :items="[{ label: 'Contact' }]" />
     
     <!-- Hero Section -->
-    <section style="text-align: center; padding: 40px 16px 64px; background: linear-gradient(180deg, #FFFFFF 0%, #FAFAFA 100%);">
-      <h1 style="font-size: 48px; font-weight: 700; letter-spacing: 2px; margin-bottom: 16px; color: #2C2C2C; line-height: 1.2; font-family: 'Playfair Display', serif;">Get in Touch</h1>
-      <p style="font-size: 18px; color: #666666; max-width: 600px; margin: 0 auto; line-height: 1.6;">We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
-    </section>
+    <PageHeader 
+      title="Get in Touch" 
+      subtitle="We'd love to hear from you. Send us a message and we'll respond as soon as possible." 
+    />
 
     <!-- Contact Form & Info -->
     <section class="py-12 px-4">

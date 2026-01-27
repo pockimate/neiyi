@@ -6,10 +6,10 @@
     <Breadcrumb :items="[{ label: 'About' }]" />
     
     <!-- Hero Section -->
-    <section style="text-align: center; padding: 40px 16px 64px; background: linear-gradient(180deg, #FFFFFF 0%, #FAFAFA 100%);">
-      <h1 style="font-size: 48px; font-weight: 700; letter-spacing: 2px; margin-bottom: 16px; color: #2C2C2C; line-height: 1.2; font-family: 'Playfair Display', serif;">Our Story</h1>
-      <p style="font-size: 18px; color: #666666; max-width: 600px; margin: 0 auto; line-height: 1.6;">Where elegance meets desire, and confidence becomes your signature</p>
-    </section>
+    <PageHeader 
+      title="Our Story" 
+      subtitle="Where elegance meets desire, and confidence becomes your signature" 
+    />
 
     <!-- Mission Section -->
     <section class="py-20 px-4">
@@ -46,35 +46,32 @@
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div class="glass-card rounded-2xl p-8 border border-gray-200 text-center">
+          <ContentCard title="Quality First" title-size="md">
             <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
               <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
               </svg>
             </div>
-            <h3 class="font-display text-2xl font-semibold mb-3 text-textPrimary">Quality First</h3>
-            <p class="text-slate-600 leading-relaxed">We never compromise on materials or craftsmanship. Every piece is made to last.</p>
-          </div>
+            <p class="text-slate-600 leading-relaxed text-center">We never compromise on materials or craftsmanship. Every piece is made to last.</p>
+          </ContentCard>
           
-          <div class="glass-card rounded-2xl p-8 border border-gray-200 text-center">
+          <ContentCard title="Privacy Matters" title-size="md">
             <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
               <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
               </svg>
             </div>
-            <h3 class="font-display text-2xl font-semibold mb-3 text-textPrimary">Privacy Matters</h3>
-            <p class="text-slate-600 leading-relaxed">Discreet packaging and secure checkout. Your privacy is our priority.</p>
-          </div>
+            <p class="text-slate-600 leading-relaxed text-center">Discreet packaging and secure checkout. Your privacy is our priority.</p>
+          </ContentCard>
           
-          <div class="glass-card rounded-2xl p-8 border border-gray-200 text-center">
+          <ContentCard title="Customer Love" title-size="md">
             <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
               <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
               </svg>
             </div>
-            <h3 class="font-display text-2xl font-semibold mb-3 text-textPrimary">Customer Love</h3>
-            <p class="text-slate-600 leading-relaxed">Your satisfaction is our success. We're here to help every step of the way.</p>
-          </div>
+            <p class="text-slate-600 leading-relaxed text-center">Your satisfaction is our success. We're here to help every step of the way.</p>
+          </ContentCard>
         </div>
       </div>
     </section>
@@ -110,29 +107,14 @@
       <div class="max-w-4xl mx-auto text-center">
         <h2 class="font-display text-4xl md:text-5xl font-bold text-primary mb-6">Ready to Feel Confident?</h2>
         <p class="text-lg text-slate-600 mb-8">Explore our collection and find your perfect piece</p>
-        <NuxtLink 
+        <BaseButton 
+          tag="NuxtLink"
           to="/products" 
-          style="
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
-            color: #FFFFFF;
-            font-weight: 600;
-            padding: 18px 40px;
-            font-size: 18px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border: none;
-            border-radius: 9999px;
-            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-            text-decoration: none;
-          "
+          variant="primary"
+          size="lg"
         >
           Shop Now
-        </NuxtLink>
+        </BaseButton>
       </div>
     </section>
     
