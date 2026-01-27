@@ -405,4 +405,28 @@ onUnmounted(() => {
   color: #2C2C2C;
   border-color: #FFFFFF;
 }
+
+/* 移动端Hero优化 */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2rem !important; /* 32px，从text-5xl的48px减小 */
+    line-height: 1.2;
+    margin-bottom: 1rem !important;
+  }
+  
+  /* Hero按钮全宽 */
+  .hero-btn-primary,
+  .hero-btn-secondary {
+    width: 100%;
+    text-align: center;
+    display: block;
+  }
+}
+
+/* 小屏幕进一步优化 */
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 1.75rem !important; /* 28px */
+  }
+}
 </style>
