@@ -39,9 +39,6 @@
       <span v-if="items.length > 0" class="breadcrumb-separator">/</span>
       <span class="breadcrumb-current text-sm">{{ items[items.length - 1]?.label }}</span>
     </div>
-    
-    <!-- Structured Data for SEO -->
-    <script type="application/ld+json" v-html="structuredData"></script>
   </nav>
 </template>
 
@@ -62,10 +59,10 @@ const goBack = () => {
   router.back()
 }
 
-// Generate structured data for SEO
+// Generate structured data for SEO using useHead
+const baseUrl = 'https://neiyi.vercel.app' // Replace with your actual domain
+
 const structuredData = computed(() => {
-  const baseUrl = 'https://neiyi.vercel.app' // Replace with your actual domain
-  
   const itemListElement = [
     {
       '@type': 'ListItem',
@@ -92,11 +89,21 @@ const structuredData = computed(() => {
     }
   })
   
-  return JSON.stringify({
+  return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement
-  })
+  }
+})
+
+// Use useHead to inject structured data into the page head
+useHead({
+  script: [
+    {
+      type: 'application/ld+json',
+      children: JSON.stringify(structuredData.value)
+    }
+  ]
 })
 </script>
 
