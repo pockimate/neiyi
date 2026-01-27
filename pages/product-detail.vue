@@ -113,26 +113,52 @@
             <!-- Size Selection -->
             <div class="mb-6">
               <div class="flex items-center justify-between mb-3">
-                <label class="text-sm font-semibold text-primary uppercase tracking-wider">Size</label>
+                <label class="text-sm font-semibold text-primary uppercase tracking-wider">
+                  Size: {{ selectedSize }}
+                </label>
                 <NuxtLink to="/size-guide" class="text-xs text-textMuted hover:text-primary transition-colors underline">
                   Size Guide
                 </NuxtLink>
               </div>
               <div class="grid grid-cols-5 gap-2">
                 <button
-                  v-for="size in sizes"
-                  :key="size"
-                  @click="selectedSize = size"
+                  v-for="size in sizesWithStock"
+                  :key="size.name"
+                  @click="selectSize(size.name)"
+                  :disabled="size.stock === 0"
                   :class="[
-                    'size-selector py-3 text-sm font-semibold border transition-all duration-200 cursor-pointer',
-                    selectedSize === size 
+                    'size-selector py-3 text-sm font-semibold border transition-all duration-200 relative',
+                    selectedSize === size.name 
                       ? 'bg-primary text-white border-primary' 
-                      : 'bg-white text-primary border-border hover:border-primary'
+                      : size.stock === 0
+                        ? 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed'
+                        : 'bg-white text-primary border-border hover:border-primary cursor-pointer'
                   ]"
+                  :title="size.stock === 0 ? 'Out of stock' : `${size.stock} in stock`"
                 >
-                  {{ size }}
+                  {{ size.name }}
+                  <!-- 售罄标记 -->
+                  <span 
+                    v-if="size.stock === 0"
+                    class="absolute inset-0 flex items-center justify-center"
+                  >
+                    <span class="w-full h-px bg-gray-400 rotate-[-20deg]"></span>
+                  </span>
+                  <!-- 低库存提示 -->
+                  <span 
+                    v-if="size.stock > 0 && size.stock <= 3 && selectedSize === size.name"
+                    class="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"
+                  ></span>
                 </button>
               </div>
+              <!-- 库存提示 -->
+              <p 
+                v-if="selectedSizeStock && selectedSizeStock <= 5"
+                class="text-xs mt-2"
+                :class="selectedSizeStock <= 3 ? 'text-red-600' : 'text-orange-600'"
+              >
+                {{ selectedSizeStock <= 3 ? '⚠️' : '⏰' }} Only {{ selectedSizeStock }} left in stock!
+              </p>
             </div>
             
             <!-- Color Selection -->
@@ -144,24 +170,50 @@
                 <button
                   v-for="color in colors"
                   :key="color.name"
-                  @click="selectedColor = color.name"
+                  @click="selectColor(color)"
                   :class="[
-                    'color-selector w-10 h-10 rounded-full border-2 transition-all duration-200 cursor-pointer',
-                    selectedColor === color.name ? 'border-primary scale-110' : 'border-border hover:border-primary'
+                    'color-selector w-12 h-12 rounded-full border-2 transition-all duration-200 cursor-pointer relative group',
+                    selectedColor === color.name 
+                      ? 'border-primary scale-110 shadow-lg' 
+                      : 'border-gray-300 hover:border-primary hover:scale-105'
                   ]"
                   :style="{ backgroundColor: color.hex }"
                   :title="color.name"
-                ></button>
+                >
+                  <!-- 选中标记 -->
+                  <span 
+                    v-if="selectedColor === color.name"
+                    class="absolute inset-0 flex items-center justify-center"
+                  >
+                    <svg class="w-6 h-6 text-white drop-shadow-lg" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                    </svg>
+                  </span>
+                  
+                  <!-- Hover 提示 -->
+                  <span class="absolute -top-8 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                    {{ color.name }}
+                  </span>
+                </button>
               </div>
             </div>
             
             <!-- Quantity -->
             <div class="mb-8">
-              <label class="block text-sm font-semibold text-primary uppercase tracking-wider mb-3">Quantity</label>
+              <div class="flex items-center justify-between mb-3">
+                <label class="text-sm font-semibold text-primary uppercase tracking-wider">Quantity</label>
+                <span class="text-xs text-textMuted">Max: {{ maxQuantity }}</span>
+              </div>
               <div class="flex items-center gap-3">
                 <button 
-                  @click="quantity = Math.max(1, quantity - 1)"
-                  class="quantity-btn w-12 h-12 border border-border hover:border-primary transition-colors cursor-pointer flex items-center justify-center"
+                  @click="decreaseQuantity"
+                  :disabled="quantity <= 1"
+                  :class="[
+                    'quantity-btn w-12 h-12 border transition-colors flex items-center justify-center',
+                    quantity <= 1 
+                      ? 'border-gray-200 text-gray-300 cursor-not-allowed' 
+                      : 'border-border hover:border-primary cursor-pointer'
+                  ]"
                 >
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
@@ -171,16 +223,46 @@
                   v-model.number="quantity" 
                   type="number" 
                   min="1"
+                  :max="maxQuantity"
+                  @input="validateQuantity"
                   class="w-20 h-12 text-center border border-border focus:border-primary focus:outline-none"
                 />
                 <button 
-                  @click="quantity++"
-                  class="quantity-btn w-12 h-12 border border-border hover:border-primary transition-colors cursor-pointer flex items-center justify-center"
+                  @click="increaseQuantity"
+                  :disabled="quantity >= maxQuantity"
+                  :class="[
+                    'quantity-btn w-12 h-12 border transition-colors flex items-center justify-center',
+                    quantity >= maxQuantity 
+                      ? 'border-gray-200 text-gray-300 cursor-not-allowed' 
+                      : 'border-border hover:border-primary cursor-pointer'
+                  ]"
                 >
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                   </svg>
                 </button>
+              </div>
+              
+              <!-- 批量购买优惠提示 -->
+              <div class="mt-3 space-y-2">
+                <div 
+                  v-if="quantity >= 3 && quantity < 5"
+                  class="text-xs bg-blue-50 text-blue-700 px-3 py-2 rounded flex items-center gap-2"
+                >
+                  <svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                  </svg>
+                  <span>Buy 5+ items and get 10% off!</span>
+                </div>
+                <div 
+                  v-if="quantity >= 5"
+                  class="text-xs bg-green-50 text-green-700 px-3 py-2 rounded flex items-center gap-2"
+                >
+                  <svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                  </svg>
+                  <span>🎉 10% bulk discount applied!</span>
+                </div>
               </div>
             </div>
             
@@ -390,12 +472,19 @@ const productId = computed(() => parseInt(route.query.id as string))
 const product = computed(() => products.find(p => p.id === productId.value))
 
 // Product images (using same image for demo, replace with actual images)
-const productImages = computed(() => [
-  product.value?.image,
-  product.value?.image,
-  product.value?.image,
-  product.value?.image
-])
+const productImages = computed(() => {
+  const colorData = selectedColorData.value
+  if (colorData && colorData.images) {
+    return colorData.images
+  }
+  // 默认图片
+  return [
+    product.value?.image,
+    product.value?.image,
+    product.value?.image,
+    product.value?.image
+  ]
+})
 
 const currentImageIndex = ref(0)
 const currentImage = computed(() => productImages.value[currentImageIndex.value])
@@ -414,14 +503,74 @@ const mainImageRef = ref<HTMLImageElement | null>(null)
 // Lightbox functionality
 const isLightboxOpen = ref(false)
 
-const sizes = ['XS', 'S', 'M', 'L', 'XL']
+// Size stock data (模拟数据，实际应从后端获取)
+const sizesWithStock = ref([
+  { name: 'XS', stock: 5 },
+  { name: 'S', stock: 8 },
+  { name: 'M', stock: 12 },
+  { name: 'L', stock: 3 },
+  { name: 'XL', stock: 0 }
+])
+
+// Color data with images
 const colors = [
-  { name: 'Black', hex: '#000000' },
-  { name: 'White', hex: '#FFFFFF' },
-  { name: 'Pink', hex: '#F472B6' },
-  { name: 'Red', hex: '#EF4444' }
+  { 
+    name: 'Black', 
+    hex: '#000000',
+    images: [
+      product.value?.image,
+      product.value?.image,
+      product.value?.image,
+      product.value?.image
+    ]
+  },
+  { 
+    name: 'White', 
+    hex: '#FFFFFF',
+    images: [
+      product.value?.image,
+      product.value?.image,
+      product.value?.image,
+      product.value?.image
+    ]
+  },
+  { 
+    name: 'Nude', 
+    hex: '#E8C4A0',
+    images: [
+      product.value?.image,
+      product.value?.image,
+      product.value?.image,
+      product.value?.image
+    ]
+  },
+  { 
+    name: 'Red', 
+    hex: '#DC2626',
+    images: [
+      product.value?.image,
+      product.value?.image,
+      product.value?.image,
+      product.value?.image
+    ]
+  }
 ]
+
 const tabs = ['Description', 'Details', 'Shipping']
+
+// Computed properties
+const selectedSizeStock = computed(() => {
+  const size = sizesWithStock.value.find(s => s.name === selectedSize.value)
+  return size?.stock || 0
+})
+
+const maxQuantity = computed(() => {
+  return Math.min(selectedSizeStock.value, 10) // 最多购买10件
+})
+
+const selectedColorData = computed(() => {
+  return colors.find(c => c.name === selectedColor.value)
+})
 
 const handleMouseMove = (event: MouseEvent) => {
   if (!showZoom.value) return
@@ -438,6 +587,45 @@ const handleMouseMove = (event: MouseEvent) => {
 
 const selectImage = (index: number) => {
   currentImageIndex.value = index
+}
+
+const selectSize = (size: string) => {
+  const sizeData = sizesWithStock.value.find(s => s.name === size)
+  if (sizeData && sizeData.stock > 0) {
+    selectedSize.value = size
+    // 如果当前数量超过新尺码的库存，调整数量
+    if (quantity.value > sizeData.stock) {
+      quantity.value = sizeData.stock
+    }
+  }
+}
+
+const selectColor = (color: typeof colors[0]) => {
+  selectedColor.value = color.name
+  // 切换颜色时更新图片
+  if (color.images && color.images.length > 0) {
+    currentImageIndex.value = 0 // 重置到第一张图片
+  }
+}
+
+const decreaseQuantity = () => {
+  if (quantity.value > 1) {
+    quantity.value--
+  }
+}
+
+const increaseQuantity = () => {
+  if (quantity.value < maxQuantity.value) {
+    quantity.value++
+  }
+}
+
+const validateQuantity = () => {
+  if (quantity.value < 1) {
+    quantity.value = 1
+  } else if (quantity.value > maxQuantity.value) {
+    quantity.value = maxQuantity.value
+  }
 }
 
 const openLightbox = () => {
