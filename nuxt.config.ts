@@ -118,5 +118,11 @@ export default defineNuxtConfig({
 
   nitro: {
     preset: 'vercel'
+  },
+
+  vite: {
+    optimizeDeps: {
+      exclude: ['#app-manifest']
+    }
   }
 })

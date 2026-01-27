@@ -13,18 +13,33 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
           <!-- Left: Product Images -->
           <div>
-            <!-- Main Image - 正方形 -->
-            <div class="mb-4 aspect-square bg-backgroundLight border border-border overflow-hidden group relative">
+            <!-- Main Image - 正方形 with Zoom -->
+            <div 
+              class="mb-4 aspect-square bg-backgroundLight border border-border overflow-hidden group relative cursor-zoom-in"
+              @mouseenter="showZoom = true"
+              @mouseleave="showZoom = false"
+              @mousemove="handleMouseMove"
+              @click="openLightbox"
+            >
               <img 
+                ref="mainImageRef"
                 :src="currentImage" 
                 :alt="product.name"
-                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                class="w-full h-full object-cover transition-transform duration-500"
+                :class="{ 'scale-150': showZoom }"
+                :style="zoomStyle"
               />
-              <!-- 放大镜图标 -->
-              <div class="absolute top-4 right-4 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              
+              <!-- 全屏查看图标 -->
+              <div class="absolute top-4 right-4 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer z-10">
                 <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
                 </svg>
+              </div>
+              
+              <!-- Zoom 提示 -->
+              <div class="absolute bottom-4 left-4 bg-black/70 text-white text-xs px-3 py-2 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                Hover to zoom • Click for fullscreen
               </div>
             </div>
             
@@ -33,10 +48,10 @@
               <button
                 v-for="(image, index) in productImages"
                 :key="index"
-                @click="currentImage = image"
+                @click="selectImage(index)"
                 :class="[
                   'aspect-square border-2 transition-all duration-300 overflow-hidden cursor-pointer group relative',
-                  currentImage === image 
+                  currentImageIndex === index 
                     ? 'border-accent shadow-md' 
                     : 'border-border hover:border-accent hover:shadow-sm'
                 ]"
@@ -48,7 +63,7 @@
                 />
                 <!-- 选中指示器 -->
                 <div 
-                  v-if="currentImage === image"
+                  v-if="currentImageIndex === index"
                   class="absolute inset-0 bg-accent/10 pointer-events-none"
                 ></div>
               </button>
@@ -290,6 +305,75 @@
       </div>
     </section>
     
+    <!-- Lightbox Modal -->
+    <Teleport to="body">
+      <div 
+        v-if="isLightboxOpen"
+        class="fixed inset-0 z-50 bg-black/95 flex items-center justify-center"
+        @click="closeLightbox"
+      >
+        <!-- Close Button -->
+        <button
+          @click="closeLightbox"
+          class="absolute top-6 right-6 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors z-10"
+        >
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+        
+        <!-- Image Counter -->
+        <div class="absolute top-6 left-6 bg-black/50 text-white px-4 py-2 rounded-full text-sm">
+          {{ currentImageIndex + 1 }} / {{ productImages.length }}
+        </div>
+        
+        <!-- Main Image -->
+        <div class="relative max-w-5xl max-h-[80vh] mx-auto" @click.stop>
+          <img 
+            :src="currentImage" 
+            :alt="product?.name"
+            class="max-w-full max-h-[80vh] object-contain"
+          />
+        </div>
+        
+        <!-- Navigation Arrows -->
+        <button
+          v-if="currentImageIndex > 0"
+          @click.stop="previousImage"
+          class="absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors"
+        >
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        
+        <button
+          v-if="currentImageIndex < productImages.length - 1"
+          @click.stop="nextImage"
+          class="absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors"
+        >
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </button>
+        
+        <!-- Thumbnail Strip -->
+        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 bg-black/50 p-3 rounded-lg">
+          <button
+            v-for="(image, index) in productImages"
+            :key="index"
+            @click.stop="selectImage(index)"
+            :class="[
+              'w-16 h-16 border-2 transition-all overflow-hidden',
+              currentImageIndex === index ? 'border-white' : 'border-white/30 hover:border-white/60'
+            ]"
+          >
+            <img :src="image" :alt="`Thumbnail ${index + 1}`" class="w-full h-full object-cover" />
+          </button>
+        </div>
+      </div>
+    </Teleport>
+    
     <TheFooter />
   </div>
 </template>
@@ -313,13 +397,22 @@ const productImages = computed(() => [
   product.value?.image
 ])
 
-const currentImage = ref(product.value?.image)
+const currentImageIndex = ref(0)
+const currentImage = computed(() => productImages.value[currentImageIndex.value])
 const selectedSize = ref('M')
 const selectedColor = ref('Black')
 const quantity = ref(1)
 const isInWishlist = ref(false)
 const isWishlistAnimating = ref(false)
 const activeTab = ref('Description')
+
+// Image zoom functionality
+const showZoom = ref(false)
+const zoomStyle = ref({})
+const mainImageRef = ref<HTMLImageElement | null>(null)
+
+// Lightbox functionality
+const isLightboxOpen = ref(false)
 
 const sizes = ['XS', 'S', 'M', 'L', 'XL']
 const colors = [
@@ -329,6 +422,60 @@ const colors = [
   { name: 'Red', hex: '#EF4444' }
 ]
 const tabs = ['Description', 'Details', 'Shipping']
+
+const handleMouseMove = (event: MouseEvent) => {
+  if (!showZoom.value) return
+  
+  const target = event.currentTarget as HTMLElement
+  const rect = target.getBoundingClientRect()
+  const x = ((event.clientX - rect.left) / rect.width) * 100
+  const y = ((event.clientY - rect.top) / rect.height) * 100
+  
+  zoomStyle.value = {
+    transformOrigin: `${x}% ${y}%`
+  }
+}
+
+const selectImage = (index: number) => {
+  currentImageIndex.value = index
+}
+
+const openLightbox = () => {
+  isLightboxOpen.value = true
+  // Prevent body scroll
+  document.body.style.overflow = 'hidden'
+}
+
+const closeLightbox = () => {
+  isLightboxOpen.value = false
+  // Restore body scroll
+  document.body.style.overflow = ''
+}
+
+const nextImage = () => {
+  if (currentImageIndex.value < productImages.value.length - 1) {
+    currentImageIndex.value++
+  }
+}
+
+const previousImage = () => {
+  if (currentImageIndex.value > 0) {
+    currentImageIndex.value--
+  }
+}
+
+// Keyboard navigation for lightbox
+const handleKeydown = (event: KeyboardEvent) => {
+  if (!isLightboxOpen.value) return
+  
+  if (event.key === 'Escape') {
+    closeLightbox()
+  } else if (event.key === 'ArrowRight') {
+    nextImage()
+  } else if (event.key === 'ArrowLeft') {
+    previousImage()
+  }
+}
 
 const handleAddToCart = () => {
   if (!product.value) return
@@ -373,15 +520,23 @@ const getBadgeClass = (badge: string) => {
   return 'tag-new' // 默认
 }
 
-// Initialize current image
-watch(() => product.value, (newProduct) => {
-  if (newProduct) {
-    currentImage.value = newProduct.image
-  }
-}, { immediate: true })
+onMounted(() => {
+  window.addEventListener('keydown', handleKeydown)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeydown)
+  // Ensure body scroll is restored
+  document.body.style.overflow = ''
+})
 </script>
 
 <style scoped>
+/* Zoom cursor */
+.cursor-zoom-in {
+  cursor: zoom-in;
+}
+
 /* 愿望清单心形动画 */
 .wishlist-btn {
   position: relative;
@@ -422,5 +577,16 @@ input[type="number"]::-webkit-outer-spin-button {
 
 input[type="number"] {
   -moz-appearance: textfield;
+}
+
+/* Lightbox animations */
+.lightbox-enter-active,
+.lightbox-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.lightbox-enter-from,
+.lightbox-leave-to {
+  opacity: 0;
 }
 </style>
