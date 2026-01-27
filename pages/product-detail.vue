@@ -61,7 +61,11 @@
           <!-- Right: Product Info -->
           <div>
             <!-- Badge -->
-            <div v-if="product.badge" class="inline-block bg-primary text-white px-3 py-1 text-xs font-semibold uppercase tracking-wider mb-4">
+            <div 
+              v-if="product.badge" 
+              :class="getBadgeClass(product.badge)"
+              class="inline-block mb-4"
+            >
               {{ product.badge }}
             </div>
             
@@ -344,6 +348,18 @@ const handleBuyNow = () => {
 }
 
 const toggleWishlist = () => {
+  isInWishlist.value = !isInWishlist.value
+}
+
+// 根据badge类型返回对应的class
+const getBadgeClass = (badge: string) => {
+  const badgeLower = badge.toLowerCase()
+  if (badgeLower.includes('new')) return 'tag-new'
+  if (badgeLower.includes('bestseller') || badgeLower.includes('best')) return 'tag-bestseller'
+  if (badgeLower.includes('sale') || badgeLower.includes('off')) return 'tag-sale'
+  return 'tag-new' // 默认
+}
+
   isInWishlist.value = !isInWishlist.value
 }
 

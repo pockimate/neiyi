@@ -14,7 +14,11 @@
         />
         
         <!-- 徽章 -->
-        <div v-if="product.badge" class="badge-new">
+        <div 
+          v-if="product.badge" 
+          :class="getBadgeClass(product.badge)"
+          class="absolute top-12 left-12 z-10"
+        >
           {{ product.badge }}
         </div>
         
@@ -78,6 +82,15 @@ const handleAddToCart = (event: Event) => {
   const isCartOpen = useState('cartSidebarOpen')
   isCartOpen.value = true
 }
+
+// 根据badge类型返回对应的class
+const getBadgeClass = (badge: string) => {
+  const badgeLower = badge.toLowerCase()
+  if (badgeLower.includes('new')) return 'tag-new'
+  if (badgeLower.includes('bestseller') || badgeLower.includes('best')) return 'tag-bestseller'
+  if (badgeLower.includes('sale') || badgeLower.includes('off')) return 'tag-sale'
+  return 'tag-new' // 默认
+}
 </script>
 
 <style scoped>
@@ -132,22 +145,7 @@ const handleAddToCart = (event: Event) => {
   transform: scale(1.05);
 }
 
-/* 徽章 */
-.badge-new {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
-  color: #FFFFFF;
-  padding: 6px 12px;
-  font-size: 10px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  border-radius: 4px;
-  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
-  z-index: 10;
-}
+/* 徽章 - 移除旧样式，使用全局统一样式 */
 
 /* Add to Cart 按钮 */
 .btn-add-to-cart {
