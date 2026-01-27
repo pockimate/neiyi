@@ -77,9 +77,9 @@
     </section>
     
     <!-- 2. Categories - 分类导航 -->
-    <section class="py-16 md:py-24 px-6 bg-backgroundLight">
+    <section class="section bg-backgroundLight">
       <div class="max-w-7xl mx-auto">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+        <div class="grid grid-cols-2 md:grid-cols-4" style="gap: var(--space-lg);">
           <NuxtLink 
             v-for="(category, catIndex) in categories" 
             :key="catIndex"
@@ -104,9 +104,9 @@
     </section>
     
     <!-- 3. Featured Products -->
-    <section class="py-16 md:py-24 px-6 bg-background">
+    <section class="section bg-background">
       <div class="max-w-7xl mx-auto">
-        <div class="fade-in-up text-center mb-12 md:mb-16">
+        <div class="fade-in-up text-center" style="margin-bottom: var(--space-xl);">
           <p class="text-xs md:text-sm text-accent font-semibold mb-3 tracking-widest uppercase">
             Discover Our Collection
           </p>
@@ -116,13 +116,13 @@
           <div class="w-16 h-px bg-accent mx-auto"></div>
         </div>
         
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4" style="gap: var(--space-lg);">
           <div class="fade-in-up" v-for="(product, index) in featuredProducts" :key="product.id" :class="`delay-${(index % 4) * 100}`">
             <ProductCard :product="product" />
           </div>
         </div>
         
-        <div class="fade-in-up text-center mt-12 md:mt-16">
+        <div class="fade-in-up text-center" style="margin-top: var(--space-xl);">
           <NuxtLink to="/products" class="btn-secondary inline-block">
             View All Products
           </NuxtLink>
@@ -184,21 +184,21 @@
     </section>
     
     <!-- 7. Newsletter Signup -->
-    <section class="py-16 md:py-24 px-6 bg-backgroundLight text-primary">
+    <section class="section bg-backgroundLight text-primary">
       <div class="max-w-3xl mx-auto text-center">
-        <div class="fade-in-up">
+        <div class="fade-in-up" style="margin-bottom: var(--space-lg);">
           <p class="text-xs md:text-sm text-accent font-semibold mb-3 tracking-widest uppercase">
             Sign Up For
           </p>
           <h2 class="text-3xl md:text-4xl font-light mb-4 md:mb-6 tracking-widest uppercase">
             Newsletter Obsessive
           </h2>
-          <p class="text-xs md:text-sm text-textMuted mb-8 md:mb-12 tracking-wide">
+          <p class="text-xs md:text-sm text-textMuted tracking-wide">
             GET AN EXCLUSIVE 10% DISCOUNT WHEN SHOPPING FOR MIN. 50 EURO
           </p>
         </div>
         
-        <form class="fade-in-up delay-200 flex flex-col md:flex-row gap-4 max-w-xl mx-auto">
+        <form class="fade-in-up delay-200 flex flex-col md:flex-row max-w-xl mx-auto" style="gap: var(--space-sm);">
           <input 
             type="email" 
             placeholder="Enter your e-mail address"
@@ -209,7 +209,7 @@
           </button>
         </form>
         
-        <div class="fade-in-up delay-300 mt-6 flex items-center justify-center gap-2 text-xs text-textMuted">
+        <div class="fade-in-up delay-300 flex items-center justify-center gap-2 text-xs text-textMuted" style="margin-top: var(--space-md);">
           <input type="checkbox" id="newsletter-consent" class="w-4 h-4" />
           <label for="newsletter-consent">
             I subscribe to the newsletter in accordance. Regulations.
@@ -219,20 +219,20 @@
     </section>
     
     <!-- 8. Our Story -->
-    <section class="py-16 md:py-24 px-6 bg-backgroundLight">
+    <section class="section bg-backgroundLight">
       <div class="max-w-3xl mx-auto text-center">
-        <div class="fade-in-up">
+        <div class="fade-in-up" style="margin-bottom: var(--space-lg);">
           <h2 class="text-3xl md:text-4xl font-light text-primary mb-6 md:mb-8 tracking-widest uppercase">
             Our Story
           </h2>
-          <div class="w-16 h-px bg-primary mx-auto mb-8 md:mb-12"></div>
+          <div class="w-16 h-px bg-primary mx-auto"></div>
         </div>
-        <p class="fade-in-up delay-100 text-textSecondary leading-loose mb-6 md:mb-8 text-sm md:text-base">
+        <p class="fade-in-up delay-100 text-textSecondary leading-loose text-sm md:text-base" style="margin-bottom: var(--space-md);">
           We believe every woman deserves to feel beautiful, confident, and empowered. 
           Our journey began with a simple mission: to create luxury lingerie that celebrates 
           femininity in all its forms.
         </p>
-        <p class="fade-in-up delay-200 text-textSecondary leading-loose mb-8 md:mb-12 text-sm md:text-base">
+        <p class="fade-in-up delay-200 text-textSecondary leading-loose text-sm md:text-base" style="margin-bottom: var(--space-lg);">
           Each piece in our collection is thoughtfully designed and crafted with premium materials, 
           ensuring both comfort and elegance.
         </p>

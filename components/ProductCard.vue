@@ -37,12 +37,12 @@
       </div>
       
       <!-- 产品信息 -->
-      <div class="p-4 text-center">
-        <h3 class="text-sm font-normal text-primary mb-2 line-clamp-2 leading-relaxed group-hover:text-accent transition-colors duration-300">
+      <div class="text-center" style="padding: var(--space-md);">
+        <h3 class="text-sm font-normal text-primary line-clamp-2 leading-relaxed group-hover:text-accent transition-colors duration-300" style="margin-bottom: var(--space-sm);">
           {{ product.name }}
         </h3>
         
-        <div class="flex items-center justify-center gap-2">
+        <div class="flex items-center justify-center" style="gap: var(--space-xs);">
           <p v-if="product.originalPrice" class="text-xs text-textMuted line-through">
             ${{ product.originalPrice.toFixed(2) }}
           </p>

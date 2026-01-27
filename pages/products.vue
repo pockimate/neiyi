@@ -2,10 +2,10 @@
   <div class="min-h-screen bg-white">
     <TheNavbar />
     
-    <div class="pt-24 pb-20 px-4">
+    <div class="section" style="padding-top: var(--space-3xl);">
       <div class="max-w-7xl mx-auto">
         <!-- 页面标题 -->
-        <div class="text-center mb-12">
+        <div class="text-center" style="margin-bottom: var(--space-xl);">
           <h1 class="text-3xl md:text-4xl font-light uppercase tracking-wider mb-4">
             All Products
           </h1>
@@ -15,9 +15,9 @@
         </div>
         
         <!-- 筛选和排序 -->
-        <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-8 pb-8 border-b border-border">
+        <div class="flex flex-col sm:flex-row justify-between items-center pb-8 border-b border-border" style="gap: var(--space-md); margin-bottom: var(--space-lg);">
           <!-- 筛选器 -->
-          <div class="flex flex-wrap gap-3">
+          <div class="flex flex-wrap" style="gap: var(--space-sm);">
             <button 
               @click="currentFilter = 'all'"
               :class="[
@@ -77,11 +77,11 @@
         </div>
         
         <!-- 产品网格 -->
-        <div v-if="isLoading" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+        <div v-if="isLoading" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4" style="gap: var(--space-lg);">
           <ProductCardSkeleton v-for="n in 8" :key="n" />
         </div>
         
-        <div v-else class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+        <div v-else class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4" style="gap: var(--space-lg);">
           <ProductCard 
             v-for="product in sortedProducts" 
             :key="product.id" 
@@ -97,7 +97,7 @@
         </div>
         
         <!-- 加载更多 -->
-        <div v-if="hasMore" class="text-center mt-12">
+        <div v-if="hasMore" class="text-center" style="margin-top: var(--space-xl);">
           <button @click="loadMore" class="btn-secondary">
             Load More
           </button>
