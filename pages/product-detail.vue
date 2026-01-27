@@ -112,7 +112,7 @@
                   :key="size"
                   @click="selectedSize = size"
                   :class="[
-                    'py-3 text-sm font-semibold border transition-all duration-200 cursor-pointer',
+                    'size-selector py-3 text-sm font-semibold border transition-all duration-200 cursor-pointer',
                     selectedSize === size 
                       ? 'bg-primary text-white border-primary' 
                       : 'bg-white text-primary border-border hover:border-primary'
@@ -134,7 +134,7 @@
                   :key="color.name"
                   @click="selectedColor = color.name"
                   :class="[
-                    'w-10 h-10 rounded-full border-2 transition-all duration-200 cursor-pointer',
+                    'color-selector w-10 h-10 rounded-full border-2 transition-all duration-200 cursor-pointer',
                     selectedColor === color.name ? 'border-primary scale-110' : 'border-border hover:border-primary'
                   ]"
                   :style="{ backgroundColor: color.hex }"
@@ -149,7 +149,7 @@
               <div class="flex items-center gap-3">
                 <button 
                   @click="quantity = Math.max(1, quantity - 1)"
-                  class="w-12 h-12 border border-border hover:border-primary transition-colors cursor-pointer flex items-center justify-center"
+                  class="quantity-btn w-12 h-12 border border-border hover:border-primary transition-colors cursor-pointer flex items-center justify-center"
                 >
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
@@ -163,7 +163,7 @@
                 />
                 <button 
                   @click="quantity++"
-                  class="w-12 h-12 border border-border hover:border-primary transition-colors cursor-pointer flex items-center justify-center"
+                  class="quantity-btn w-12 h-12 border border-border hover:border-primary transition-colors cursor-pointer flex items-center justify-center"
                 >
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>

@@ -64,7 +64,7 @@
           <button 
             @click="toggleSearch"
             :class="[
-              'p-2 hover:opacity-60 transition-all duration-300 cursor-pointer',
+              'icon-btn p-2 hover:opacity-60 transition-all duration-300 cursor-pointer',
               isScrolled ? 'text-primary' : 'text-white'
             ]"
             aria-label="Search"
@@ -79,7 +79,7 @@
             v-if="!isLoggedIn"
             to="/login" 
             :class="[
-              'p-2 hover:opacity-60 transition-all duration-300 cursor-pointer',
+              'icon-btn p-2 hover:opacity-60 transition-all duration-300 cursor-pointer',
               isScrolled ? 'text-primary' : 'text-white'
             ]"
             aria-label="Account"
@@ -93,7 +93,7 @@
             v-else
             @click="toggleUserMenu"
             :class="[
-              'p-2 hover:opacity-60 transition-all duration-300 cursor-pointer',
+              'icon-btn p-2 hover:opacity-60 transition-all duration-300 cursor-pointer',
               isScrolled ? 'text-primary' : 'text-white'
             ]"
           >
