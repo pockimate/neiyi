@@ -137,9 +137,41 @@
         <div v-if="currentStep === 2" class="bg-white rounded-lg shadow-sm p-8">
           <h2 class="text-xl font-semibold text-primary mb-4">预览导入数据</h2>
           
-          <div class="mb-6">
-            <p class="text-textSecondary">
-              共检测到 <span class="font-semibold text-primary">{{ parsedProducts.length }}</span> 个商品
+          <div class="mb-6 flex items-center justify-between">
+            <div>
+              <p class="text-textSecondary">
+                共检测到 <span class="font-semibold text-primary">{{ parsedProducts.length }}</span> 个有效商品
+              </p>
+              <p v-if="validationErrors.length > 0" class="text-error text-sm mt-1">
+                发现 <span class="font-semibold">{{ validationErrors.length }}</span> 行数据有错误
+              </p>
+            </div>
+            <button 
+              v-if="validationErrors.length > 0"
+              @click="downloadErrorReport"
+              class="text-sm text-error hover:text-error/80 underline"
+            >
+              下载错误报告
+            </button>
+          </div>
+
+          <!-- 错误提示 -->
+          <div v-if="validationErrors.length > 0" class="mb-6 p-4 bg-error/10 border border-error/30 rounded-lg">
+            <h3 class="font-semibold text-error mb-2 flex items-center">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+              </svg>
+              数据验证错误
+            </h3>
+            <p class="text-sm text-textSecondary mb-2">以下行存在错误，将被跳过：</p>
+            <ul class="text-sm text-textSecondary space-y-1 max-h-40 overflow-y-auto">
+              <li v-for="error in validationErrors.slice(0, 10)" :key="error.row" class="flex items-start">
+                <span class="font-semibold mr-2">第{{ error.row }}行:</span>
+                <span>{{ error.errors.join(', ') }}</span>
+              </li>
+            </ul>
+            <p v-if="validationErrors.length > 10" class="text-sm text-textMuted mt-2">
+              还有 {{ validationErrors.length - 10 }} 个错误...
             </p>
           </div>
 
@@ -234,18 +266,71 @@ const isDragging = ref(false)
 const parsedProducts = ref<any[]>([])
 const importing = ref(false)
 const importedCount = ref(0)
+const validationErrors = ref<any[]>([])
+const importProgress = ref(0)
+const totalRows = ref(0)
+const processedRows = ref(0)
+
+// Shopify标准字段映射
+const SHOPIFY_FIELDS = {
+  required: ['Handle', 'Title'],
+  optional: [
+    'Body (HTML)', 'Vendor', 'Product Category', 'Type', 'Tags',
+    'Published', 'Option1 Name', 'Option1 Value', 'Option2 Name', 'Option2 Value',
+    'Option3 Name', 'Option3 Value', 'Variant SKU', 'Variant Grams',
+    'Variant Inventory Tracker', 'Variant Inventory Qty', 'Variant Inventory Policy',
+    'Variant Fulfillment Service', 'Variant Price', 'Variant Compare At Price',
+    'Variant Requires Shipping', 'Variant Taxable', 'Variant Barcode',
+    'Image Src', 'Image Position', 'Image Alt Text', 'Gift Card',
+    'SEO Title', 'SEO Description', 'Google Shopping / Google Product Category',
+    'Google Shopping / Gender', 'Google Shopping / Age Group',
+    'Google Shopping / MPN', 'Google Shopping / AdWords Grouping',
+    'Google Shopping / AdWords Labels', 'Google Shopping / Condition',
+    'Google Shopping / Custom Product', 'Google Shopping / Custom Label 0',
+    'Google Shopping / Custom Label 1', 'Google Shopping / Custom Label 2',
+    'Google Shopping / Custom Label 3', 'Google Shopping / Custom Label 4',
+    'Variant Image', 'Variant Weight Unit', 'Variant Tax Code',
+    'Cost per item', 'Status'
+  ]
+}
 
 const handleFileSelect = (event: Event) => {
   const target = event.target as HTMLInputElement
   if (target.files && target.files[0]) {
-    selectedFile.value = target.files[0]
+    const file = target.files[0]
+    
+    // 验证文件类型
+    if (!file.name.endsWith('.csv')) {
+      alert('请选择CSV文件')
+      return
+    }
+    
+    // 验证文件大小（最大10MB）
+    if (file.size > 10 * 1024 * 1024) {
+      alert('文件大小不能超过10MB')
+      return
+    }
+    
+    selectedFile.value = file
   }
 }
 
 const handleDrop = (event: DragEvent) => {
   isDragging.value = false
   if (event.dataTransfer?.files && event.dataTransfer.files[0]) {
-    selectedFile.value = event.dataTransfer.files[0]
+    const file = event.dataTransfer.files[0]
+    
+    if (!file.name.endsWith('.csv')) {
+      alert('请选择CSV文件')
+      return
+    }
+    
+    if (file.size > 10 * 1024 * 1024) {
+      alert('文件大小不能超过10MB')
+      return
+    }
+    
+    selectedFile.value = file
   }
 }
 
@@ -262,60 +347,241 @@ const formatFileSize = (bytes: number) => {
 const parseCSV = async () => {
   if (!selectedFile.value) return
 
-  const text = await selectedFile.value.text()
-  const lines = text.split('\n')
-  const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''))
-  
-  const products: any[] = []
-  
-  for (let i = 1; i < lines.length; i++) {
-    if (!lines[i].trim()) continue
+  try {
+    const text = await selectedFile.value.text()
+    const lines = text.split('\n').filter(line => line.trim()) // 跳过空行
     
-    const values = lines[i].split(',').map(v => v.trim().replace(/"/g, ''))
-    const product: any = {}
-    
-    headers.forEach((header, index) => {
-      product[header] = values[index] || ''
-    })
-    
-    // 转换为我们的商品格式
-    const formattedProduct = {
-      id: Date.now() + i,
-      name: product['Title'] || product['title'],
-      description: product['Body (HTML)'] || product['description'] || '',
-      price: parseFloat(product['Variant Price'] || product['price'] || '0'),
-      originalPrice: parseFloat(product['Variant Compare At Price'] || product['comparePrice'] || '0') || undefined,
-      image: product['Image Src'] || product['image'] || '',
-      type: product['Type'] || product['type'] || '',
-      vendor: product['Vendor'] || product['vendor'] || '',
-      badge: product['Tags']?.includes('New') ? 'New' : 
-             product['Tags']?.includes('Sale') ? 'Sale' : 
-             product['Tags']?.includes('Bestseller') ? 'Bestseller' : '',
-      tags: product['Tags'] || product['tags'] || ''
+    if (lines.length < 2) {
+      alert('CSV文件至少需要包含表头和一行数据')
+      return
     }
     
-    products.push(formattedProduct)
+    // 解析表头
+    const headers = parseCSVLine(lines[0])
+    
+    // 验证必填字段
+    const missingFields = SHOPIFY_FIELDS.required.filter(field => 
+      !headers.some(h => h.toLowerCase() === field.toLowerCase())
+    )
+    
+    if (missingFields.length > 0) {
+      alert(`缺少必填字段: ${missingFields.join(', ')}`)
+      return
+    }
+    
+    const products: any[] = []
+    const errors: any[] = []
+    totalRows.value = lines.length - 1
+    
+    // 解析每一行
+    for (let i = 1; i < lines.length; i++) {
+      try {
+        const values = parseCSVLine(lines[i])
+        const product: any = {}
+        
+        headers.forEach((header, index) => {
+          product[header] = values[index] || ''
+        })
+        
+        // 验证数据
+        const rowErrors = validateProduct(product, i + 1)
+        if (rowErrors.length > 0) {
+          errors.push({ row: i + 1, errors: rowErrors, data: product })
+          continue
+        }
+        
+        // 转换为我们的商品格式
+        const formattedProduct = {
+          id: Date.now() + i,
+          handle: product['Handle'] || product['handle'],
+          name: product['Title'] || product['title'],
+          description: product['Body (HTML)'] || product['description'] || '',
+          price: parseFloat(product['Variant Price'] || product['price'] || '0'),
+          originalPrice: parseFloat(product['Variant Compare At Price'] || product['comparePrice'] || '0') || undefined,
+          image: product['Image Src'] || product['image'] || '',
+          type: product['Type'] || product['type'] || '',
+          vendor: product['Vendor'] || product['vendor'] || '',
+          category: product['Product Category'] || '',
+          sku: product['Variant SKU'] || '',
+          barcode: product['Variant Barcode'] || '',
+          inventory: parseInt(product['Variant Inventory Qty'] || '0'),
+          weight: parseFloat(product['Variant Grams'] || '0'),
+          published: product['Published'] !== 'FALSE',
+          badge: detectBadge(product['Tags'] || ''),
+          tags: product['Tags'] || product['tags'] || '',
+          options: {
+            option1: {
+              name: product['Option1 Name'] || '',
+              value: product['Option1 Value'] || ''
+            },
+            option2: {
+              name: product['Option2 Name'] || '',
+              value: product['Option2 Value'] || ''
+            },
+            option3: {
+              name: product['Option3 Name'] || '',
+              value: product['Option3 Value'] || ''
+            }
+          }
+        }
+        
+        products.push(formattedProduct)
+      } catch (error) {
+        errors.push({ row: i + 1, errors: ['解析失败'], data: {} })
+      }
+    }
+    
+    parsedProducts.value = products
+    validationErrors.value = errors
+    
+    if (errors.length > 0) {
+      const proceed = confirm(`发现 ${errors.length} 行数据有错误，是否继续导入有效数据？`)
+      if (!proceed) return
+    }
+    
+    currentStep.value = 2
+  } catch (error) {
+    alert('CSV文件解析失败，请检查文件格式')
+    console.error(error)
+  }
+}
+
+// 解析CSV行（处理引号和逗号）
+const parseCSVLine = (line: string): string[] => {
+  const result: string[] = []
+  let current = ''
+  let inQuotes = false
+  
+  for (let i = 0; i < line.length; i++) {
+    const char = line[i]
+    
+    if (char === '"') {
+      if (inQuotes && line[i + 1] === '"') {
+        current += '"'
+        i++
+      } else {
+        inQuotes = !inQuotes
+      }
+    } else if (char === ',' && !inQuotes) {
+      result.push(current.trim())
+      current = ''
+    } else {
+      current += char
+    }
   }
   
-  parsedProducts.value = products
-  currentStep.value = 2
+  result.push(current.trim())
+  return result.map(v => v.replace(/^"|"$/g, ''))
+}
+
+// 验证商品数据
+const validateProduct = (product: any, row: number): string[] => {
+  const errors: string[] = []
+  
+  // 验证Handle（必填且唯一）
+  if (!product['Handle'] && !product['handle']) {
+    errors.push('Handle不能为空')
+  }
+  
+  // 验证Title（必填）
+  if (!product['Title'] && !product['title']) {
+    errors.push('Title不能为空')
+  }
+  
+  // 验证价格格式
+  const price = product['Variant Price'] || product['price']
+  if (price && isNaN(parseFloat(price))) {
+    errors.push('价格格式错误')
+  }
+  
+  // 验证库存格式
+  const inventory = product['Variant Inventory Qty']
+  if (inventory && isNaN(parseInt(inventory))) {
+    errors.push('库存格式错误')
+  }
+  
+  // 验证图片URL
+  const imageUrl = product['Image Src'] || product['image']
+  if (imageUrl && !isValidUrl(imageUrl)) {
+    errors.push('图片URL格式错误')
+  }
+  
+  return errors
+}
+
+// 验证URL格式
+const isValidUrl = (url: string): boolean => {
+  try {
+    new URL(url)
+    return true
+  } catch {
+    return false
+  }
+}
+
+// 检测徽章
+const detectBadge = (tags: string): string => {
+  const tagLower = tags.toLowerCase()
+  if (tagLower.includes('new')) return 'New'
+  if (tagLower.includes('sale')) return 'Sale'
+  if (tagLower.includes('bestseller') || tagLower.includes('best seller')) return 'Bestseller'
+  return ''
 }
 
 const importProducts = async () => {
   currentStep.value = 3
   importing.value = true
+  importProgress.value = 0
+  processedRows.value = 0
   
-  // 模拟导入过程
-  await new Promise(resolve => setTimeout(resolve, 2000))
+  try {
+    const batchSize = 10 // 每批处理10个商品
+    const batches = Math.ceil(parsedProducts.value.length / batchSize)
+    
+    for (let i = 0; i < batches; i++) {
+      const start = i * batchSize
+      const end = Math.min(start + batchSize, parsedProducts.value.length)
+      const batch = parsedProducts.value.slice(start, end)
+      
+      // 模拟批量导入
+      await new Promise(resolve => setTimeout(resolve, 500))
+      
+      // 这里应该调用API保存到数据库
+      // 现在只是保存到localStorage作为演示
+      const existingProducts = JSON.parse(localStorage.getItem('products') || '[]')
+      const allProducts = [...existingProducts, ...batch]
+      localStorage.setItem('products', JSON.stringify(allProducts))
+      
+      processedRows.value = end
+      importProgress.value = Math.round((end / parsedProducts.value.length) * 100)
+    }
+    
+    importedCount.value = parsedProducts.value.length
+    importing.value = false
+  } catch (error) {
+    importing.value = false
+    alert('导入失败，请重试')
+    console.error(error)
+  }
+}
+
+const downloadErrorReport = () => {
+  if (validationErrors.value.length === 0) return
   
-  // 这里应该调用API保存到数据库
-  // 现在只是保存到localStorage作为演示
-  const existingProducts = JSON.parse(localStorage.getItem('products') || '[]')
-  const allProducts = [...existingProducts, ...parsedProducts.value]
-  localStorage.setItem('products', JSON.stringify(allProducts))
+  let csv = 'Row,Errors,Handle,Title\n'
+  validationErrors.value.forEach(error => {
+    const handle = error.data['Handle'] || error.data['handle'] || ''
+    const title = error.data['Title'] || error.data['title'] || ''
+    csv += `${error.row},"${error.errors.join('; ')}","${handle}","${title}"\n`
+  })
   
-  importedCount.value = parsedProducts.value.length
-  importing.value = false
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = 'import-errors.csv'
+  a.click()
+  URL.revokeObjectURL(url)
 }
 
 const resetImport = () => {
@@ -326,12 +592,12 @@ const resetImport = () => {
 }
 
 const downloadTemplate = () => {
-  const template = `Handle,Title,Body (HTML),Vendor,Type,Tags,Variant Price,Variant Compare At Price,Image Src
-lace-bra-001,Elegant Lace Bra,Beautiful lace bra with delicate details,Intimate Elegance,Bras,New,49.99,69.99,https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f
-silk-chemise-002,Silk Chemise,Luxurious silk chemise,Intimate Elegance,Chemises,Bestseller,89.99,,https://images.unsplash.com/photo-1596783074918-c84cb06531ca
-satin-bodysuit-003,Satin Bodysuit,Elegant satin bodysuit,Intimate Elegance,Bodysuits,Sale,59.99,79.99,https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f`
+  const template = `Handle,Title,Body (HTML),Vendor,Product Category,Type,Tags,Published,Option1 Name,Option1 Value,Option2 Name,Option2 Value,Option3 Name,Option3 Value,Variant SKU,Variant Grams,Variant Inventory Tracker,Variant Inventory Qty,Variant Inventory Policy,Variant Fulfillment Service,Variant Price,Variant Compare At Price,Variant Requires Shipping,Variant Taxable,Variant Barcode,Image Src,Image Position,Image Alt Text,Gift Card,SEO Title,SEO Description,Variant Image,Variant Weight Unit,Status
+lace-bra-001,Elegant Lace Bra,"<p>Beautiful lace bra with delicate details. Perfect for everyday wear.</p>",Intimate Elegance,Apparel & Accessories > Clothing > Underwear & Socks,Bras,"New,Featured",TRUE,Size,M,Color,Black,,,LB001,200,shopify,50,deny,manual,49.99,69.99,TRUE,TRUE,123456789,https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f,1,Elegant Lace Bra,FALSE,Elegant Lace Bra - Intimate Elegance,Shop our elegant lace bra collection,https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f,g,active
+silk-chemise-002,Silk Chemise,"<p>Luxurious silk chemise for ultimate comfort.</p>",Intimate Elegance,Apparel & Accessories > Clothing > Sleepwear,Chemises,"Bestseller,Luxury",TRUE,Size,L,,,,,SC002,150,shopify,30,deny,manual,89.99,,TRUE,TRUE,987654321,https://images.unsplash.com/photo-1596783074918-c84cb06531ca,1,Silk Chemise,FALSE,Silk Chemise - Intimate Elegance,Premium silk chemise collection,https://images.unsplash.com/photo-1596783074918-c84cb06531ca,g,active
+satin-bodysuit-003,Satin Bodysuit,"<p>Elegant satin bodysuit with adjustable straps.</p>",Intimate Elegance,Apparel & Accessories > Clothing > One-Pieces,Bodysuits,"Sale,Summer",TRUE,Size,S,Color,Pink,,,SB003,180,shopify,25,deny,manual,59.99,79.99,TRUE,TRUE,456789123,https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f,1,Satin Bodysuit,FALSE,Satin Bodysuit - Intimate Elegance,Elegant satin bodysuit on sale,https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f,g,active`
   
-  const blob = new Blob([template], { type: 'text/csv' })
+  const blob = new Blob(['\ufeff' + template], { type: 'text/csv;charset=utf-8;' }) // UTF-8 BOM
   const url = URL.createObjectURL(blob)
   const a = document.createElement('a')
   a.href = url
