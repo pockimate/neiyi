@@ -2,7 +2,15 @@
   <div class="bg-white min-h-screen">
     <TheNavbar />
     
-    <section class="pt-32 pb-20 px-6">
+    <!-- Breadcrumb -->
+    <div class="pt-24">
+      <Breadcrumb :items="[
+        { label: 'Shopping Cart', to: '/cart' },
+        { label: 'Checkout' }
+      ]" />
+    </div>
+    
+    <section class="pt-8 pb-20 px-6">
       <div class="max-w-7xl mx-auto">
         <!-- Progress Steps -->
         <div class="mb-12">

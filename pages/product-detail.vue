@@ -5,13 +5,10 @@
     <section v-if="product" class="pt-24 pb-20">
       <div class="max-w-7xl mx-auto px-6">
         <!-- Breadcrumb -->
-        <nav class="mb-8 flex items-center gap-2 text-sm text-textMuted">
-          <NuxtLink to="/" class="hover:text-primary transition-colors">Home</NuxtLink>
-          <span>/</span>
-          <NuxtLink to="/products" class="hover:text-primary transition-colors">Products</NuxtLink>
-          <span>/</span>
-          <span class="text-primary">{{ product.name }}</span>
-        </nav>
+        <Breadcrumb :items="[
+          { label: 'Products', to: '/products' },
+          { label: product.name }
+        ]" />
         
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
           <!-- Left: Product Images -->

@@ -2,6 +2,11 @@
   <div>
     <TheNavbar />
     
+    <!-- Breadcrumb -->
+    <div class="pt-24">
+      <Breadcrumb :items="[{ label: 'Size Guide' }]" />
+    </div>
+    
     <!-- Hero Section -->
     <section class="page-header">
       <h1 class="page-title">Size Guide</h1>

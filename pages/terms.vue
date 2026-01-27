@@ -2,6 +2,11 @@
   <div>
     <TheNavbar />
     
+    <!-- Breadcrumb -->
+    <div class="pt-24">
+      <Breadcrumb :items="[{ label: 'Terms of Service' }]" />
+    </div>
+    
     <section class="page-header">
       <h1 class="page-title">Terms of Service</h1>
       <p class="page-subtitle">Last updated: January 2024</p>

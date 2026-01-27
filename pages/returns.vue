@@ -2,6 +2,11 @@
   <div>
     <TheNavbar />
     
+    <!-- Breadcrumb -->
+    <div class="pt-24">
+      <Breadcrumb :items="[{ label: 'Returns' }]" />
+    </div>
+    
     <section class="page-header">
       <h1 class="page-title">Returns & Exchanges</h1>
       <p class="page-subtitle">We want you to love your purchase. If not, we're here to help.</p>

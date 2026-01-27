@@ -2,6 +2,11 @@
   <div>
     <TheNavbar />
     
+    <!-- Breadcrumb -->
+    <div class="pt-24">
+      <Breadcrumb :items="[{ label: 'Shipping' }]" />
+    </div>
+    
     <section class="page-header">
       <h1 class="page-title">Shipping Information</h1>
       <p class="page-subtitle">Fast, discreet, and reliable delivery to your door</p>

@@ -2,6 +2,11 @@
   <div>
     <TheNavbar />
     
+    <!-- Breadcrumb -->
+    <div class="pt-24">
+      <Breadcrumb :items="[{ label: 'Privacy Policy' }]" />
+    </div>
+    
     <section class="page-header">
       <h1 class="page-title">Privacy Policy</h1>
       <p class="page-subtitle">Last updated: January 2024</p>

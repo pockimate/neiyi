@@ -2,6 +2,11 @@
   <div>
     <TheNavbar />
     
+    <!-- Breadcrumb -->
+    <div class="pt-24">
+      <Breadcrumb :items="[{ label: 'About' }]" />
+    </div>
+    
     <!-- Hero Section -->
     <section class="page-header">
       <h1 class="page-title">Our Story</h1>
