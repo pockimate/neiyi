@@ -1,7 +1,24 @@
 <template>
+  <!-- 顶部通知栏 -->
+  <div v-if="showTopBar" class="bg-primary text-white text-center py-2 px-4 text-xs uppercase tracking-wide relative z-50">
+    <p class="max-w-7xl mx-auto">
+      {{ topBarMessage }}
+    </p>
+    <button 
+      @click="closeTopBar"
+      class="absolute right-4 top-1/2 -translate-y-1/2 hover:opacity-70 transition-opacity"
+      aria-label="Close notification"
+    >
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+    </button>
+  </div>
+  
   <nav 
     :class="[
-      'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+      'fixed left-0 right-0 z-50 transition-all duration-300',
+      showTopBar ? 'top-8' : 'top-0',
       isTransparent ? 'bg-transparent' : 'bg-white border-b border-border shadow-sm'
     ]"
   >
@@ -20,15 +37,26 @@
         
         <!-- 主导航 - 桌面端 -->
         <div class="hidden md:flex items-center gap-8">
-          <NuxtLink 
-            to="/products" 
-            :class="[
-              'nav-link transition-colors duration-300',
-              isTransparent ? 'text-white' : 'text-primary'
-            ]"
+          <!-- Shop All with Mega Menu -->
+          <div 
+            class="relative"
+            @mouseenter="openMegaMenu('shop')"
+            @mouseleave="closeMegaMenu"
           >
-            Shop All
-          </NuxtLink>
+            <NuxtLink 
+              to="/products" 
+              :class="[
+                'nav-link transition-colors duration-300 flex items-center gap-1',
+                isTransparent ? 'text-white' : 'text-primary'
+              ]"
+            >
+              Shop All
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </NuxtLink>
+          </div>
+          
           <NuxtLink 
             to="/products?filter=new" 
             :class="[
@@ -102,33 +130,39 @@
             </svg>
           </button>
           
-          <!-- 购物车 -->
-          <NuxtLink 
-            to="/cart" 
-            class="relative p-2 hover:opacity-60 transition-opacity cursor-pointer" 
-            aria-label="Shopping cart"
+          <!-- 购物车 with Mini Cart Preview -->
+          <div 
+            class="relative"
+            @mouseenter="openMiniCart"
+            @mouseleave="closeMiniCart"
           >
-            <svg 
-              :class="[
-                'w-5 h-5',
-                isTransparent ? 'text-white' : 'text-primary'
-              ]" 
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24"
+            <NuxtLink 
+              to="/cart" 
+              class="relative p-2 hover:opacity-60 transition-opacity cursor-pointer block" 
+              aria-label="Shopping cart"
             >
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
-            </svg>
-            <span 
-              v-if="cartStore.cartCount > 0" 
-              :class="[
-                'cart-badge absolute -top-1 -right-1 bg-primary text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-semibold',
-                { 'updated': isBadgeAnimating }
-              ]"
-            >
-              {{ cartStore.cartCount }}
-            </span>
-          </NuxtLink>
+              <svg 
+                :class="[
+                  'w-5 h-5',
+                  isTransparent ? 'text-white' : 'text-primary'
+                ]" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+              </svg>
+              <span 
+                v-if="cartStore.cartCount > 0" 
+                :class="[
+                  'cart-badge absolute -top-1 -right-1 bg-primary text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-semibold',
+                  { 'updated': isBadgeAnimating }
+                ]"
+              >
+                {{ cartStore.cartCount }}
+              </span>
+            </NuxtLink>
+          </div>
           
           <!-- 移动端菜单按钮 -->
           <button 
@@ -146,7 +180,7 @@
         </div>
       </div>
       
-      <!-- 搜索栏 -->
+      <!-- 搜索栏 with Auto-suggestions -->
       <Transition name="slide-down">
         <div v-if="isSearchOpen" class="mt-4 pt-4 border-t border-border">
           <div class="relative">
@@ -156,10 +190,32 @@
               placeholder="Search products..."
               class="w-full px-4 py-3 pl-12 border-2 border-gray-300 transition-all duration-300 focus:border-accent focus:shadow-[0_0_0_4px_rgba(201,168,130,0.1)] focus:outline-none text-sm"
               @keyup.enter="handleSearch"
+              @input="handleSearchInput"
             />
             <svg class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-textMuted pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
             </svg>
+            
+            <!-- Search Suggestions -->
+            <div 
+              v-if="searchSuggestions.length > 0 && searchQuery.length > 0"
+              class="absolute top-full left-0 right-0 mt-2 bg-white border border-border shadow-lg max-h-96 overflow-y-auto z-50"
+            >
+              <NuxtLink
+                v-for="product in searchSuggestions"
+                :key="product.id"
+                :to="`/product-detail?id=${product.id}`"
+                @click="closeSearch"
+                class="flex items-center gap-4 p-3 hover:bg-backgroundLight transition-colors cursor-pointer border-b border-border last:border-b-0"
+              >
+                <img :src="product.image" :alt="product.name" class="w-16 h-16 object-cover" />
+                <div class="flex-1">
+                  <p class="text-sm font-semibold text-primary">{{ product.name }}</p>
+                  <p class="text-xs text-textMuted">{{ product.category }}</p>
+                </div>
+                <p class="text-sm font-semibold text-accent">${{ product.price.toFixed(2) }}</p>
+              </NuxtLink>
+            </div>
           </div>
         </div>
       </Transition>
@@ -208,6 +264,103 @@
       </div>
     </Transition>
     
+    <!-- Mega Menu -->
+    <Transition name="fade">
+      <div
+        v-if="isMegaMenuOpen && activeMegaMenu === 'shop'"
+        @mouseenter="openMegaMenu('shop')"
+        @mouseleave="closeMegaMenu"
+        class="absolute left-0 right-0 top-full bg-white border-b border-border shadow-lg z-40"
+      >
+        <div class="max-w-7xl mx-auto px-6 py-8">
+          <div class="grid grid-cols-4 gap-8">
+            <!-- Categories -->
+            <div v-for="category in categories" :key="category.name">
+              <h3 class="text-sm font-semibold text-primary uppercase tracking-wide mb-4">{{ category.name }}</h3>
+              <ul class="space-y-2">
+                <li v-for="item in category.items" :key="item">
+                  <NuxtLink 
+                    :to="`/products?category=${encodeURIComponent(item)}`"
+                    @click="closeMegaMenu"
+                    class="text-sm text-textMuted hover:text-accent transition-colors"
+                  >
+                    {{ item }}
+                  </NuxtLink>
+                </li>
+              </ul>
+            </div>
+            
+            <!-- Featured Products -->
+            <div class="col-span-1">
+              <h3 class="text-sm font-semibold text-primary uppercase tracking-wide mb-4">Featured</h3>
+              <div class="space-y-4">
+                <NuxtLink
+                  v-for="product in featuredProducts.slice(0, 2)"
+                  :key="product.id"
+                  :to="`/product-detail?id=${product.id}`"
+                  @click="closeMegaMenu"
+                  class="block group"
+                >
+                  <div class="relative overflow-hidden mb-2">
+                    <img :src="product.image" :alt="product.name" class="w-full h-32 object-cover group-hover:scale-105 transition-transform duration-300" />
+                    <span v-if="product.badge" class="absolute top-2 left-2 px-2 py-1 bg-accent text-white text-xs font-semibold uppercase">
+                      {{ product.badge }}
+                    </span>
+                  </div>
+                  <p class="text-xs font-semibold text-primary group-hover:text-accent transition-colors">{{ product.name }}</p>
+                  <p class="text-xs text-accent">${{ product.price.toFixed(2) }}</p>
+                </NuxtLink>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Transition>
+    
+    <!-- Mini Cart Preview -->
+    <Transition name="fade">
+      <div
+        v-if="isMiniCartOpen && cartStore.cartCount > 0"
+        @mouseenter="openMiniCart"
+        @mouseleave="closeMiniCart"
+        class="absolute right-6 top-full mt-2 w-80 bg-white border border-border shadow-lg z-40"
+      >
+        <div class="p-4 border-b border-border">
+          <h3 class="text-sm font-semibold text-primary uppercase tracking-wide">Shopping Cart ({{ cartStore.cartCount }})</h3>
+        </div>
+        
+        <div class="max-h-64 overflow-y-auto">
+          <div
+            v-for="(item, index) in cartStore.items.slice(0, 3)"
+            :key="index"
+            class="flex gap-3 p-4 border-b border-border"
+          >
+            <img v-if="item.image" :src="item.image" :alt="item.name" class="w-16 h-16 object-cover" />
+            <div class="flex-1">
+              <p class="text-xs font-semibold text-primary">{{ item.name }}</p>
+              <p class="text-xs text-textMuted">{{ item.size }} | {{ item.color }}</p>
+              <p class="text-xs text-textMuted">Qty: {{ item.quantity }}</p>
+            </div>
+            <p class="text-xs font-semibold text-accent">${{ (item.price * item.quantity).toFixed(2) }}</p>
+          </div>
+        </div>
+        
+        <div class="p-4 border-t border-border">
+          <div class="flex justify-between mb-3">
+            <span class="text-sm font-semibold">Subtotal:</span>
+            <span class="text-sm font-semibold text-accent">${{ cartStore.subtotal.toFixed(2) }}</span>
+          </div>
+          <NuxtLink 
+            to="/cart"
+            @click="closeMiniCart"
+            class="block w-full py-2 bg-primary hover:bg-accent text-white text-center text-xs uppercase tracking-wide font-semibold transition-colors"
+          >
+            View Cart
+          </NuxtLink>
+        </div>
+      </div>
+    </Transition>
+    
     <!-- 购物车侧边栏 -->
     <CartSidebar :isOpen="isCartOpen" @close="isCartOpen = false" />
   </nav>
@@ -240,6 +393,48 @@ const userEmail = ref('')
 const isCartOpen = ref(false)
 const isBadgeAnimating = ref(false)
 
+// Top Bar
+const showTopBar = ref(true)
+const topBarMessage = computed(() => {
+  if (cartStore.subtotal > 0 && cartStore.subtotal < 100) {
+    return `Add $${(100 - cartStore.subtotal).toFixed(2)} more for FREE SHIPPING! 🚚`
+  }
+  return '✨ NEW ARRIVALS: Shop the latest collection | FREE SHIPPING on orders over $100'
+})
+
+// Mega Menu
+const isMegaMenuOpen = ref(false)
+const activeMegaMenu = ref('')
+const categories = [
+  {
+    name: 'Bras & Sets',
+    items: ['Lace Bras', 'Silk Sets', 'Velvet Bralettes', 'Push-up Bras', 'Wireless Bras']
+  },
+  {
+    name: 'Bodysuits',
+    items: ['Satin Bodysuits', 'Mesh Teddies', 'Lace Bodysuits', 'Sheer Bodysuits']
+  },
+  {
+    name: 'Chemises',
+    items: ['Lace Chemises', 'Satin Chemises', 'Robe Sets', 'Babydolls']
+  },
+  {
+    name: 'Corsets',
+    items: ['Velvet Corsets', 'Structured Corsets', 'Corset Sets', 'Waist Cinchers']
+  }
+]
+
+const featuredProducts = computed(() => {
+  return products.filter(p => p.badge === 'New' || p.badge === 'Bestseller').slice(0, 2)
+})
+
+// Mini Cart
+const isMiniCartOpen = ref(false)
+
+// Search Suggestions
+const searchSuggestions = ref<typeof products>([])
+let searchTimeout: NodeJS.Timeout
+
 // 监听购物车数量变化，触发动画
 watch(() => cartStore.cartCount, (newCount, oldCount) => {
   if (newCount > oldCount) {
@@ -255,11 +450,58 @@ const handleScroll = () => {
   isScrolled.value = window.scrollY > 50
 }
 
+const closeTopBar = () => {
+  showTopBar.value = false
+}
+
+const openMegaMenu = (menu: string) => {
+  activeMegaMenu.value = menu
+  isMegaMenuOpen.value = true
+}
+
+const closeMegaMenu = () => {
+  isMegaMenuOpen.value = false
+  activeMegaMenu.value = ''
+}
+
+const openMiniCart = () => {
+  isMiniCartOpen.value = true
+}
+
+const closeMiniCart = () => {
+  isMiniCartOpen.value = false
+}
+
 const toggleSearch = () => {
   isSearchOpen.value = !isSearchOpen.value
   if (!isSearchOpen.value) {
     searchQuery.value = ''
+    searchSuggestions.value = []
   }
+}
+
+const closeSearch = () => {
+  isSearchOpen.value = false
+  searchQuery.value = ''
+  searchSuggestions.value = []
+}
+
+const handleSearchInput = () => {
+  clearTimeout(searchTimeout)
+  
+  if (searchQuery.value.length < 2) {
+    searchSuggestions.value = []
+    return
+  }
+  
+  searchTimeout = setTimeout(() => {
+    const query = searchQuery.value.toLowerCase()
+    searchSuggestions.value = products.filter(p => 
+      p.name.toLowerCase().includes(query) || 
+      p.category.toLowerCase().includes(query) ||
+      p.description.toLowerCase().includes(query)
+    ).slice(0, 5)
+  }, 300)
 }
 
 const toggleUserMenu = () => {
