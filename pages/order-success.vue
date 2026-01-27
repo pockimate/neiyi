@@ -134,80 +134,36 @@
           
           <!-- Actions -->
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <NuxtLink 
+            <BaseButton 
+              tag="NuxtLink"
               to="/products" 
-              style="
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
-                color: #FFFFFF;
-                font-weight: 600;
-                padding: 16px 32px;
-                font-size: 16px;
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
-                border: none;
-                border-radius: 9999px;
-                box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
-                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                cursor: pointer;
-                text-decoration: none;
-              "
+              variant="primary"
+              size="md"
             >
               Continue Shopping
-            </NuxtLink>
-            <NuxtLink 
+            </BaseButton>
+            <BaseButton 
+              tag="NuxtLink"
               to="/" 
-              style="
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                background: transparent;
-                color: #2C2C2C;
-                font-weight: 600;
-                padding: 16px 32px;
-                font-size: 16px;
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
-                border: 2px solid #2C2C2C;
-                border-radius: 9999px;
-                transition: all 0.3s ease;
-                cursor: pointer;
-                text-decoration: none;
-              "
+              variant="secondary"
+              size="md"
             >
               Back to Home
-            </NuxtLink>
+            </BaseButton>
           </div>
         </div>
         
         <div v-else class="glass-card rounded-2xl p-12 border border-gray-200 text-center">
           <h3 class="font-display text-2xl font-semibold mb-2 text-textPrimary">No Order Found</h3>
           <p class="text-slate-600 mb-6">We couldn't find your order details.</p>
-          <NuxtLink 
+          <BaseButton 
+            tag="NuxtLink"
             to="/products" 
-            style="
-              display: inline-flex;
-              align-items: center;
-              justify-content: center;
-              background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
-              color: #FFFFFF;
-              font-weight: 600;
-              padding: 14px 32px;
-              font-size: 16px;
-              text-transform: uppercase;
-              letter-spacing: 0.5px;
-              border: none;
-              border-radius: 9999px;
-              box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
-              transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-              cursor: pointer;
-              text-decoration: none;
-            "
+            variant="primary"
+            size="md"
           >
             Shop Now
-          </NuxtLink>
+          </BaseButton>
         </div>
       </div>
     </section>

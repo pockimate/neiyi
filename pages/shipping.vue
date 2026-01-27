@@ -134,29 +134,14 @@
       <div class="max-w-4xl mx-auto text-center">
         <h2 class="font-display text-4xl font-bold mb-4" style="color: #2C2C2C;">Questions About Shipping?</h2>
         <p class="text-lg text-slate-600 mb-8">Our customer service team is here to help</p>
-        <NuxtLink 
+        <BaseButton 
+          tag="NuxtLink"
           to="/contact" 
-          style="
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
-            color: #FFFFFF;
-            font-weight: 600;
-            padding: 18px 40px;
-            font-size: 18px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border: none;
-            border-radius: 9999px;
-            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-            text-decoration: none;
-          "
+          variant="primary"
+          size="lg"
         >
           Contact Us
-        </NuxtLink>
+        </BaseButton>
       </div>
     </section>
     

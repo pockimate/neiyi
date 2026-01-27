@@ -35,29 +35,14 @@
         <div v-if="cartStore.items.length === 0" class="text-center py-20">
           <h3 class="text-xl font-light mb-4 text-primary uppercase tracking-wide">Your cart is empty</h3>
           <p class="text-sm text-textMuted mb-8">Add some items before checking out</p>
-          <NuxtLink 
+          <BaseButton 
+            tag="NuxtLink"
             to="/products" 
-            style="
-              display: inline-flex;
-              align-items: center;
-              justify-content: center;
-              background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
-              color: #FFFFFF;
-              font-weight: 600;
-              padding: 14px 32px;
-              font-size: 16px;
-              text-transform: uppercase;
-              letter-spacing: 0.5px;
-              border: none;
-              border-radius: 4px;
-              box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
-              transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-              cursor: pointer;
-              text-decoration: none;
-            "
+            variant="primary"
+            size="md"
           >
             Continue Shopping
-          </NuxtLink>
+          </BaseButton>
         </div>
 
         <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-12">
