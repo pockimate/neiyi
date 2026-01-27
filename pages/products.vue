@@ -77,7 +77,11 @@
         </div>
         
         <!-- 产品网格 -->
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+        <div v-if="isLoading" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+          <ProductCardSkeleton v-for="n in 8" :key="n" />
+        </div>
+        
+        <div v-else class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
           <ProductCard 
             v-for="product in sortedProducts" 
             :key="product.id" 
@@ -112,6 +116,14 @@ const { products } = useProducts()
 const currentFilter = ref('all')
 const sortBy = ref('default')
 const displayCount = ref(20)
+const isLoading = ref(true)
+
+// 模拟加载延迟
+onMounted(() => {
+  setTimeout(() => {
+    isLoading.value = false
+  }, 800)
+})
 
 const filteredProducts = computed(() => {
   let filtered = [...products]
