@@ -367,8 +367,6 @@ watch(() => product.value, (newProduct) => {
   }
 }, { immediate: true })
 </script>
-}, { immediate: true })
-</script>
 
 <style scoped>
 input[type="number"]::-webkit-inner-spin-button,
