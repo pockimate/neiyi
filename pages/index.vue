@@ -79,7 +79,7 @@
     <!-- 2. Categories - 分类导航 -->
     <section class="section bg-backgroundLight">
       <div class="max-w-7xl mx-auto">
-        <div class="grid grid-cols-2 md:grid-cols-4" style="gap: var(--space-lg);">
+        <div class="grid grid-cols-2 md:grid-cols-4" style="gap: var(--space-sm);">
           <NuxtLink 
             v-for="(category, catIndex) in categories" 
             :key="catIndex"
@@ -116,7 +116,7 @@
           <div class="w-16 h-px bg-accent mx-auto"></div>
         </div>
         
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4" style="gap: var(--space-lg);">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4" style="gap: var(--space-md);">
           <div class="fade-in-up" v-for="(product, index) in featuredProducts" :key="product.id" :class="`delay-${(index % 4) * 100}`">
             <ProductCard :product="product" />
           </div>

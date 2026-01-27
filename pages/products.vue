@@ -77,11 +77,11 @@
         </div>
         
         <!-- 产品网格 -->
-        <div v-if="isLoading" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4" style="gap: var(--space-lg);">
+        <div v-if="isLoading" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4" style="gap: var(--space-md);">
           <ProductCardSkeleton v-for="n in 8" :key="n" />
         </div>
         
-        <div v-else class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4" style="gap: var(--space-lg);">
+        <div v-else class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4" style="gap: var(--space-md);">
           <ProductCard 
             v-for="product in sortedProducts" 
             :key="product.id" 
