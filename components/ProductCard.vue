@@ -7,21 +7,26 @@
       <!-- 图片区域 -->
       <div class="product-image-wrapper relative aspect-[3/4] overflow-hidden bg-backgroundLight">
         <!-- 主图片 -->
-        <img 
-          :src="product.image" 
+        <OptimizedImage
+          :src="product.image"
           :alt="product.name"
-          class="product-image product-image-main w-full h-full object-cover"
-          loading="lazy"
+          aspect-ratio="3/4"
+          object-fit="cover"
+          image-class="product-image product-image-main"
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
         />
         
         <!-- 第二张图片 (hover显示) -->
-        <img 
-          v-if="product.hoverImage"
-          :src="product.hoverImage" 
-          :alt="`${product.name} - alternate view`"
-          class="product-image product-image-hover w-full h-full object-cover absolute inset-0"
-          loading="lazy"
-        />
+        <div v-if="product.hoverImage" class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-400">
+          <OptimizedImage
+            :src="product.hoverImage"
+            :alt="`${product.name} - alternate view`"
+            aspect-ratio="3/4"
+            object-fit="cover"
+            image-class="product-image product-image-hover"
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+          />
+        </div>
         
         <!-- 徽章 -->
         <div 

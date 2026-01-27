@@ -167,20 +167,72 @@ export default defineNuxtConfig({
             roseLight: '#F0F0F0'
           },
           fontFamily: {
-            display: ['Playfair Display', 'serif'],
-            body: ['Montserrat', 'sans-serif'],
-            script: ['Allura', 'cursive']
+            // 衬线字体 - 用于标题和品牌元素
+            display: ['Playfair Display', 'Georgia', 'serif'],
+            // 无衬线字体 - 用于正文和UI元素
+            body: ['Montserrat', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+            // 手写字体 - 用于装饰性文字
+            script: ['Allura', 'cursive'],
+            // 系统字体栈 - 用于表单和数据
+            mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace']
           },
           fontSize: {
-            'h1': '48px',
-            'h2': '36px',
-            'h3': '24px',
-            'body': '16px',
+            // 标题层级 (H1-H6)
+            'h1': ['3rem', { lineHeight: '1.2', letterSpacing: '-0.02em', fontWeight: '700' }],      // 48px
+            'h2': ['2.25rem', { lineHeight: '1.3', letterSpacing: '-0.01em', fontWeight: '600' }],   // 36px
+            'h3': ['1.875rem', { lineHeight: '1.4', letterSpacing: '0', fontWeight: '600' }],        // 30px
+            'h4': ['1.5rem', { lineHeight: '1.4', letterSpacing: '0', fontWeight: '600' }],          // 24px
+            'h5': ['1.25rem', { lineHeight: '1.5', letterSpacing: '0', fontWeight: '600' }],         // 20px
+            'h6': ['1.125rem', { lineHeight: '1.5', letterSpacing: '0', fontWeight: '600' }],        // 18px
+            
+            // 正文层级
+            'body-xl': ['1.25rem', { lineHeight: '1.7', letterSpacing: '0' }],                       // 20px
+            'body-lg': ['1.125rem', { lineHeight: '1.7', letterSpacing: '0' }],                      // 18px
+            'body': ['1rem', { lineHeight: '1.6', letterSpacing: '0' }],                             // 16px (默认)
+            'body-sm': ['0.875rem', { lineHeight: '1.6', letterSpacing: '0' }],                      // 14px
+            
+            // 辅助文字
+            'caption': ['0.75rem', { lineHeight: '1.5', letterSpacing: '0.01em' }],                  // 12px
+            'overline': ['0.75rem', { lineHeight: '1.5', letterSpacing: '0.1em', fontWeight: '600' }], // 12px uppercase
+            
+            // 显示文字 (Hero/Landing)
+            'display-xl': ['4.5rem', { lineHeight: '1.1', letterSpacing: '-0.02em', fontWeight: '800' }],  // 72px
+            'display-lg': ['3.75rem', { lineHeight: '1.1', letterSpacing: '-0.02em', fontWeight: '800' }], // 60px
+            'display-md': ['3rem', { lineHeight: '1.2', letterSpacing: '-0.02em', fontWeight: '700' }],    // 48px
+            
+            // 兼容旧配置
+            'h1-old': '48px',
+            'h2-old': '36px',
+            'h3-old': '24px',
             'small': '14px'
           },
           lineHeight: {
-            'relaxed': '1.7',
-            'loose': '1.8'
+            'tighter': '1.1',
+            'tight': '1.2',
+            'snug': '1.3',
+            'normal': '1.5',
+            'relaxed': '1.6',
+            'loose': '1.7',
+            'extra-loose': '1.8'
+          },
+          letterSpacing: {
+            'tighter': '-0.02em',
+            'tight': '-0.01em',
+            'normal': '0',
+            'wide': '0.01em',
+            'wider': '0.05em',
+            'widest': '0.1em'
+          },
+          fontWeight: {
+            'thin': '100',
+            'extralight': '200',
+            'light': '300',
+            'normal': '400',
+            'medium': '500',
+            'semibold': '600',
+            'bold': '700',
+            'extrabold': '800',
+            'black': '900'
           },
           minHeight: {
             'touch': '48px'
