@@ -329,6 +329,7 @@
         </div>
         
         <!-- Product Details Tabs -->
+        <!-- Tabs Section -->
         <div class="mt-20 border-t border-border">
           <div class="flex gap-8 border-b border-border">
             <button
@@ -343,6 +344,7 @@
               ]"
             >
               {{ tab }}
+              <span v-if="tab === 'Reviews'" class="ml-1 text-xs">({{ reviews.length }})</span>
             </button>
           </div>
           
@@ -381,6 +383,192 @@
               <p class="text-textSecondary text-sm leading-relaxed">
                 Orders are processed within 1-2 business days and typically arrive within 3-5 business days.
               </p>
+            </div>
+            
+            <!-- Reviews Tab -->
+            <div v-if="activeTab === 'Reviews'">
+              <!-- Rating Summary -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 pb-8 border-b border-border">
+                <!-- Overall Rating -->
+                <div class="text-center">
+                  <div class="text-5xl font-bold text-primary mb-2">{{ overallRating }}</div>
+                  <div class="flex justify-center text-accent mb-2">
+                    <svg v-for="i in 5" :key="i" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                    </svg>
+                  </div>
+                  <p class="text-sm text-textMuted">Based on {{ reviews.length }} reviews</p>
+                </div>
+                
+                <!-- Rating Distribution -->
+                <div class="space-y-2">
+                  <div v-for="star in [5, 4, 3, 2, 1]" :key="star" class="flex items-center gap-3">
+                    <span class="text-sm text-textSecondary w-12">{{ star }} star</span>
+                    <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                      <div 
+                        class="h-full bg-accent transition-all duration-300"
+                        :style="{ width: `${getRatingPercentage(star)}%` }"
+                      ></div>
+                    </div>
+                    <span class="text-sm text-textMuted w-12 text-right">{{ getRatingCount(star) }}</span>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Review Filters -->
+              <div class="flex flex-wrap gap-3 mb-6">
+                <button
+                  v-for="filter in reviewFilters"
+                  :key="filter.value"
+                  @click="selectedReviewFilter = filter.value"
+                  :class="[
+                    'px-4 py-2 text-sm border rounded-full transition-all',
+                    selectedReviewFilter === filter.value
+                      ? 'bg-primary text-white border-primary'
+                      : 'bg-white text-textSecondary border-border hover:border-primary'
+                  ]"
+                >
+                  {{ filter.label }}
+                </button>
+              </div>
+              
+              <!-- Reviews List -->
+              <div class="space-y-6">
+                <div 
+                  v-for="review in filteredReviews" 
+                  :key="review.id"
+                  class="border-b border-border pb-6 last:border-0"
+                >
+                  <div class="flex items-start gap-4">
+                    <!-- Avatar -->
+                    <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0">
+                      <span class="text-lg font-semibold text-gray-600">{{ review.userName.charAt(0) }}</span>
+                    </div>
+                    
+                    <div class="flex-1">
+                      <!-- Header -->
+                      <div class="flex items-center justify-between mb-2">
+                        <div>
+                          <h4 class="font-semibold text-primary">{{ review.userName }}</h4>
+                          <div class="flex items-center gap-2 mt-1">
+                            <div class="flex text-accent">
+                              <svg v-for="i in review.rating" :key="i" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                              </svg>
+                            </div>
+                            <span class="text-xs text-textMuted">{{ review.date }}</span>
+                          </div>
+                        </div>
+                        <span v-if="review.verified" class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">
+                          ✓ Verified Purchase
+                        </span>
+                      </div>
+                      
+                      <!-- Specs -->
+                      <p class="text-xs text-textMuted mb-3">
+                        Size: {{ review.size }} • Color: {{ review.color }}
+                      </p>
+                      
+                      <!-- Content -->
+                      <p class="text-sm text-textSecondary leading-relaxed mb-3">
+                        {{ review.content }}
+                      </p>
+                      
+                      <!-- Images -->
+                      <div v-if="review.images && review.images.length > 0" class="flex gap-2 mb-3">
+                        <img 
+                          v-for="(img, idx) in review.images" 
+                          :key="idx"
+                          :src="img" 
+                          alt="Review image"
+                          class="w-20 h-20 object-cover rounded cursor-pointer hover:opacity-80 transition-opacity"
+                          @click="openImageModal(img)"
+                        />
+                      </div>
+                      
+                      <!-- Actions -->
+                      <div class="flex items-center gap-4 text-sm">
+                        <button 
+                          @click="likeReview(review.id)"
+                          class="flex items-center gap-1 text-textMuted hover:text-primary transition-colors"
+                        >
+                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"/>
+                          </svg>
+                          <span>Helpful ({{ review.likes }})</span>
+                        </button>
+                        <button class="text-textMuted hover:text-red-600 transition-colors">
+                          Report
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Load More -->
+              <div v-if="filteredReviews.length < reviews.length" class="text-center mt-8">
+                <BaseButton variant="secondary" size="md">
+                  Load More Reviews
+                </BaseButton>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Recommended Products Section -->
+        <div class="mt-20">
+          <!-- You May Also Like -->
+          <div class="mb-16">
+            <h2 class="text-2xl font-light text-primary mb-6 uppercase tracking-wider">You May Also Like</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+              <ProductCard 
+                v-for="product in recommendedProducts" 
+                :key="product.id"
+                :product="product"
+              />
+            </div>
+          </div>
+          
+          <!-- Frequently Bought Together -->
+          <div class="mb-16 bg-gray-50 p-8 rounded-lg">
+            <h2 class="text-2xl font-light text-primary mb-6 uppercase tracking-wider">Frequently Bought Together</h2>
+            <div class="flex flex-col md:flex-row items-center gap-6">
+              <div class="flex items-center gap-4 flex-wrap justify-center">
+                <div v-for="(item, index) in bundleItems" :key="item.id" class="flex items-center">
+                  <div class="w-24 h-24 bg-white border border-border rounded-lg overflow-hidden">
+                    <img :src="item.image" :alt="item.name" class="w-full h-full object-cover" />
+                  </div>
+                  <svg v-if="index < bundleItems.length - 1" class="w-6 h-6 text-textMuted mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                  </svg>
+                </div>
+              </div>
+              <div class="flex-shrink-0">
+                <div class="text-center mb-4">
+                  <p class="text-sm text-textMuted mb-1">Bundle Price:</p>
+                  <div class="flex items-baseline gap-2 justify-center">
+                    <span class="text-2xl font-bold text-primary">${{ bundlePrice.toFixed(2) }}</span>
+                    <span class="text-sm text-textMuted line-through">${{ bundleOriginalPrice.toFixed(2) }}</span>
+                  </div>
+                  <p class="text-xs text-green-600 font-semibold">Save ${{ (bundleOriginalPrice - bundlePrice).toFixed(2) }}</p>
+                </div>
+                <BaseButton variant="primary" size="md" block>
+                  Add Bundle to Cart
+                </BaseButton>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Recently Viewed -->
+          <div v-if="recentlyViewed.length > 0">
+            <h2 class="text-2xl font-light text-primary mb-6 uppercase tracking-wider">Recently Viewed</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+              <ProductCard 
+                v-for="product in recentlyViewed" 
+                :key="product.id"
+                :product="product"
+              />
             </div>
           </div>
         </div>
@@ -556,7 +744,118 @@ const colors = [
   }
 ]
 
-const tabs = ['Description', 'Details', 'Shipping']
+const tabs = ['Description', 'Details', 'Shipping', 'Reviews']
+
+// Reviews data
+const reviews = ref([
+  {
+    id: 1,
+    userName: 'Sarah M.',
+    rating: 5,
+    date: '2 days ago',
+    verified: true,
+    size: 'M',
+    color: 'Black',
+    content: 'Absolutely love this! The quality is amazing and it fits perfectly. Very comfortable and looks stunning. Highly recommend!',
+    images: [product.value?.image],
+    likes: 24
+  },
+  {
+    id: 2,
+    userName: 'Emma L.',
+    rating: 5,
+    date: '1 week ago',
+    verified: true,
+    size: 'S',
+    color: 'White',
+    content: 'Beautiful piece! The material is soft and luxurious. True to size and very flattering.',
+    images: [],
+    likes: 18
+  },
+  {
+    id: 3,
+    userName: 'Jessica K.',
+    rating: 4,
+    date: '2 weeks ago',
+    verified: true,
+    size: 'L',
+    color: 'Nude',
+    content: 'Great quality and comfortable. Only giving 4 stars because shipping took a bit longer than expected, but the product itself is perfect!',
+    images: [product.value?.image, product.value?.image],
+    likes: 12
+  },
+  {
+    id: 4,
+    userName: 'Amanda R.',
+    rating: 5,
+    date: '3 weeks ago',
+    verified: false,
+    size: 'M',
+    color: 'Black',
+    content: 'This exceeded my expectations! The fit is perfect and the quality is outstanding.',
+    images: [],
+    likes: 8
+  }
+])
+
+const selectedReviewFilter = ref('all')
+const reviewFilters = [
+  { label: 'All Reviews', value: 'all' },
+  { label: '5 Stars', value: '5' },
+  { label: '4 Stars', value: '4' },
+  { label: 'With Photos', value: 'photos' },
+  { label: 'Verified', value: 'verified' }
+]
+
+// Computed properties for reviews
+const overallRating = computed(() => {
+  const sum = reviews.value.reduce((acc, review) => acc + review.rating, 0)
+  return (sum / reviews.value.length).toFixed(1)
+})
+
+const filteredReviews = computed(() => {
+  let filtered = reviews.value
+  
+  if (selectedReviewFilter.value === '5') {
+    filtered = filtered.filter(r => r.rating === 5)
+  } else if (selectedReviewFilter.value === '4') {
+    filtered = filtered.filter(r => r.rating === 4)
+  } else if (selectedReviewFilter.value === 'photos') {
+    filtered = filtered.filter(r => r.images && r.images.length > 0)
+  } else if (selectedReviewFilter.value === 'verified') {
+    filtered = filtered.filter(r => r.verified)
+  }
+  
+  return filtered
+})
+
+const getRatingCount = (star: number) => {
+  return reviews.value.filter(r => r.rating === star).length
+}
+
+const getRatingPercentage = (star: number) => {
+  const count = getRatingCount(star)
+  return (count / reviews.value.length) * 100
+}
+
+// Recommended products
+const recommendedProducts = computed(() => products.slice(0, 4))
+const recentlyViewed = computed(() => products.slice(4, 8))
+
+// Bundle items
+const bundleItems = computed(() => [
+  product.value,
+  products[1],
+  products[2]
+].filter(Boolean))
+
+const bundleOriginalPrice = computed(() => {
+  return bundleItems.value.reduce((sum, item) => sum + (item?.price || 0), 0)
+})
+
+const bundlePrice = computed(() => {
+  return bundleOriginalPrice.value * 0.85 // 15% discount
+})
 
 // Computed properties
 const selectedSizeStock = computed(() => {
@@ -697,6 +996,18 @@ const toggleWishlist = () => {
       isWishlistAnimating.value = false
     }, 600)
   }
+}
+
+const likeReview = (reviewId: number) => {
+  const review = reviews.value.find(r => r.id === reviewId)
+  if (review) {
+    review.likes++
+  }
+}
+
+const openImageModal = (imageUrl: string) => {
+  // TODO: 实现图片查看模态框
+  console.log('Open image:', imageUrl)
 }
 
 // 根据badge类型返回对应的class
