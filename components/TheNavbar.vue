@@ -108,12 +108,23 @@
             class="relative p-2 hover:opacity-60 transition-opacity cursor-pointer" 
             aria-label="Shopping cart"
           >
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg 
+              :class="[
+                'w-5 h-5',
+                isScrolled ? 'text-primary' : 'text-white'
+              ]" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
             </svg>
             <span 
               v-if="cartStore.cartCount > 0" 
-              class="absolute -top-1 -right-1 bg-primary text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-semibold"
+              :class="[
+                'cart-badge absolute -top-1 -right-1 bg-primary text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-semibold',
+                { 'updated': isBadgeAnimating }
+              ]"
             >
               {{ cartStore.cartCount }}
             </span>
@@ -217,6 +228,17 @@ const isLoggedIn = ref(false)
 const userName = ref('')
 const userEmail = ref('')
 const isCartOpen = ref(false)
+const isBadgeAnimating = ref(false)
+
+// 监听购物车数量变化，触发动画
+watch(() => cartStore.cartCount, (newCount, oldCount) => {
+  if (newCount > oldCount) {
+    isBadgeAnimating.value = true
+    setTimeout(() => {
+      isBadgeAnimating.value = false
+    }, 400)
+  }
+})
 
 // 监听滚动
 const handleScroll = () => {
@@ -312,6 +334,20 @@ onUnmounted(() => {
 
 .nav-link:hover {
   color: #666666;
+}
+
+/* 购物车徽章弹跳动画 */
+@keyframes bounce {
+  0%, 100% { 
+    transform: scale(1); 
+  }
+  50% { 
+    transform: scale(1.2); 
+  }
+}
+
+.cart-badge.updated {
+  animation: bounce 0.4s ease;
 }
 
 .slide-down-enter-active,
