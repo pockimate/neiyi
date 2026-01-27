@@ -2,11 +2,9 @@
   <div>
     <TheNavbar />
     
-    <section class="pt-32 pb-12 px-4">
-      <div class="max-w-4xl mx-auto text-center">
-        <h1 class="font-display text-5xl md:text-6xl font-bold text-primary mb-6">Returns & Exchanges</h1>
-        <p class="text-lg text-slate-600 leading-relaxed">We want you to love your purchase. If not, we're here to help.</p>
-      </div>
+    <section class="page-header">
+      <h1 class="page-title">Returns & Exchanges</h1>
+      <p class="page-subtitle">We want you to love your purchase. If not, we're here to help.</p>
     </section>
 
     <section class="py-12 px-4">

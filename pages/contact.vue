@@ -3,11 +3,9 @@
     <TheNavbar />
     
     <!-- Hero Section -->
-    <section class="pt-32 pb-12 px-4">
-      <div class="max-w-4xl mx-auto text-center">
-        <h1 class="font-display text-5xl md:text-6xl font-bold text-primary mb-6">Get in Touch</h1>
-        <p class="text-lg text-slate-600 leading-relaxed">We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
-      </div>
+    <section class="page-header">
+      <h1 class="page-title">Get in Touch</h1>
+      <p class="page-subtitle">We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
     </section>
 
     <!-- Contact Form & Info -->

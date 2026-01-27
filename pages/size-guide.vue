@@ -3,11 +3,9 @@
     <TheNavbar />
     
     <!-- Hero Section -->
-    <section class="pt-32 pb-12 px-4">
-      <div class="max-w-4xl mx-auto text-center">
-        <h1 class="font-display text-5xl md:text-6xl font-bold text-primary mb-6">Size Guide</h1>
-        <p class="text-lg text-slate-600 leading-relaxed">Find your perfect fit with our comprehensive sizing guide</p>
-      </div>
+    <section class="page-header">
+      <h1 class="page-title">Size Guide</h1>
+      <p class="page-subtitle">Find your perfect fit with our comprehensive sizing guide</p>
     </section>
 
     <!-- Size Charts -->

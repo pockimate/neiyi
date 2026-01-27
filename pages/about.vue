@@ -3,12 +3,9 @@
     <TheNavbar />
     
     <!-- Hero Section -->
-    <section class="pt-32 pb-12 px-4 bg-gradient-to-b from-pink-50 to-white">
-      <div class="max-w-4xl mx-auto text-center">
-        <p class="font-script text-3xl md:text-4xl text-primary mb-4">Our Story</p>
-        <h1 class="font-display text-5xl md:text-6xl font-bold text-textPrimary mb-6">About Intimate Elegance</h1>
-        <p class="text-lg text-slate-600 leading-relaxed">Where elegance meets desire, and confidence becomes your signature</p>
-      </div>
+    <section class="page-header">
+      <h1 class="page-title">Our Story</h1>
+      <p class="page-subtitle">Where elegance meets desire, and confidence becomes your signature</p>
     </section>
 
     <!-- Mission Section -->
