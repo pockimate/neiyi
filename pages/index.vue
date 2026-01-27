@@ -201,7 +201,7 @@
           <input 
             type="email" 
             placeholder="Enter your e-mail address"
-            class="flex-1 px-6 py-3 border border-border bg-white text-primary focus:outline-none focus:border-accent transition-colors"
+            class="flex-1 px-6 py-3 border-2 border-gray-300 bg-white text-primary transition-all duration-300 focus:outline-none focus:border-accent focus:shadow-[0_0_0_4px_rgba(201,168,130,0.1)]"
           />
           <button type="submit" class="btn-primary whitespace-nowrap">
             SUBSCRIBE

@@ -151,10 +151,10 @@
               v-model="searchQuery"
               type="text"
               placeholder="Search products..."
-              class="w-full px-4 py-3 border border-border focus:border-primary focus:outline-none text-sm"
+              class="w-full px-4 py-3 pl-12 border-2 border-gray-300 transition-all duration-300 focus:border-accent focus:shadow-[0_0_0_4px_rgba(201,168,130,0.1)] focus:outline-none text-sm"
               @keyup.enter="handleSearch"
             />
-            <svg class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-textMuted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-textMuted pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
             </svg>
           </div>

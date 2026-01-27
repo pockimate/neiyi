@@ -57,7 +57,7 @@
                     v-model="couponCode"
                     type="text"
                     placeholder="Enter code"
-                    class="flex-1 px-4 py-3 border border-border focus:border-primary focus:outline-none text-sm"
+                    class="flex-1 px-4 py-3 border-2 border-gray-300 transition-all duration-300 focus:border-accent focus:shadow-[0_0_0_4px_rgba(201,168,130,0.1)] focus:outline-none text-sm disabled:bg-gray-100 disabled:cursor-not-allowed"
                     :disabled="appliedCoupon !== null"
                   />
                   <button
