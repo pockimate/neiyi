@@ -84,7 +84,8 @@
             v-for="(category, catIndex) in categories" 
             :key="catIndex"
             :to="category.link"
-            class="group relative overflow-hidden cursor-pointer h-64 md:h-80"
+            class="fade-in-up group relative overflow-hidden cursor-pointer h-64 md:h-80"
+            :class="`delay-${catIndex * 100}`"
           >
             <img 
               :src="category.image" 
@@ -105,7 +106,7 @@
     <!-- 3. Featured Products -->
     <section class="py-16 md:py-24 px-6 bg-background">
       <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-12 md:mb-16">
+        <div class="fade-in-up text-center mb-12 md:mb-16">
           <p class="text-xs md:text-sm text-accent font-semibold mb-3 tracking-widest uppercase">
             Discover Our Collection
           </p>
@@ -116,14 +117,12 @@
         </div>
         
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-          <ProductCard 
-            v-for="product in featuredProducts" 
-            :key="product.id" 
-            :product="product" 
-          />
+          <div class="fade-in-up" v-for="(product, index) in featuredProducts" :key="product.id" :class="`delay-${(index % 4) * 100}`">
+            <ProductCard :product="product" />
+          </div>
         </div>
         
-        <div class="text-center mt-12 md:mt-16">
+        <div class="fade-in-up text-center mt-12 md:mt-16">
           <NuxtLink to="/products" class="btn-secondary inline-block">
             View All Products
           </NuxtLink>
@@ -143,7 +142,7 @@
       </div>
       
       <div class="relative z-10 h-full flex items-center justify-center">
-        <div class="text-center text-white px-6 max-w-4xl">
+        <div class="fade-in-up text-center text-white px-6 max-w-4xl">
           <h2 class="text-4xl md:text-7xl font-light mb-6 md:mb-8 tracking-widest uppercase">
             EVERYTHING
           </h2>
@@ -187,17 +186,19 @@
     <!-- 7. Newsletter Signup -->
     <section class="py-16 md:py-24 px-6 bg-backgroundLight text-primary">
       <div class="max-w-3xl mx-auto text-center">
-        <p class="text-xs md:text-sm text-accent font-semibold mb-3 tracking-widest uppercase">
-          Sign Up For
-        </p>
-        <h2 class="text-3xl md:text-4xl font-light mb-4 md:mb-6 tracking-widest uppercase">
-          Newsletter Obsessive
-        </h2>
-        <p class="text-xs md:text-sm text-textMuted mb-8 md:mb-12 tracking-wide">
-          GET AN EXCLUSIVE 10% DISCOUNT WHEN SHOPPING FOR MIN. 50 EURO
-        </p>
+        <div class="fade-in-up">
+          <p class="text-xs md:text-sm text-accent font-semibold mb-3 tracking-widest uppercase">
+            Sign Up For
+          </p>
+          <h2 class="text-3xl md:text-4xl font-light mb-4 md:mb-6 tracking-widest uppercase">
+            Newsletter Obsessive
+          </h2>
+          <p class="text-xs md:text-sm text-textMuted mb-8 md:mb-12 tracking-wide">
+            GET AN EXCLUSIVE 10% DISCOUNT WHEN SHOPPING FOR MIN. 50 EURO
+          </p>
+        </div>
         
-        <form class="flex flex-col md:flex-row gap-4 max-w-xl mx-auto">
+        <form class="fade-in-up delay-200 flex flex-col md:flex-row gap-4 max-w-xl mx-auto">
           <input 
             type="email" 
             placeholder="Enter your e-mail address"
@@ -208,7 +209,7 @@
           </button>
         </form>
         
-        <div class="mt-6 flex items-center justify-center gap-2 text-xs text-textMuted">
+        <div class="fade-in-up delay-300 mt-6 flex items-center justify-center gap-2 text-xs text-textMuted">
           <input type="checkbox" id="newsletter-consent" class="w-4 h-4" />
           <label for="newsletter-consent">
             I subscribe to the newsletter in accordance. Regulations.
@@ -220,22 +221,26 @@
     <!-- 8. Our Story -->
     <section class="py-16 md:py-24 px-6 bg-backgroundLight">
       <div class="max-w-3xl mx-auto text-center">
-        <h2 class="text-3xl md:text-4xl font-light text-primary mb-6 md:mb-8 tracking-widest uppercase">
-          Our Story
-        </h2>
-        <div class="w-16 h-px bg-primary mx-auto mb-8 md:mb-12"></div>
-        <p class="text-textSecondary leading-loose mb-6 md:mb-8 text-sm md:text-base">
+        <div class="fade-in-up">
+          <h2 class="text-3xl md:text-4xl font-light text-primary mb-6 md:mb-8 tracking-widest uppercase">
+            Our Story
+          </h2>
+          <div class="w-16 h-px bg-primary mx-auto mb-8 md:mb-12"></div>
+        </div>
+        <p class="fade-in-up delay-100 text-textSecondary leading-loose mb-6 md:mb-8 text-sm md:text-base">
           We believe every woman deserves to feel beautiful, confident, and empowered. 
           Our journey began with a simple mission: to create luxury lingerie that celebrates 
           femininity in all its forms.
         </p>
-        <p class="text-textSecondary leading-loose mb-8 md:mb-12 text-sm md:text-base">
+        <p class="fade-in-up delay-200 text-textSecondary leading-loose mb-8 md:mb-12 text-sm md:text-base">
           Each piece in our collection is thoughtfully designed and crafted with premium materials, 
           ensuring both comfort and elegance.
         </p>
-        <NuxtLink to="/about" class="btn-secondary inline-block">
-          Learn More
-        </NuxtLink>
+        <div class="fade-in-up delay-300">
+          <NuxtLink to="/about" class="btn-secondary inline-block">
+            Learn More
+          </NuxtLink>
+        </div>
       </div>
     </section>
     
@@ -328,6 +333,25 @@ const stopAutoplay = () => {
 
 onMounted(() => {
   startAutoplay()
+  
+  // 滚动触发动画 - Intersection Observer
+  if (process.client) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible')
+        }
+      })
+    }, { 
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    })
+    
+    // 观察所有带有 fade-in-up 类的元素
+    document.querySelectorAll('.fade-in-up').forEach(el => {
+      observer.observe(el)
+    })
+  }
 })
 
 onUnmounted(() => {
