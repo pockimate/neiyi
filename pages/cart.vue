@@ -28,24 +28,145 @@
         <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-12">
           <!-- Cart Items -->
           <div class="lg:col-span-2 space-y-6">
-            <div v-for="(item, index) in cartStore.items" :key="index" class="border border-border p-6">
+            <div v-for="(item, index) in cartStore.items" :key="index" class="border border-border p-6 hover:shadow-md transition-shadow">
               <div class="flex gap-6">
-                <div class="w-32 h-32 bg-backgroundLight flex-shrink-0 overflow-hidden">
-                  <img v-if="item.image" :src="item.image" :alt="item.name" class="w-full h-full object-cover" />
-                </div>
+                <NuxtLink :to="`/product-detail?id=${item.id}`" class="w-32 h-32 bg-backgroundLight flex-shrink-0 overflow-hidden">
+                  <img v-if="item.image" :src="item.image" :alt="item.name" class="w-full h-full object-cover hover:scale-105 transition-transform" />
+                </NuxtLink>
                 <div class="flex-1">
-                  <h3 class="text-base font-semibold mb-2 text-primary uppercase tracking-wide">{{ item.name }}</h3>
-                  <p class="text-xs text-textMuted mb-4 uppercase">Size: {{ item.size }} | Color: {{ item.color }}</p>
+                  <div class="flex justify-between items-start mb-2">
+                    <NuxtLink :to="`/product-detail?id=${item.id}`" class="hover:text-accent transition-colors">
+                      <h3 class="text-base font-semibold text-primary uppercase tracking-wide">{{ item.name }}</h3>
+                    </NuxtLink>
+                    <button @click="cartStore.removeItem(index)" class="text-textMuted hover:text-red-600 transition-colors" title="Remove">
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                      </svg>
+                    </button>
+                  </div>
+                  
+                  <!-- Size & Color Selectors -->
+                  <div class="flex gap-4 mb-3">
+                    <div>
+                      <label class="text-xs text-textMuted uppercase">Size:</label>
+                      <select 
+                        v-model="item.size"
+                        @change="updateItemSize(index, $event)"
+                        class="ml-2 px-2 py-1 border border-border text-xs focus:border-primary focus:outline-none cursor-pointer"
+                      >
+                        <option v-for="size in availableSizes" :key="size" :value="size">{{ size }}</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label class="text-xs text-textMuted uppercase">Color:</label>
+                      <select 
+                        v-model="item.color"
+                        @change="updateItemColor(index, $event)"
+                        class="ml-2 px-2 py-1 border border-border text-xs focus:border-primary focus:outline-none cursor-pointer"
+                      >
+                        <option v-for="color in availableColors" :key="color" :value="color">{{ color }}</option>
+                      </select>
+                    </div>
+                  </div>
+                  
+                  <!-- Stock Status -->
+                  <p v-if="getItemStock(item) <= 5 && getItemStock(item) > 0" class="text-xs text-orange-600 mb-3">
+                    ⚠️ Only {{ getItemStock(item) }} left in stock
+                  </p>
+                  <p v-else-if="getItemStock(item) === 0" class="text-xs text-red-600 mb-3">
+                    ❌ Out of stock
+                  </p>
+                  
                   <div class="flex items-center justify-between">
+                    <!-- Quantity -->
                     <div class="flex items-center space-x-4">
-                      <button @click="cartStore.updateQuantity(index, -1)" class="w-8 h-8 border border-border hover:bg-backgroundLight transition-colors duration-200 cursor-pointer text-sm">-</button>
+                      <button 
+                        @click="cartStore.updateQuantity(index, -1)" 
+                        :disabled="item.quantity <= 1"
+                        :class="[
+                          'w-8 h-8 border transition-colors duration-200 text-sm',
+                          item.quantity <= 1 
+                            ? 'border-gray-200 text-gray-300 cursor-not-allowed' 
+                            : 'border-border hover:bg-backgroundLight cursor-pointer'
+                        ]"
+                      >
+                        -
+                      </button>
                       <span class="font-semibold text-sm w-8 text-center">{{ item.quantity }}</span>
-                      <button @click="cartStore.updateQuantity(index, 1)" class="w-8 h-8 border border-border hover:bg-backgroundLight transition-colors duration-200 cursor-pointer text-sm">+</button>
+                      <button 
+                        @click="cartStore.updateQuantity(index, 1)" 
+                        :disabled="item.quantity >= getItemStock(item)"
+                        :class="[
+                          'w-8 h-8 border transition-colors duration-200 text-sm',
+                          item.quantity >= getItemStock(item)
+                            ? 'border-gray-200 text-gray-300 cursor-not-allowed' 
+                            : 'border-border hover:bg-backgroundLight cursor-pointer'
+                        ]"
+                      >
+                        +
+                      </button>
                     </div>
+                    
+                    <!-- Price -->
                     <div class="text-right">
-                      <p class="text-lg font-semibold text-primary mb-2">${{ (item.price * item.quantity).toFixed(2) }}</p>
-                      <button @click="cartStore.removeItem(index)" class="text-xs text-textMuted hover:text-primary cursor-pointer uppercase tracking-wide">Remove</button>
+                      <p class="text-lg font-semibold text-primary">${{ (item.price * item.quantity).toFixed(2) }}</p>
+                      <p v-if="item.originalPrice" class="text-xs text-textMuted line-through">${{ (item.originalPrice * item.quantity).toFixed(2) }}</p>
                     </div>
+                  </div>
+                  
+                  <!-- Actions -->
+                  <div class="flex gap-4 mt-4 pt-4 border-t border-border">
+                    <button 
+                      @click="moveToWishlist(index)"
+                      class="text-xs text-textMuted hover:text-primary transition-colors flex items-center gap-1"
+                    >
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                      </svg>
+                      Move to Wishlist
+                    </button>
+                    <button 
+                      @click="saveForLater(index)"
+                      class="text-xs text-textMuted hover:text-primary transition-colors flex items-center gap-1"
+                    >
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
+                      </svg>
+                      Save for Later
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Saved for Later Section -->
+            <div v-if="savedItems.length > 0" class="mt-12">
+              <h2 class="text-xl font-light text-primary mb-6 uppercase tracking-wider">Saved for Later</h2>
+              <div class="space-y-4">
+                <div v-for="(item, index) in savedItems" :key="index" class="border border-border p-4 bg-gray-50">
+                  <div class="flex gap-4">
+                    <div class="w-20 h-20 bg-white flex-shrink-0 overflow-hidden">
+                      <img v-if="item.image" :src="item.image" :alt="item.name" class="w-full h-full object-cover" />
+                    </div>
+                    <div class="flex-1">
+                      <h4 class="text-sm font-semibold text-primary mb-1">{{ item.name }}</h4>
+                      <p class="text-xs text-textMuted mb-2">Size: {{ item.size }} | Color: {{ item.color }}</p>
+                      <div class="flex gap-3">
+                        <button 
+                          @click="moveBackToCart(index)"
+                          class="text-xs text-primary hover:underline"
+                        >
+                          Move to Cart
+                        </button>
+                        <button 
+                          @click="removeSavedItem(index)"
+                          class="text-xs text-textMuted hover:text-red-600"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    </div>
+                    <p class="text-sm font-semibold text-primary">${{ item.price.toFixed(2) }}</p>
                   </div>
                 </div>
               </div>
@@ -83,10 +204,51 @@
                     Remove
                   </button>
                 </div>
-                <p v-if="couponError" class="text-xs text-accent mt-2">{{ couponError }}</p>
-                <p v-if="appliedCoupon" class="text-xs text-primary mt-2">
-                  �?{{ appliedCoupon.code }} applied - {{ appliedCoupon.discount }}% off
-                </p>
+                <!-- Coupon Feedback -->
+                <div v-if="couponError" class="flex items-center gap-2 mt-3 p-3 bg-red-50 border border-red-200 rounded">
+                  <svg class="w-4 h-4 text-red-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                  </svg>
+                  <span class="text-xs text-red-700">{{ couponError }}</span>
+                </div>
+                
+                <div v-if="appliedCoupon" class="flex items-center gap-2 mt-3 p-3 bg-green-50 border border-green-200 rounded">
+                  <svg class="w-4 h-4 text-green-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                  </svg>
+                  <span class="text-xs text-green-700">{{ appliedCoupon.code }} applied - {{ appliedCoupon.discount }}% off</span>
+                </div>
+                
+                <!-- Available Coupons -->
+                <div v-if="!appliedCoupon" class="mt-4">
+                  <button 
+                    @click="showAvailableCoupons = !showAvailableCoupons"
+                    class="text-xs text-accent hover:underline flex items-center gap-1"
+                  >
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                    </svg>
+                    {{ showAvailableCoupons ? 'Hide' : 'View' }} available coupons
+                  </button>
+                  
+                  <div v-if="showAvailableCoupons" class="mt-3 space-y-2">
+                    <div 
+                      v-for="coupon in availableCoupons" 
+                      :key="coupon.code"
+                      class="p-3 bg-backgroundLight border border-border rounded hover:border-accent transition-colors cursor-pointer"
+                      @click="selectCoupon(coupon)"
+                    >
+                      <div class="flex justify-between items-start mb-1">
+                        <span class="text-xs font-bold text-primary">{{ coupon.code }}</span>
+                        <span class="text-xs text-accent font-semibold">{{ coupon.discount }}% OFF</span>
+                      </div>
+                      <p class="text-xs text-textMuted">{{ coupon.description }}</p>
+                      <p v-if="coupon.minPurchase > 0" class="text-xs text-textSecondary mt-1">
+                        Min. purchase: ${{ coupon.minPurchase }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
               
               <div class="space-y-4 mb-8">
@@ -123,6 +285,26 @@
                     class="h-full bg-primary transition-all duration-300"
                     :style="{ width: `${(cartStore.subtotal / 100) * 100}%` }"
                   ></div>
+                </div>
+              </div>
+              
+              <!-- Rewards & Delivery Info -->
+              <div class="mb-8 space-y-3 p-4 bg-backgroundLight border border-border">
+                <div class="flex items-center gap-2 text-xs">
+                  <svg class="w-4 h-4 text-accent" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                  </svg>
+                  <span class="text-textSecondary">
+                    Earn <span class="font-bold text-primary">{{ earnedPoints }} points</span> with this order
+                  </span>
+                </div>
+                <div class="flex items-center gap-2 text-xs">
+                  <svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/>
+                  </svg>
+                  <span class="text-textSecondary">
+                    Estimated delivery: <span class="font-bold text-primary">{{ estimatedDelivery }}</span>
+                  </span>
                 </div>
               </div>
               
@@ -171,6 +353,20 @@
             </div>
           </div>
         </div>
+        
+        <!-- Recommended Products -->
+        <div v-if="cartStore.items.length > 0" class="mt-20">
+          <h2 class="text-2xl font-light text-primary mb-8 text-center uppercase tracking-wider">Don't Forget These</h2>
+          <p class="text-sm text-textMuted text-center mb-12">Complete your look with these complementary items</p>
+          
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <ProductCard 
+              v-for="product in recommendedProducts" 
+              :key="product.id" 
+              :product="product"
+            />
+          </div>
+        </div>
       </div>
     </section>
     
@@ -180,36 +376,118 @@
 
 <script setup lang="ts">
 import { useCartStore } from '~/stores/cart'
+import { useProducts } from '~/composables/useProducts'
 
 const cartStore = useCartStore()
+const { products } = useProducts()
+
+// Saved for later items
+const savedItems = ref<any[]>([])
+
+// Available sizes and colors
+const availableSizes = ['XS', 'S', 'M', 'L', 'XL']
+const availableColors = ['Black', 'White', 'Nude', 'Red']
 
 // Coupon functionality
 const couponCode = ref('')
-const appliedCoupon = ref<{ code: string; discount: number } | null>(null)
+const appliedCoupon = ref<{ code: string; discount: number; description: string } | null>(null)
 const couponError = ref('')
+const showAvailableCoupons = ref(false)
 
 // Available coupons (in real app, this would come from backend)
 const availableCoupons = [
-  { code: 'SAVE10', discount: 10 },
-  { code: 'SAVE20', discount: 20 },
-  { code: 'WELCOME15', discount: 15 }
+  { code: 'SAVE10', discount: 10, description: '10% off your order', minPurchase: 0 },
+  { code: 'SAVE20', discount: 20, description: '20% off orders over $100', minPurchase: 100 },
+  { code: 'WELCOME15', discount: 15, description: '15% off for new customers', minPurchase: 0 }
 ]
+
+// Recommended products
+const recommendedProducts = computed(() => products.slice(0, 4))
+
+// Stock simulation (in real app, this would come from backend)
+const getItemStock = (item: any) => {
+  // Simulate stock based on item id
+  const stockMap: Record<number, number> = {
+    1: 10,
+    2: 3,
+    3: 0,
+    4: 15,
+    5: 2
+  }
+  return stockMap[item.id] || 10
+}
+
+const updateItemSize = (index: number, event: Event) => {
+  const target = event.target as HTMLSelectElement
+  cartStore.items[index].size = target.value
+  cartStore.saveCart()
+}
+
+const updateItemColor = (index: number, event: Event) => {
+  const target = event.target as HTMLSelectElement
+  cartStore.items[index].color = target.value
+  cartStore.saveCart()
+}
+
+const moveToWishlist = (index: number) => {
+  const item = cartStore.items[index]
+  // TODO: Add to wishlist store
+  console.log('Move to wishlist:', item.name)
+  cartStore.removeItem(index)
+  alert(`${item.name} moved to wishlist!`)
+}
+
+const saveForLater = (index: number) => {
+  const item = cartStore.items[index]
+  savedItems.value.push({ ...item })
+  cartStore.removeItem(index)
+}
+
+const moveBackToCart = (index: number) => {
+  const item = savedItems.value[index]
+  cartStore.addToCart(item)
+  savedItems.value.splice(index, 1)
+}
+
+const removeSavedItem = (index: number) => {
+  savedItems.value.splice(index, 1)
+}
 
 const applyCoupon = () => {
   const coupon = availableCoupons.find(c => c.code.toUpperCase() === couponCode.value.toUpperCase())
   
-  if (coupon) {
-    appliedCoupon.value = coupon
-    couponError.value = ''
-  } else {
+  if (!coupon) {
     couponError.value = 'Invalid coupon code'
+    return
   }
+  
+  if (coupon.minPurchase > 0 && cartStore.subtotal < coupon.minPurchase) {
+    couponError.value = `Minimum purchase of $${coupon.minPurchase} required`
+    return
+  }
+  
+  appliedCoupon.value = {
+    code: coupon.code,
+    discount: coupon.discount,
+    description: coupon.description
+  }
+  couponError.value = ''
+  showAvailableCoupons.value = false
 }
 
 const removeCoupon = () => {
   appliedCoupon.value = null
   couponCode.value = ''
   couponError.value = ''
+}
+
+const selectCoupon = (coupon: typeof availableCoupons[0]) => {
+  if (coupon.minPurchase > 0 && cartStore.subtotal < coupon.minPurchase) {
+    couponError.value = `Minimum purchase of $${coupon.minPurchase} required`
+    return
+  }
+  couponCode.value = coupon.code
+  applyCoupon()
 }
 
 // Calculations
@@ -234,7 +512,30 @@ const finalTotal = computed(() => {
   return subtotalAfterDiscount.value + shippingCost.value + taxAmount.value
 })
 
+// Rewards points (1 point per dollar)
+const earnedPoints = computed(() => {
+  return Math.floor(finalTotal.value)
+})
+
+// Estimated delivery
+const estimatedDelivery = computed(() => {
+  const today = new Date()
+  const deliveryDate = new Date(today)
+  deliveryDate.setDate(today.getDate() + (shippingCost.value === 0 ? 3 : 5))
+  return deliveryDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+})
+
 onMounted(() => {
   cartStore.loadCart()
+  // Load saved items from localStorage
+  const saved = localStorage.getItem('savedForLater')
+  if (saved) {
+    savedItems.value = JSON.parse(saved)
+  }
 })
+
+// Watch saved items and persist to localStorage
+watch(savedItems, (newValue) => {
+  localStorage.setItem('savedForLater', JSON.stringify(newValue))
+}, { deep: true })
 </script>
