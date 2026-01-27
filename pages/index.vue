@@ -3,7 +3,7 @@
     <TheNavbar />
     
     <!-- 1. Hero Carousel - 全屏轮播图 -->
-    <section class="relative h-screen overflow-hidden">
+    <section class="relative h-screen overflow-hidden" style="margin-bottom: var(--space-2xl);">
       <div class="absolute inset-0">
         <template v-for="(slide, slideIndex) in slides" :key="slideIndex">
           <div
