@@ -188,7 +188,10 @@
               </button>
               <button 
                 @click="toggleWishlist"
-                class="w-full btn-secondary h-14 text-sm flex items-center justify-center gap-2"
+                :class="[
+                  'wishlist-btn w-full btn-secondary h-14 text-sm flex items-center justify-center gap-2',
+                  { 'active': isWishlistAnimating }
+                ]"
               >
                 <svg class="w-5 h-5" :fill="isInWishlist ? 'currentColor' : 'none'" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
@@ -314,6 +317,7 @@ const selectedSize = ref('M')
 const selectedColor = ref('Black')
 const quantity = ref(1)
 const isInWishlist = ref(false)
+const isWishlistAnimating = ref(false)
 const activeTab = ref('Description')
 
 const sizes = ['XS', 'S', 'M', 'L', 'XL']
@@ -349,6 +353,14 @@ const handleBuyNow = () => {
 
 const toggleWishlist = () => {
   isInWishlist.value = !isInWishlist.value
+  
+  // 触发心形动画（仅在添加到愿望清单时）
+  if (isInWishlist.value) {
+    isWishlistAnimating.value = true
+    setTimeout(() => {
+      isWishlistAnimating.value = false
+    }, 600)
+  }
 }
 
 // 根据badge类型返回对应的class
@@ -369,6 +381,38 @@ watch(() => product.value, (newProduct) => {
 </script>
 
 <style scoped>
+/* 愿望清单心形动画 */
+.wishlist-btn {
+  position: relative;
+}
+
+.wishlist-btn.active::after {
+  content: '♥';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 48px;
+  color: #C9A882;
+  animation: heart-pop 0.6s ease;
+  pointer-events: none;
+}
+
+@keyframes heart-pop {
+  0% { 
+    transform: translate(-50%, -50%) scale(0); 
+    opacity: 1; 
+  }
+  50% { 
+    transform: translate(-50%, -50%) scale(1.5); 
+    opacity: 0.8; 
+  }
+  100% { 
+    transform: translate(-50%, -50%) scale(0); 
+    opacity: 0; 
+  }
+}
+
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
