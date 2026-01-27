@@ -24,15 +24,20 @@
         <div class="max-w-7xl mx-auto px-6 w-full">
           <template v-for="(slide, slideIndex) in slides" :key="`content-${slideIndex}`">
             <div v-if="currentSlide === slideIndex" class="max-w-2xl">
-              <h1 class="text-5xl md:text-8xl font-light mb-6 md:mb-8 tracking-widest uppercase text-white">
+              <h1 class="hero-title text-5xl md:text-8xl font-light mb-6 md:mb-8 tracking-widest uppercase text-white">
                 {{ slide.title }}
               </h1>
-              <p class="text-sm md:text-lg font-light mb-8 md:mb-12 tracking-widest uppercase text-white">
+              <p class="text-sm md:text-lg font-light mb-8 md:mb-12 tracking-widest uppercase text-white/90">
                 {{ slide.subtitle }}
               </p>
-              <NuxtLink :to="slide.link" class="btn-primary inline-block">
-                {{ slide.buttonText }}
-              </NuxtLink>
+              <div class="flex flex-col sm:flex-row gap-4">
+                <NuxtLink :to="slide.link" class="hero-btn-primary inline-block px-8 py-4 font-semibold uppercase tracking-wider text-sm transition-all duration-300 hover:scale-105 hover:shadow-xl">
+                  {{ slide.buttonText }}
+                </NuxtLink>
+                <NuxtLink to="/about" class="hero-btn-secondary inline-block px-8 py-4 font-semibold uppercase tracking-wider text-sm transition-all duration-300 hover:scale-105">
+                  Learn More
+                </NuxtLink>
+              </div>
             </div>
           </template>
         </div>
@@ -329,3 +334,51 @@ onUnmounted(() => {
   stopAutoplay()
 })
 </script>
+
+<style scoped>
+/* Hero标题渐变闪烁效果 */
+.hero-title {
+  background: linear-gradient(135deg, #FFFFFF 0%, #C9A882 50%, #FFFFFF 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { 
+    background-position: 0% 50%; 
+  }
+  50% { 
+    background-position: 100% 50%; 
+  }
+}
+
+/* 主按钮 - 金色渐变 */
+.hero-btn-primary {
+  background: linear-gradient(135deg, #C9A882 0%, #B8956F 100%);
+  color: #FFFFFF;
+  border: none;
+  box-shadow: 0 4px 15px rgba(201, 168, 130, 0.3);
+}
+
+.hero-btn-primary:hover {
+  box-shadow: 0 6px 25px rgba(201, 168, 130, 0.5);
+}
+
+/* 次要按钮 - 毛玻璃效果 */
+.hero-btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid #FFFFFF;
+  color: #FFFFFF;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.hero-btn-secondary:hover {
+  background: #FFFFFF;
+  color: #2C2C2C;
+  border-color: #FFFFFF;
+}
+</style>
