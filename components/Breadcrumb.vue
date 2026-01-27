@@ -1,5 +1,5 @@
 <template>
-  <nav class="breadcrumb max-w-7xl mx-auto px-6">
+  <nav class="breadcrumb max-w-7xl mx-auto px-6 pt-24">
     <NuxtLink to="/" class="breadcrumb-link">Home</NuxtLink>
     <span class="breadcrumb-separator">/</span>
     

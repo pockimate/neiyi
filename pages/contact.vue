@@ -3,12 +3,10 @@
     <TheNavbar />
     
     <!-- Breadcrumb -->
-    <div class="pt-24">
-      <Breadcrumb :items="[{ label: 'Contact' }]" />
-    </div>
+    <Breadcrumb :items="[{ label: 'Contact' }]" />
     
     <!-- Hero Section -->
-    <section class="page-header">
+    <section class="page-header" style="padding-top: 40px;">
       <h1 class="page-title">Get in Touch</h1>
       <p class="page-subtitle">We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
     </section>

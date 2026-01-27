@@ -3,11 +3,9 @@
     <TheNavbar />
     
     <!-- Breadcrumb -->
-    <div class="pt-24">
-      <Breadcrumb :items="[{ label: 'Products' }]" />
-    </div>
+    <Breadcrumb :items="[{ label: 'Products' }]" />
     
-    <div class="section" style="padding-top: var(--space-xl);">
+    <div class="section" style="padding-top: var(--space-lg);">
       <div class="max-w-7xl mx-auto">
         <!-- 页面标题 -->
         <div class="text-center" style="margin-bottom: var(--space-xl);">

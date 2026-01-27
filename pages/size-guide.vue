@@ -3,12 +3,10 @@
     <TheNavbar />
     
     <!-- Breadcrumb -->
-    <div class="pt-24">
-      <Breadcrumb :items="[{ label: 'Size Guide' }]" />
-    </div>
+    <Breadcrumb :items="[{ label: 'Size Guide' }]" />
     
     <!-- Hero Section -->
-    <section class="page-header">
+    <section class="page-header" style="padding-top: 40px;">
       <h1 class="page-title">Size Guide</h1>
       <p class="page-subtitle">Find your perfect fit with our comprehensive sizing guide</p>
     </section>

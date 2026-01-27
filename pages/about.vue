@@ -3,12 +3,10 @@
     <TheNavbar />
     
     <!-- Breadcrumb -->
-    <div class="pt-24">
-      <Breadcrumb :items="[{ label: 'About' }]" />
-    </div>
+    <Breadcrumb :items="[{ label: 'About' }]" />
     
     <!-- Hero Section -->
-    <section class="page-header">
+    <section class="page-header" style="padding-top: 40px;">
       <h1 class="page-title">Our Story</h1>
       <p class="page-subtitle">Where elegance meets desire, and confidence becomes your signature</p>
     </section>

@@ -3,14 +3,12 @@
     <TheNavbar />
     
     <!-- Breadcrumb -->
-    <div class="pt-24">
-      <Breadcrumb :items="[
-        { label: 'Shopping Cart', to: '/cart' },
-        { label: 'Checkout' }
-      ]" />
-    </div>
+    <Breadcrumb :items="[
+      { label: 'Shopping Cart', to: '/cart' },
+      { label: 'Checkout' }
+    ]" />
     
-    <section class="pt-8 pb-20 px-6">
+    <section class="pt-4 pb-20 px-6">
       <div class="max-w-7xl mx-auto">
         <!-- Progress Steps -->
         <div class="mb-12">

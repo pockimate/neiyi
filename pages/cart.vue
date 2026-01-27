@@ -3,11 +3,9 @@
     <TheNavbar />
     
     <!-- Breadcrumb -->
-    <div class="pt-24">
-      <Breadcrumb :items="[{ label: 'Shopping Cart' }]" />
-    </div>
+    <Breadcrumb :items="[{ label: 'Shopping Cart' }]" />
     
-    <section class="pt-8 pb-20 px-6">
+    <section class="pt-4 pb-20 px-6">
       <div class="max-w-7xl mx-auto">
         <h1 class="text-3xl font-light text-primary mb-12 text-center uppercase tracking-wider">Shopping Cart</h1>
         

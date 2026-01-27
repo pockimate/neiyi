@@ -3,11 +3,9 @@
     <TheNavbar />
     
     <!-- Breadcrumb -->
-    <div class="pt-24">
-      <Breadcrumb :items="[{ label: 'Shipping' }]" />
-    </div>
+    <Breadcrumb :items="[{ label: 'Shipping' }]" />
     
-    <section class="page-header">
+    <section class="page-header" style="padding-top: 40px;">
       <h1 class="page-title">Shipping Information</h1>
       <p class="page-subtitle">Fast, discreet, and reliable delivery to your door</p>
     </section>

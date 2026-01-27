@@ -3,11 +3,9 @@
     <TheNavbar />
     
     <!-- Breadcrumb -->
-    <div class="pt-24">
-      <Breadcrumb :items="[{ label: 'Privacy Policy' }]" />
-    </div>
+    <Breadcrumb :items="[{ label: 'Privacy Policy' }]" />
     
-    <section class="page-header">
+    <section class="page-header" style="padding-top: 40px;">
       <h1 class="page-title">Privacy Policy</h1>
       <p class="page-subtitle">Last updated: January 2024</p>
     </section>
