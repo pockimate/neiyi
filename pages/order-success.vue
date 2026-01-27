@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="background-color: #FAFAFA !important;">
     <TheNavbar />
     
     <section class="pt-32 pb-20 px-4">
@@ -20,7 +20,7 @@
         
         <div v-if="order" class="space-y-6">
           <!-- Order Details -->
-          <div class="glass-card rounded-2xl p-8 border border-pink-200">
+          <div class="glass-card rounded-2xl p-8 border border-gray-200">
             <h2 class="font-display text-2xl font-semibold mb-6 text-textPrimary">Order Details</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
@@ -44,16 +44,16 @@
             </div>
             
             <!-- Order Items -->
-            <div class="border-t border-pink-200 pt-6">
+            <div class="border-t border-gray-200 pt-6">
               <h3 class="font-semibold text-slate-700 mb-4">Order Items</h3>
               <div class="space-y-4">
                 <div v-for="(item, index) in order.items" :key="index" class="flex gap-4">
-                  <div class="w-20 h-20 bg-gradient-to-br from-pink-100 to-rose-50 rounded-lg flex-shrink-0">
+                  <div class="w-20 h-20 rounded-lg flex-shrink-0" style="background: linear-gradient(135deg, #F5F5F5 0%, #E8E8E8 100%);">
                     <img v-if="item.image" :src="item.image" :alt="item.name" class="w-full h-full object-cover rounded-lg" />
                   </div>
                   <div class="flex-1">
                     <p class="font-semibold text-textPrimary">{{ item.name }}</p>
-                    <p class="text-sm text-slate-600">Size: {{ item.size }} • Color: {{ item.color }}</p>
+                    <p class="text-sm text-slate-600">Size: {{ item.size }} �?Color: {{ item.color }}</p>
                     <p class="text-sm text-slate-600">Quantity: {{ item.quantity }}</p>
                   </div>
                   <div class="text-right">
@@ -64,7 +64,7 @@
             </div>
             
             <!-- Order Summary -->
-            <div class="border-t border-pink-200 mt-6 pt-6">
+            <div class="border-t border-gray-200 mt-6 pt-6">
               <div class="space-y-2 max-w-sm ml-auto">
                 <div class="flex justify-between text-slate-600">
                   <span>Subtotal</span>
@@ -78,7 +78,7 @@
                   <span>Tax</span>
                   <span>${{ order.tax.toFixed(2) }}</span>
                 </div>
-                <div class="border-t border-pink-200 pt-2 flex justify-between font-semibold text-lg">
+                <div class="border-t border-gray-200 pt-2 flex justify-between font-semibold text-lg">
                   <span>Total</span>
                   <span class="text-primary">${{ order.total.toFixed(2) }}</span>
                 </div>
@@ -87,7 +87,7 @@
           </div>
           
           <!-- What's Next -->
-          <div class="glass-card rounded-2xl p-8 border border-pink-200">
+          <div class="glass-card rounded-2xl p-8 border border-gray-200">
             <h2 class="font-display text-2xl font-semibold mb-6 text-textPrimary">What's Next?</h2>
             <div class="space-y-4">
               <div class="flex items-start gap-4">
@@ -134,19 +134,78 @@
           
           <!-- Actions -->
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <NuxtLink to="/products" class="inline-block bg-cta hover:bg-yellow-600 text-white px-8 py-4 rounded-full font-semibold text-center transition-all duration-200 cursor-pointer shadow-lg hover:shadow-xl">
+            <NuxtLink 
+              to="/products" 
+              style="
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
+                color: #FFFFFF;
+                font-weight: 600;
+                padding: 16px 32px;
+                font-size: 16px;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                border: none;
+                border-radius: 9999px;
+                box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                cursor: pointer;
+                text-decoration: none;
+              "
+            >
               Continue Shopping
             </NuxtLink>
-            <NuxtLink to="/" class="inline-block border-2 border-primary text-primary hover:bg-primary hover:text-white px-8 py-4 rounded-full font-semibold text-center transition-all duration-200 cursor-pointer">
+            <NuxtLink 
+              to="/" 
+              style="
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                background: transparent;
+                color: #2C2C2C;
+                font-weight: 600;
+                padding: 16px 32px;
+                font-size: 16px;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                border: 2px solid #2C2C2C;
+                border-radius: 9999px;
+                transition: all 0.3s ease;
+                cursor: pointer;
+                text-decoration: none;
+              "
+            >
               Back to Home
             </NuxtLink>
           </div>
         </div>
         
-        <div v-else class="glass-card rounded-2xl p-12 border border-pink-200 text-center">
+        <div v-else class="glass-card rounded-2xl p-12 border border-gray-200 text-center">
           <h3 class="font-display text-2xl font-semibold mb-2 text-textPrimary">No Order Found</h3>
           <p class="text-slate-600 mb-6">We couldn't find your order details.</p>
-          <NuxtLink to="/products" class="inline-block bg-cta hover:bg-yellow-600 text-white px-8 py-3 rounded-full font-semibold transition-all duration-200 cursor-pointer">
+          <NuxtLink 
+            to="/products" 
+            style="
+              display: inline-flex;
+              align-items: center;
+              justify-content: center;
+              background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
+              color: #FFFFFF;
+              font-weight: 600;
+              padding: 14px 32px;
+              font-size: 16px;
+              text-transform: uppercase;
+              letter-spacing: 0.5px;
+              border: none;
+              border-radius: 9999px;
+              box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+              transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+              cursor: pointer;
+              text-decoration: none;
+            "
+          >
             Shop Now
           </NuxtLink>
         </div>

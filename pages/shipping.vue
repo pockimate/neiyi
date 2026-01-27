@@ -1,34 +1,34 @@
 <template>
-  <div>
+  <div style="background-color: #FAFAFA !important;">
     <TheNavbar />
     
     <!-- Breadcrumb -->
     <Breadcrumb :items="[{ label: 'Shipping' }]" />
     
-    <section class="page-header" style="padding-top: 40px;">
-      <h1 class="page-title">Shipping Information</h1>
-      <p class="page-subtitle">Fast, discreet, and reliable delivery to your door</p>
+    <section style="text-align: center; padding: 40px 16px 64px; background: linear-gradient(180deg, #FFFFFF 0%, #FAFAFA 100%);">
+      <h1 style="font-size: 48px; font-weight: 700; letter-spacing: 2px; margin-bottom: 16px; color: #2C2C2C; line-height: 1.2; font-family: 'Playfair Display', serif;">Shipping Information</h1>
+      <p style="font-size: 18px; color: #666666; max-width: 600px; margin: 0 auto; line-height: 1.6;">Fast, discreet, and reliable delivery to your door</p>
     </section>
 
     <section class="py-12 px-4">
       <div class="max-w-6xl mx-auto space-y-8">
-        <div class="glass-card rounded-2xl p-8 border border-pink-200">
+        <div class="glass-card rounded-2xl p-8 border border-gray-200">
           <h2 class="font-display text-3xl font-bold text-textPrimary mb-6">Shipping Options</h2>
           <div class="grid md:grid-cols-3 gap-6">
-            <div class="border border-pink-200 rounded-xl p-6">
+            <div class="border border-gray-200 rounded-xl p-6">
               <h3 class="font-display text-xl font-semibold mb-2 text-textPrimary">Standard Shipping</h3>
               <p class="text-3xl font-bold text-primary mb-2">$5.99</p>
               <p class="text-slate-600 mb-4">5-7 business days</p>
               <p class="text-sm text-slate-500">Free on orders over $100</p>
             </div>
-            <div class="border border-pink-200 rounded-xl p-6 bg-pink-50">
+            <div class="border border-gray-200 rounded-xl p-6 bg-gray-50">
               <div class="inline-block bg-cta text-white px-3 py-1 rounded-full text-xs font-semibold mb-2">POPULAR</div>
               <h3 class="font-display text-xl font-semibold mb-2 text-textPrimary">Express Shipping</h3>
               <p class="text-3xl font-bold text-primary mb-2">$12.99</p>
               <p class="text-slate-600 mb-4">2-3 business days</p>
               <p class="text-sm text-slate-500">Expedited processing</p>
             </div>
-            <div class="border border-pink-200 rounded-xl p-6">
+            <div class="border border-gray-200 rounded-xl p-6">
               <h3 class="font-display text-xl font-semibold mb-2 text-textPrimary">Overnight</h3>
               <p class="text-3xl font-bold text-primary mb-2">$24.99</p>
               <p class="text-slate-600 mb-4">1 business day</p>
@@ -37,13 +37,13 @@
           </div>
         </div>
 
-        <div class="glass-card rounded-2xl p-8 border border-pink-200">
+        <div class="glass-card rounded-2xl p-8 border border-gray-200">
           <h2 class="font-display text-3xl font-bold text-textPrimary mb-6">Processing Time</h2>
           <p class="text-slate-600 text-lg mb-4">Orders are processed within 1-2 business days (Monday-Friday, excluding holidays).</p>
           <p class="text-slate-600">You will receive a confirmation email with tracking information once your order ships.</p>
         </div>
 
-        <div class="glass-card rounded-2xl p-8 border border-pink-200">
+        <div class="glass-card rounded-2xl p-8 border border-gray-200">
           <h2 class="font-display text-3xl font-bold text-textPrimary mb-6">International Shipping</h2>
           <p class="text-slate-600 text-lg mb-4">We ship to over 50 countries worldwide!</p>
           <ul class="space-y-3">
@@ -68,7 +68,7 @@
           </ul>
         </div>
 
-        <div class="glass-card rounded-2xl p-8 border border-pink-200 bg-gradient-to-br from-pink-50 to-purple-50">
+        <div class="glass-card rounded-2xl p-8 border border-gray-200 bg-gray-50">
           <h2 class="font-display text-3xl font-bold text-textPrimary mb-6">Discreet Packaging</h2>
           <p class="text-slate-600 text-lg mb-4">Your privacy is our priority. All orders are shipped in:</p>
           <ul class="space-y-3">
@@ -93,7 +93,7 @@
           </ul>
         </div>
 
-        <div class="glass-card rounded-2xl p-8 border border-pink-200">
+        <div class="glass-card rounded-2xl p-8 border border-gray-200">
           <h2 class="font-display text-3xl font-bold text-textPrimary mb-6">Order Tracking</h2>
           <p class="text-slate-600 text-lg mb-4">Track your order every step of the way:</p>
           <div class="grid md:grid-cols-4 gap-4">
@@ -130,11 +130,31 @@
       </div>
     </section>
 
-    <section class="py-20 px-4 bg-gradient-to-br from-pink-100 via-rose-50 to-purple-100">
+    <section class="py-20 px-4" style="background: linear-gradient(135deg, #F5F5F5 0%, #E8E8E8 100%);">
       <div class="max-w-4xl mx-auto text-center">
-        <h2 class="font-display text-4xl font-bold text-primary mb-4">Questions About Shipping?</h2>
+        <h2 class="font-display text-4xl font-bold mb-4" style="color: #2C2C2C;">Questions About Shipping?</h2>
         <p class="text-lg text-slate-600 mb-8">Our customer service team is here to help</p>
-        <NuxtLink to="/contact" class="inline-block bg-cta hover:bg-yellow-600 text-white px-10 py-5 rounded-full font-semibold transition-all duration-200 cursor-pointer shadow-lg hover:shadow-xl">
+        <NuxtLink 
+          to="/contact" 
+          style="
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
+            color: #FFFFFF;
+            font-weight: 600;
+            padding: 18px 40px;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: none;
+            border-radius: 9999px;
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            text-decoration: none;
+          "
+        >
           Contact Us
         </NuxtLink>
       </div>
@@ -146,3 +166,4 @@
 
 <script setup lang="ts">
 </script>
+

@@ -5,7 +5,7 @@
       <div class="flex items-center gap-4">
         <select 
           v-model="filterStatus"
-          class="w-48 px-4 py-2 bg-slate-800 border-2 border-pink-200 rounded-lg focus:outline-none focus:border-primary text-white cursor-pointer"
+          class="w-48 px-4 py-2 bg-slate-800 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary text-white cursor-pointer"
         >
           <option value="">All Status</option>
           <option value="active">Active</option>
@@ -26,7 +26,7 @@
     
     <!-- Coupons Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div v-for="coupon in filteredCoupons" :key="coupon.code" class="glass-card-dark rounded-xl p-6 border border-pink-200">
+      <div v-for="coupon in filteredCoupons" :key="coupon.code" class="glass-card-dark rounded-xl p-6 border border-gray-200">
         <div class="flex items-start justify-between mb-4">
           <div>
             <h3 class="text-2xl font-bold text-white mb-1">{{ coupon.code }}</h3>
@@ -73,7 +73,7 @@
     
     <!-- Add/Edit Modal -->
     <div v-if="showAddModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div class="glass-card-dark rounded-2xl p-8 border border-pink-200 max-w-md w-full">
+      <div class="glass-card-dark rounded-2xl p-8 border border-gray-200 max-w-md w-full">
         <div class="flex items-center justify-between mb-6">
           <h3 class="text-2xl font-bold text-white">{{ editingCoupon ? 'Edit Coupon' : 'Add New Coupon' }}</h3>
           <button @click="closeModal" class="p-2 hover:bg-white/10 rounded-lg transition-colors cursor-pointer">
@@ -91,7 +91,7 @@
               type="text" 
               required
               :disabled="!!editingCoupon"
-              class="w-full px-4 py-3 bg-slate-800 border-2 border-pink-200 rounded-lg focus:outline-none focus:border-primary text-white uppercase"
+              class="w-full px-4 py-3 bg-slate-800 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary text-white uppercase"
               placeholder="SAVE20"
             />
           </div>
@@ -102,7 +102,7 @@
               v-model="couponForm.description"
               type="text" 
               required
-              class="w-full px-4 py-3 bg-slate-800 border-2 border-pink-200 rounded-lg focus:outline-none focus:border-primary text-white"
+              class="w-full px-4 py-3 bg-slate-800 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary text-white"
               placeholder="20% off all products"
             />
           </div>
@@ -115,7 +115,7 @@
               min="1"
               max="100"
               required
-              class="w-full px-4 py-3 bg-slate-800 border-2 border-pink-200 rounded-lg focus:outline-none focus:border-primary text-white"
+              class="w-full px-4 py-3 bg-slate-800 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary text-white"
             />
           </div>
           
@@ -125,7 +125,7 @@
               v-model.number="couponForm.limit"
               type="number" 
               min="1"
-              class="w-full px-4 py-3 bg-slate-800 border-2 border-pink-200 rounded-lg focus:outline-none focus:border-primary text-white"
+              class="w-full px-4 py-3 bg-slate-800 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary text-white"
               placeholder="Leave empty for unlimited"
             />
           </div>
@@ -136,7 +136,7 @@
               v-model="couponForm.expires"
               type="date" 
               required
-              class="w-full px-4 py-3 bg-slate-800 border-2 border-pink-200 rounded-lg focus:outline-none focus:border-primary text-white"
+              class="w-full px-4 py-3 bg-slate-800 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary text-white"
             />
           </div>
           

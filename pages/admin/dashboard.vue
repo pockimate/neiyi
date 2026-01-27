@@ -2,7 +2,7 @@
   <AdminLayout page-title="Dashboard" page-subtitle="Welcome back! Here's what's happening">
     <!-- Stats Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-      <div v-for="stat in stats" :key="stat.label" class="glass-card-dark rounded-xl p-6 border border-pink-200">
+      <div v-for="stat in stats" :key="stat.label" class="glass-card-dark rounded-xl p-6 border border-gray-200">
         <div class="flex items-center justify-between mb-4">
           <div :class="`w-12 h-12 ${stat.color} rounded-lg flex items-center justify-center`">
             <component :is="stat.icon" class="w-6 h-6 text-white" />
@@ -18,7 +18,7 @@
     
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
       <!-- Recent Orders -->
-      <div class="glass-card-dark rounded-xl p-6 border border-pink-200">
+      <div class="glass-card-dark rounded-xl p-6 border border-gray-200">
         <div class="flex items-center justify-between mb-6">
           <h3 class="text-xl font-bold text-white">Recent Orders</h3>
           <NuxtLink to="/admin/orders" class="text-sm text-primary hover:underline cursor-pointer">
@@ -43,7 +43,7 @@
       </div>
       
       <!-- Top Products -->
-      <div class="glass-card-dark rounded-xl p-6 border border-pink-200">
+      <div class="glass-card-dark rounded-xl p-6 border border-gray-200">
         <div class="flex items-center justify-between mb-6">
           <h3 class="text-xl font-bold text-white">Top Products</h3>
           <NuxtLink to="/admin/products" class="text-sm text-primary hover:underline cursor-pointer">
@@ -65,7 +65,7 @@
     </div>
     
     <!-- Sales Chart -->
-    <div class="glass-card-dark rounded-xl p-6 border border-pink-200">
+    <div class="glass-card-dark rounded-xl p-6 border border-gray-200">
       <h3 class="text-xl font-bold text-white mb-6">Sales Overview</h3>
       <div class="h-64 flex items-end justify-between gap-2">
         <div v-for="(value, index) in salesData" :key="index" class="flex-1 flex flex-col items-center gap-2">
@@ -111,7 +111,7 @@ const stats = [
     value: '89',
     change: '+15.3%',
     changeColor: 'text-green-400',
-    color: 'bg-pink-500',
+    color: 'bg-gray-500',
     icon: 'svg'
   }
 ]

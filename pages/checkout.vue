@@ -35,7 +35,27 @@
         <div v-if="cartStore.items.length === 0" class="text-center py-20">
           <h3 class="text-xl font-light mb-4 text-primary uppercase tracking-wide">Your cart is empty</h3>
           <p class="text-sm text-textMuted mb-8">Add some items before checking out</p>
-          <NuxtLink to="/products" class="btn-primary inline-block">
+          <NuxtLink 
+            to="/products" 
+            style="
+              display: inline-flex;
+              align-items: center;
+              justify-content: center;
+              background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
+              color: #FFFFFF;
+              font-weight: 600;
+              padding: 14px 32px;
+              font-size: 16px;
+              text-transform: uppercase;
+              letter-spacing: 0.5px;
+              border: none;
+              border-radius: 4px;
+              box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+              transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+              cursor: pointer;
+              text-decoration: none;
+            "
+          >
             Continue Shopping
           </NuxtLink>
         </div>
@@ -90,7 +110,7 @@
                       type="text" 
                       :class="[
                         'w-full px-4 py-3 border-2 rounded-lg focus:outline-none transition-colors',
-                        errors.firstName ? 'border-red-500' : 'border-pink-200 focus:border-primary'
+                        errors.firstName ? 'border-red-500' : 'border-gray-200 focus:border-primary'
                       ]"
                       @blur="validateField('firstName')"
                     />
@@ -103,7 +123,7 @@
                       type="text" 
                       :class="[
                         'w-full px-4 py-3 border-2 rounded-lg focus:outline-none transition-colors',
-                        errors.lastName ? 'border-red-500' : 'border-pink-200 focus:border-primary'
+                        errors.lastName ? 'border-red-500' : 'border-gray-200 focus:border-primary'
                       ]"
                       @blur="validateField('lastName')"
                     />
@@ -117,7 +137,7 @@
                     type="text" 
                     :class="[
                       'w-full px-4 py-3 border-2 rounded-lg focus:outline-none transition-colors',
-                      errors.address ? 'border-red-500' : 'border-pink-200 focus:border-primary'
+                      errors.address ? 'border-red-500' : 'border-gray-200 focus:border-primary'
                     ]"
                     placeholder="Street address"
                     @blur="validateField('address')"
@@ -129,7 +149,7 @@
                   <input 
                     v-model="form.apartment"
                     type="text" 
-                    class="w-full px-4 py-3 border-2 border-pink-200 rounded-lg focus:outline-none focus:border-primary"
+                    class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary"
                   />
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -140,7 +160,7 @@
                       type="text" 
                       :class="[
                         'w-full px-4 py-3 border-2 rounded-lg focus:outline-none transition-colors',
-                        errors.city ? 'border-red-500' : 'border-pink-200 focus:border-primary'
+                        errors.city ? 'border-red-500' : 'border-gray-200 focus:border-primary'
                       ]"
                       @blur="validateField('city')"
                     />
@@ -153,7 +173,7 @@
                       type="text" 
                       :class="[
                         'w-full px-4 py-3 border-2 rounded-lg focus:outline-none transition-colors',
-                        errors.state ? 'border-red-500' : 'border-pink-200 focus:border-primary'
+                        errors.state ? 'border-red-500' : 'border-gray-200 focus:border-primary'
                       ]"
                       @blur="validateField('state')"
                     />
@@ -166,7 +186,7 @@
                       type="text" 
                       :class="[
                         'w-full px-4 py-3 border-2 rounded-lg focus:outline-none transition-colors',
-                        errors.zipCode ? 'border-red-500' : 'border-pink-200 focus:border-primary'
+                        errors.zipCode ? 'border-red-500' : 'border-gray-200 focus:border-primary'
                       ]"
                       @blur="validateField('zipCode')"
                     />
@@ -179,7 +199,7 @@
                     v-model="form.country"
                     :class="[
                       'w-full px-4 py-3 border-2 rounded-lg focus:outline-none transition-colors cursor-pointer',
-                      errors.country ? 'border-red-500' : 'border-pink-200 focus:border-primary'
+                      errors.country ? 'border-red-500' : 'border-gray-200 focus:border-primary'
                     ]"
                     @blur="validateField('country')"
                   >
@@ -195,7 +215,7 @@
             </div>
             
             <!-- Payment Method -->
-            <div class="glass-card rounded-2xl p-6 border border-pink-200">
+            <div class="glass-card rounded-2xl p-6 border border-gray-200">
               <h2 class="font-display text-2xl font-semibold mb-6 text-textPrimary">Payment Method</h2>
               <div class="space-y-4">
                 <div class="flex gap-4">
@@ -207,7 +227,7 @@
                       'flex-1 p-4 border-2 rounded-lg transition-all duration-200 cursor-pointer',
                       form.paymentMethod === method.id
                         ? 'border-primary bg-primary/5'
-                        : 'border-pink-200 hover:border-primary'
+                        : 'border-gray-200 hover:border-primary'
                     ]"
                   >
                     <div class="flex items-center justify-center gap-2">
@@ -224,7 +244,7 @@
                     <input 
                       v-model="form.cardNumber"
                       type="text" 
-                      class="w-full px-4 py-3 border-2 border-pink-200 rounded-lg focus:outline-none focus:border-primary"
+                      class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary"
                       placeholder="1234 5678 9012 3456"
                       maxlength="19"
                     />
@@ -235,7 +255,7 @@
                       <input 
                         v-model="form.cardExpiry"
                         type="text" 
-                        class="w-full px-4 py-3 border-2 border-pink-200 rounded-lg focus:outline-none focus:border-primary"
+                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary"
                         placeholder="MM/YY"
                         maxlength="5"
                       />
@@ -245,7 +265,7 @@
                       <input 
                         v-model="form.cardCvv"
                         type="text" 
-                        class="w-full px-4 py-3 border-2 border-pink-200 rounded-lg focus:outline-none focus:border-primary"
+                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary"
                         placeholder="123"
                         maxlength="4"
                       />
@@ -261,12 +281,12 @@
             </div>
             
             <!-- Order Notes -->
-            <div class="glass-card rounded-2xl p-6 border border-pink-200">
+            <div class="glass-card rounded-2xl p-6 border border-gray-200">
               <h2 class="font-display text-2xl font-semibold mb-4 text-textPrimary">Order Notes (Optional)</h2>
               <textarea
                 v-model="form.notes"
                 rows="4"
-                class="w-full px-4 py-3 border-2 border-pink-200 rounded-lg focus:outline-none focus:border-primary resize-none"
+                class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary resize-none"
                 placeholder="Any special instructions for your order?"
               ></textarea>
             </div>
@@ -274,13 +294,13 @@
           
           <!-- Order Summary -->
           <div class="lg:col-span-1">
-            <div class="glass-card rounded-2xl p-6 border border-pink-200 sticky top-24">
+            <div class="glass-card rounded-2xl p-6 border border-gray-200 sticky top-24">
               <h2 class="font-display text-2xl font-semibold mb-6 text-textPrimary">Order Summary</h2>
               
               <!-- Cart Items -->
               <div class="space-y-4 mb-6 max-h-64 overflow-y-auto">
                 <div v-for="(item, index) in cartStore.items" :key="index" class="flex gap-3">
-                  <div class="w-16 h-16 bg-gradient-to-br from-pink-100 to-rose-50 rounded-lg flex-shrink-0 relative">
+                  <div class="w-16 h-16 rounded-lg flex-shrink-0 relative" style="background: linear-gradient(135deg, #F5F5F5 0%, #E8E8E8 100%);">
                     <img v-if="item.image" :src="item.image" :alt="item.name" class="w-full h-full object-cover rounded-lg" />
                     <span class="absolute -top-2 -right-2 w-6 h-6 bg-primary text-white text-xs rounded-full flex items-center justify-center">
                       {{ item.quantity }}
@@ -288,13 +308,13 @@
                   </div>
                   <div class="flex-1 min-w-0">
                     <p class="font-semibold text-sm text-textPrimary truncate">{{ item.name }}</p>
-                    <p class="text-xs text-slate-600">{{ item.size }} • {{ item.color }}</p>
+                    <p class="text-xs text-slate-600">{{ item.size }} �?{{ item.color }}</p>
                     <p class="text-sm font-bold text-primary">${{ (item.price * item.quantity).toFixed(2) }}</p>
                   </div>
                 </div>
               </div>
               
-              <div class="border-t border-pink-200 pt-4 space-y-3 mb-6">
+              <div class="border-t border-gray-200 pt-4 space-y-3 mb-6">
                 <div class="flex justify-between text-slate-600">
                   <span>Subtotal</span>
                   <span>${{ cartStore.subtotal.toFixed(2) }}</span>
@@ -307,7 +327,7 @@
                   <span>Tax</span>
                   <span>${{ cartStore.tax.toFixed(2) }}</span>
                 </div>
-                <div class="border-t border-pink-200 pt-3 flex justify-between font-semibold text-lg">
+                <div class="border-t border-gray-200 pt-3 flex justify-between font-semibold text-lg">
                   <span>Total</span>
                   <span class="text-primary">${{ cartStore.total.toFixed(2) }}</span>
                 </div>
@@ -316,12 +336,24 @@
               <button 
                 @click="handleSubmit"
                 :disabled="isSubmitting"
-                :class="[
-                  'w-full py-4 rounded-full font-semibold text-center transition-all duration-200 shadow-lg hover:shadow-xl mb-3',
-                  isSubmitting 
-                    ? 'bg-gray-400 cursor-not-allowed' 
-                    : 'bg-cta hover:bg-yellow-600 text-white cursor-pointer'
-                ]"
+                :style="{
+                  width: '100%',
+                  padding: '16px 32px',
+                  borderRadius: '9999px',
+                  fontWeight: '600',
+                  fontSize: '16px',
+                  textAlign: 'center',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.5px',
+                  border: 'none',
+                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  cursor: isSubmitting ? 'not-allowed' : 'pointer',
+                  background: isSubmitting ? '#9CA3AF' : 'linear-gradient(135deg, #D4AF37 0%, #B8860B 100%)',
+                  color: '#FFFFFF',
+                  boxShadow: '0 4px 12px rgba(212, 175, 55, 0.3)',
+                  marginBottom: '12px',
+                  opacity: isSubmitting ? 0.7 : 1
+                }"
               >
                 <span v-if="!isSubmitting">Place Order</span>
                 <span v-else class="flex items-center justify-center gap-2">
@@ -333,12 +365,31 @@
                 </span>
               </button>
               
-              <NuxtLink to="/cart" class="block w-full border-2 border-primary text-primary hover:bg-primary hover:text-white py-4 rounded-full font-semibold text-center transition-all duration-200 cursor-pointer">
+              <NuxtLink 
+                to="/cart" 
+                style="
+                  display: block;
+                  width: 100%;
+                  text-align: center;
+                  background: transparent;
+                  color: #2C2C2C;
+                  font-weight: 600;
+                  padding: 16px 32px;
+                  font-size: 16px;
+                  text-transform: uppercase;
+                  letter-spacing: 0.5px;
+                  border: 2px solid #2C2C2C;
+                  border-radius: 9999px;
+                  transition: all 0.3s ease;
+                  cursor: pointer;
+                  text-decoration: none;
+                "
+              >
                 Back to Cart
               </NuxtLink>
               
               <!-- Security Badges -->
-              <div class="mt-6 pt-6 border-t border-pink-200 flex items-center justify-center gap-4">
+              <div class="mt-6 pt-6 border-t border-gray-200 flex items-center justify-center gap-4">
                 <svg class="w-8 h-8 text-slate-400" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                 </svg>

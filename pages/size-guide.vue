@@ -1,26 +1,26 @@
 <template>
-  <div>
+  <div style="background-color: #FAFAFA !important;">
     <TheNavbar />
     
     <!-- Breadcrumb -->
     <Breadcrumb :items="[{ label: 'Size Guide' }]" />
     
     <!-- Hero Section -->
-    <section class="page-header" style="padding-top: 40px;">
-      <h1 class="page-title">Size Guide</h1>
-      <p class="page-subtitle">Find your perfect fit with our comprehensive sizing guide</p>
+    <section style="text-align: center; padding: 40px 16px 64px; background: linear-gradient(180deg, #FFFFFF 0%, #FAFAFA 100%);">
+      <h1 style="font-size: 48px; font-weight: 700; letter-spacing: 2px; margin-bottom: 16px; color: #2C2C2C; line-height: 1.2; font-family: 'Playfair Display', serif;">Size Guide</h1>
+      <p style="font-size: 18px; color: #666666; max-width: 600px; margin: 0 auto; line-height: 1.6;">Find your perfect fit with our comprehensive sizing guide</p>
     </section>
 
     <!-- Size Charts -->
     <section class="py-12 px-4">
       <div class="max-w-6xl mx-auto space-y-12">
         <!-- Bra Size Chart -->
-        <div class="glass-card rounded-2xl p-8 border border-pink-200">
+        <div class="glass-card rounded-2xl p-8 border border-gray-200">
           <h2 class="font-display text-3xl font-bold text-textPrimary mb-6">Bra Sizing</h2>
           <div class="overflow-x-auto">
             <table class="w-full text-left">
               <thead>
-                <tr class="border-b-2 border-pink-200">
+                <tr class="border-b-2 border-gray-200">
                   <th class="py-3 px-4 font-semibold text-textPrimary">Size</th>
                   <th class="py-3 px-4 font-semibold text-textPrimary">Band (inches)</th>
                   <th class="py-3 px-4 font-semibold text-textPrimary">Cup A</th>
@@ -30,7 +30,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr class="border-b border-pink-100">
+                <tr class="border-b border-gray-100">
                   <td class="py-3 px-4 font-medium">32</td>
                   <td class="py-3 px-4 text-slate-600">28-30</td>
                   <td class="py-3 px-4 text-slate-600">32-33</td>
@@ -38,7 +38,7 @@
                   <td class="py-3 px-4 text-slate-600">34-35</td>
                   <td class="py-3 px-4 text-slate-600">35-36</td>
                 </tr>
-                <tr class="border-b border-pink-100">
+                <tr class="border-b border-gray-100">
                   <td class="py-3 px-4 font-medium">34</td>
                   <td class="py-3 px-4 text-slate-600">30-32</td>
                   <td class="py-3 px-4 text-slate-600">34-35</td>
@@ -46,7 +46,7 @@
                   <td class="py-3 px-4 text-slate-600">36-37</td>
                   <td class="py-3 px-4 text-slate-600">37-38</td>
                 </tr>
-                <tr class="border-b border-pink-100">
+                <tr class="border-b border-gray-100">
                   <td class="py-3 px-4 font-medium">36</td>
                   <td class="py-3 px-4 text-slate-600">32-34</td>
                   <td class="py-3 px-4 text-slate-600">36-37</td>
@@ -54,7 +54,7 @@
                   <td class="py-3 px-4 text-slate-600">38-39</td>
                   <td class="py-3 px-4 text-slate-600">39-40</td>
                 </tr>
-                <tr class="border-b border-pink-100">
+                <tr class="border-b border-gray-100">
                   <td class="py-3 px-4 font-medium">38</td>
                   <td class="py-3 px-4 text-slate-600">34-36</td>
                   <td class="py-3 px-4 text-slate-600">38-39</td>
@@ -76,12 +76,12 @@
         </div>
 
         <!-- General Size Chart -->
-        <div class="glass-card rounded-2xl p-8 border border-pink-200">
+        <div class="glass-card rounded-2xl p-8 border border-gray-200">
           <h2 class="font-display text-3xl font-bold text-textPrimary mb-6">General Sizing</h2>
           <div class="overflow-x-auto">
             <table class="w-full text-left">
               <thead>
-                <tr class="border-b-2 border-pink-200">
+                <tr class="border-b-2 border-gray-200">
                   <th class="py-3 px-4 font-semibold text-textPrimary">Size</th>
                   <th class="py-3 px-4 font-semibold text-textPrimary">Bust (inches)</th>
                   <th class="py-3 px-4 font-semibold text-textPrimary">Waist (inches)</th>
@@ -89,25 +89,25 @@
                 </tr>
               </thead>
               <tbody>
-                <tr class="border-b border-pink-100">
+                <tr class="border-b border-gray-100">
                   <td class="py-3 px-4 font-medium">XS</td>
                   <td class="py-3 px-4 text-slate-600">31-33</td>
                   <td class="py-3 px-4 text-slate-600">24-26</td>
                   <td class="py-3 px-4 text-slate-600">34-36</td>
                 </tr>
-                <tr class="border-b border-pink-100">
+                <tr class="border-b border-gray-100">
                   <td class="py-3 px-4 font-medium">S</td>
                   <td class="py-3 px-4 text-slate-600">33-35</td>
                   <td class="py-3 px-4 text-slate-600">26-28</td>
                   <td class="py-3 px-4 text-slate-600">36-38</td>
                 </tr>
-                <tr class="border-b border-pink-100">
+                <tr class="border-b border-gray-100">
                   <td class="py-3 px-4 font-medium">M</td>
                   <td class="py-3 px-4 text-slate-600">35-37</td>
                   <td class="py-3 px-4 text-slate-600">28-30</td>
                   <td class="py-3 px-4 text-slate-600">38-40</td>
                 </tr>
-                <tr class="border-b border-pink-100">
+                <tr class="border-b border-gray-100">
                   <td class="py-3 px-4 font-medium">L</td>
                   <td class="py-3 px-4 text-slate-600">37-39</td>
                   <td class="py-3 px-4 text-slate-600">30-32</td>
@@ -125,7 +125,7 @@
         </div>
 
         <!-- How to Measure -->
-        <div class="glass-card rounded-2xl p-8 border border-pink-200">
+        <div class="glass-card rounded-2xl p-8 border border-gray-200">
           <h2 class="font-display text-3xl font-bold text-textPrimary mb-6">How to Measure</h2>
           <div class="grid md:grid-cols-3 gap-6">
             <div>
@@ -153,7 +153,7 @@
         </div>
 
         <!-- Tips -->
-        <div class="glass-card rounded-2xl p-8 border border-pink-200 bg-gradient-to-br from-pink-50 to-purple-50">
+        <div class="glass-card rounded-2xl p-8 border border-gray-200 bg-gray-50">
           <h2 class="font-display text-2xl font-bold text-textPrimary mb-4">Fitting Tips</h2>
           <ul class="space-y-3">
             <li class="flex items-start">
@@ -186,11 +186,31 @@
     </section>
 
     <!-- CTA -->
-    <section class="py-20 px-4 bg-gradient-to-br from-pink-100 via-rose-50 to-purple-100">
+    <section class="py-20 px-4" style="background: linear-gradient(180deg, #FAFAFA 0%, #F0F0F0 100%);">
       <div class="max-w-4xl mx-auto text-center">
         <h2 class="font-display text-4xl font-bold text-primary mb-4">Need Help?</h2>
         <p class="text-lg text-slate-600 mb-8">Our customer service team is here to help you find the perfect fit</p>
-        <NuxtLink to="/contact" class="inline-block bg-cta hover:bg-yellow-600 text-white px-10 py-5 rounded-full font-semibold transition-all duration-200 cursor-pointer shadow-lg hover:shadow-xl">
+        <NuxtLink 
+          to="/contact" 
+          style="
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
+            color: #FFFFFF;
+            font-weight: 600;
+            padding: 18px 40px;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: none;
+            border-radius: 9999px;
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            text-decoration: none;
+          "
+        >
           Contact Us
         </NuxtLink>
       </div>
@@ -202,3 +222,4 @@
 
 <script setup lang="ts">
 </script>
+

@@ -1,23 +1,23 @@
 <template>
-  <div>
+  <div style="background-color: #FAFAFA !important;">
     <TheNavbar />
     
     <!-- Breadcrumb -->
     <Breadcrumb :items="[{ label: 'Returns' }]" />
     
-    <section class="page-header" style="padding-top: 40px;">
-      <h1 class="page-title">Returns & Exchanges</h1>
-      <p class="page-subtitle">We want you to love your purchase. If not, we're here to help.</p>
+    <section style="text-align: center; padding: 40px 16px 64px; background: linear-gradient(180deg, #FFFFFF 0%, #FAFAFA 100%);">
+      <h1 style="font-size: 48px; font-weight: 700; letter-spacing: 2px; margin-bottom: 16px; color: #2C2C2C; line-height: 1.2; font-family: 'Playfair Display', serif;">Returns & Exchanges</h1>
+      <p style="font-size: 18px; color: #666666; max-width: 600px; margin: 0 auto; line-height: 1.6;">We want you to love your purchase. If not, we're here to help.</p>
     </section>
 
     <section class="py-12 px-4">
       <div class="max-w-6xl mx-auto space-y-8">
-        <div class="glass-card rounded-2xl p-8 border border-pink-200 bg-gradient-to-br from-pink-50 to-purple-50">
+        <div class="glass-card rounded-2xl p-8 border border-gray-200 bg-gray-50">
           <h2 class="font-display text-3xl font-bold text-textPrimary mb-4">30-Day Return Policy</h2>
           <p class="text-slate-600 text-lg">We offer a hassle-free 30-day return policy on all unworn items in their original packaging with tags attached.</p>
         </div>
 
-        <div class="glass-card rounded-2xl p-8 border border-pink-200">
+        <div class="glass-card rounded-2xl p-8 border border-gray-200">
           <h2 class="font-display text-3xl font-bold text-textPrimary mb-6">Return Requirements</h2>
           <ul class="space-y-4">
             <li class="flex items-start">
@@ -59,7 +59,7 @@
           </ul>
         </div>
 
-        <div class="glass-card rounded-2xl p-8 border border-pink-200">
+        <div class="glass-card rounded-2xl p-8 border border-gray-200">
           <h2 class="font-display text-3xl font-bold text-textPrimary mb-6">How to Return</h2>
           <div class="grid md:grid-cols-4 gap-6">
             <div class="text-center">
@@ -94,7 +94,7 @@
         </div>
 
         <div class="grid md:grid-cols-2 gap-8">
-          <div class="glass-card rounded-2xl p-8 border border-pink-200">
+          <div class="glass-card rounded-2xl p-8 border border-gray-200">
             <h2 class="font-display text-2xl font-bold text-textPrimary mb-4">Exchanges</h2>
             <p class="text-slate-600 mb-4">Need a different size or color? We're happy to help!</p>
             <ul class="space-y-2 text-slate-600">
@@ -119,7 +119,7 @@
             </ul>
           </div>
 
-          <div class="glass-card rounded-2xl p-8 border border-pink-200">
+          <div class="glass-card rounded-2xl p-8 border border-gray-200">
             <h2 class="font-display text-2xl font-bold text-textPrimary mb-4">Refund Method</h2>
             <p class="text-slate-600 mb-4">Refunds are issued to the original payment method:</p>
             <ul class="space-y-2 text-slate-600">
@@ -145,7 +145,7 @@
           </div>
         </div>
 
-        <div class="glass-card rounded-2xl p-8 border border-pink-200 bg-red-50">
+        <div class="glass-card rounded-2xl p-8 border border-gray-200 bg-red-50">
           <h2 class="font-display text-2xl font-bold text-textPrimary mb-4">Non-Returnable Items</h2>
           <p class="text-slate-600 mb-4">For hygiene and safety reasons, the following items cannot be returned:</p>
           <ul class="space-y-2 text-slate-600">
@@ -178,11 +178,31 @@
       </div>
     </section>
 
-    <section class="py-20 px-4 bg-gradient-to-br from-pink-100 via-rose-50 to-purple-100">
+    <section class="py-20 px-4" style="background: linear-gradient(180deg, #FAFAFA 0%, #F0F0F0 100%);">
       <div class="max-w-4xl mx-auto text-center">
         <h2 class="font-display text-4xl font-bold text-primary mb-4">Need Help with a Return?</h2>
         <p class="text-lg text-slate-600 mb-8">Our customer service team is here to assist you</p>
-        <NuxtLink to="/contact" class="inline-block bg-cta hover:bg-yellow-600 text-white px-10 py-5 rounded-full font-semibold transition-all duration-200 cursor-pointer shadow-lg hover:shadow-xl">
+        <NuxtLink 
+          to="/contact" 
+          style="
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
+            color: #FFFFFF;
+            font-weight: 600;
+            padding: 18px 40px;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: none;
+            border-radius: 9999px;
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            text-decoration: none;
+          "
+        >
           Contact Us
         </NuxtLink>
       </div>

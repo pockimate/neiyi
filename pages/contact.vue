@@ -1,14 +1,14 @@
 <template>
-  <div>
+  <div style="background-color: #FAFAFA !important;">
     <TheNavbar />
     
     <!-- Breadcrumb -->
     <Breadcrumb :items="[{ label: 'Contact' }]" />
     
     <!-- Hero Section -->
-    <section class="page-header" style="padding-top: 40px;">
-      <h1 class="page-title">Get in Touch</h1>
-      <p class="page-subtitle">We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+    <section style="text-align: center; padding: 40px 16px 64px; background: linear-gradient(180deg, #FFFFFF 0%, #FAFAFA 100%);">
+      <h1 style="font-size: 48px; font-weight: 700; letter-spacing: 2px; margin-bottom: 16px; color: #2C2C2C; line-height: 1.2; font-family: 'Playfair Display', serif;">Get in Touch</h1>
+      <p style="font-size: 18px; color: #666666; max-width: 600px; margin: 0 auto; line-height: 1.6;">We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
     </section>
 
     <!-- Contact Form & Info -->
@@ -17,7 +17,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <!-- Contact Form -->
           <div class="lg:col-span-2">
-            <div class="glass-card rounded-2xl p-8 border border-pink-200">
+            <div class="glass-card rounded-2xl p-8 border border-gray-200">
               <h2 class="font-display text-3xl font-bold text-textPrimary mb-6">Send us a Message</h2>
               <form @submit.prevent="handleSubmit" class="space-y-6">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -27,7 +27,7 @@
                       v-model="form.firstName"
                       type="text" 
                       required
-                      class="w-full px-4 py-3 border border-pink-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                      class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                       placeholder="Jane"
                     />
                   </div>
@@ -37,7 +37,7 @@
                       v-model="form.lastName"
                       type="text" 
                       required
-                      class="w-full px-4 py-3 border border-pink-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                      class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                       placeholder="Doe"
                     />
                   </div>
@@ -49,7 +49,7 @@
                     v-model="form.email"
                     type="email" 
                     required
-                    class="w-full px-4 py-3 border border-pink-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                     placeholder="jane@example.com"
                   />
                 </div>
@@ -60,7 +60,7 @@
                     v-model="form.subject"
                     type="text" 
                     required
-                    class="w-full px-4 py-3 border border-pink-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                     placeholder="How can we help?"
                   />
                 </div>
@@ -71,14 +71,28 @@
                     v-model="form.message"
                     required
                     rows="6"
-                    class="w-full px-4 py-3 border border-pink-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+                    class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary resize-none"
                     placeholder="Tell us more about your inquiry..."
                   ></textarea>
                 </div>
                 
                 <button 
                   type="submit"
-                  class="w-full bg-cta hover:bg-yellow-600 text-white py-4 rounded-full font-semibold transition-all duration-200 cursor-pointer shadow-lg hover:shadow-xl"
+                  style="
+                    width: 100%;
+                    background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
+                    color: #FFFFFF;
+                    font-weight: 600;
+                    padding: 16px 32px;
+                    font-size: 16px;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                    border: none;
+                    border-radius: 9999px;
+                    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                    cursor: pointer;
+                  "
                 >
                   Send Message
                 </button>
@@ -88,7 +102,7 @@
           
           <!-- Contact Info -->
           <div class="space-y-6">
-            <div class="glass-card rounded-2xl p-6 border border-pink-200">
+            <div class="glass-card rounded-2xl p-6 border border-gray-200">
               <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
                 <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
@@ -99,7 +113,7 @@
               <p class="text-sm text-slate-500">We'll respond within 24 hours</p>
             </div>
             
-            <div class="glass-card rounded-2xl p-6 border border-pink-200">
+            <div class="glass-card rounded-2xl p-6 border border-gray-200">
               <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
                 <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
@@ -110,7 +124,7 @@
               <p class="text-sm text-slate-500">Mon-Fri, 9am-6pm EST</p>
             </div>
             
-            <div class="glass-card rounded-2xl p-6 border border-pink-200">
+            <div class="glass-card rounded-2xl p-6 border border-gray-200">
               <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
                 <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
@@ -122,7 +136,7 @@
               <p class="text-sm text-slate-500">By appointment only</p>
             </div>
             
-            <div class="glass-card rounded-2xl p-6 border border-pink-200">
+            <div class="glass-card rounded-2xl p-6 border border-gray-200">
               <h3 class="font-display text-xl font-semibold mb-4 text-textPrimary">Follow Us</h3>
               <div class="flex gap-3">
                 <a href="#" class="w-10 h-10 bg-primary/10 hover:bg-primary rounded-lg flex items-center justify-center transition-colors duration-200 cursor-pointer group">
@@ -148,7 +162,7 @@
     </section>
 
     <!-- FAQ Section -->
-    <section class="py-20 px-4 bg-gradient-to-b from-white to-pink-50">
+    <section class="py-20 px-4" style="background: linear-gradient(180deg, #FFFFFF 0%, #F5F5F5 100%);">
       <div class="max-w-4xl mx-auto">
         <div class="text-center mb-12">
           <h2 class="font-display text-4xl font-bold text-primary mb-4">Frequently Asked Questions</h2>
@@ -156,17 +170,17 @@
         </div>
         
         <div class="space-y-4">
-          <div class="glass-card rounded-2xl p-6 border border-pink-200">
+          <div class="glass-card rounded-2xl p-6 border border-gray-200">
             <h3 class="font-display text-xl font-semibold mb-2 text-textPrimary">What are your shipping times?</h3>
             <p class="text-slate-600">We ship within 1-2 business days. Delivery typically takes 3-5 business days for domestic orders.</p>
           </div>
           
-          <div class="glass-card rounded-2xl p-6 border border-pink-200">
+          <div class="glass-card rounded-2xl p-6 border border-gray-200">
             <h3 class="font-display text-xl font-semibold mb-2 text-textPrimary">What is your return policy?</h3>
             <p class="text-slate-600">We offer a 30-day return policy for unworn items in original packaging. See our Returns page for details.</p>
           </div>
           
-          <div class="glass-card rounded-2xl p-6 border border-pink-200">
+          <div class="glass-card rounded-2xl p-6 border border-gray-200">
             <h3 class="font-display text-xl font-semibold mb-2 text-textPrimary">Do you ship internationally?</h3>
             <p class="text-slate-600">Yes! We ship to most countries worldwide. International shipping times vary by location.</p>
           </div>

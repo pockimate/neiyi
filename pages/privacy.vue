@@ -1,25 +1,25 @@
 <template>
-  <div>
+  <div style="background-color: #FAFAFA !important;">
     <TheNavbar />
     
     <!-- Breadcrumb -->
     <Breadcrumb :items="[{ label: 'Privacy Policy' }]" />
     
-    <section class="page-header" style="padding-top: 40px;">
-      <h1 class="page-title">Privacy Policy</h1>
-      <p class="page-subtitle">Last updated: January 2024</p>
+    <section style="text-align: center; padding: 40px 16px 64px; background: linear-gradient(180deg, #FFFFFF 0%, #FAFAFA 100%);">
+      <h1 style="font-size: 48px; font-weight: 700; letter-spacing: 2px; margin-bottom: 16px; color: #2C2C2C; line-height: 1.2; font-family: 'Playfair Display', serif;">Privacy Policy</h1>
+      <p style="font-size: 18px; color: #666666; max-width: 600px; margin: 0 auto; line-height: 1.6;">Last updated: January 2024</p>
     </section>
 
     <section class="py-12 px-4">
       <div class="max-w-4xl mx-auto space-y-8">
-        <div class="glass-card rounded-2xl p-8 border border-pink-200">
+        <div class="glass-card rounded-2xl p-8 border border-gray-200">
           <h2 class="font-display text-2xl font-bold text-textPrimary mb-4">Introduction</h2>
           <p class="text-slate-600 leading-relaxed">
             At Intimate Elegance, we take your privacy seriously. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or make a purchase from us.
           </p>
         </div>
 
-        <div class="glass-card rounded-2xl p-8 border border-pink-200">
+        <div class="glass-card rounded-2xl p-8 border border-gray-200">
           <h2 class="font-display text-2xl font-bold text-textPrimary mb-4">Information We Collect</h2>
           <div class="space-y-4">
             <div>
@@ -44,7 +44,7 @@
           </div>
         </div>
 
-        <div class="glass-card rounded-2xl p-8 border border-pink-200">
+        <div class="glass-card rounded-2xl p-8 border border-gray-200">
           <h2 class="font-display text-2xl font-bold text-textPrimary mb-4">How We Use Your Information</h2>
           <ul class="space-y-3">
             <li class="flex items-start">
@@ -86,7 +86,7 @@
           </ul>
         </div>
 
-        <div class="glass-card rounded-2xl p-8 border border-pink-200">
+        <div class="glass-card rounded-2xl p-8 border border-gray-200">
           <h2 class="font-display text-2xl font-bold text-textPrimary mb-4">Information Sharing</h2>
           <p class="text-slate-600 mb-4">We do not sell your personal information. We may share your information with:</p>
           <ul class="space-y-2 text-slate-600">
@@ -96,52 +96,52 @@
           </ul>
         </div>
 
-        <div class="glass-card rounded-2xl p-8 border border-pink-200">
+        <div class="glass-card rounded-2xl p-8 border border-gray-200">
           <h2 class="font-display text-2xl font-bold text-textPrimary mb-4">Data Security</h2>
           <p class="text-slate-600 mb-4">We implement industry-standard security measures to protect your information:</p>
           <ul class="space-y-2 text-slate-600">
-            <li>• SSL encryption for all transactions</li>
-            <li>• Secure payment processing through trusted providers</li>
-            <li>• Regular security audits and updates</li>
-            <li>• Limited employee access to personal data</li>
+            <li>? SSL encryption for all transactions</li>
+            <li>? Secure payment processing through trusted providers</li>
+            <li>? Regular security audits and updates</li>
+            <li>? Limited employee access to personal data</li>
           </ul>
         </div>
 
-        <div class="glass-card rounded-2xl p-8 border border-pink-200">
+        <div class="glass-card rounded-2xl p-8 border border-gray-200">
           <h2 class="font-display text-2xl font-bold text-textPrimary mb-4">Cookies</h2>
           <p class="text-slate-600 mb-4">We use cookies to enhance your browsing experience. Cookies help us:</p>
           <ul class="space-y-2 text-slate-600">
-            <li>• Remember your preferences and shopping cart</li>
-            <li>• Analyze website traffic and usage patterns</li>
-            <li>• Provide personalized content and recommendations</li>
+            <li>? Remember your preferences and shopping cart</li>
+            <li>? Analyze website traffic and usage patterns</li>
+            <li>? Provide personalized content and recommendations</li>
           </ul>
           <p class="text-slate-600 mt-4">You can control cookies through your browser settings.</p>
         </div>
 
-        <div class="glass-card rounded-2xl p-8 border border-pink-200">
+        <div class="glass-card rounded-2xl p-8 border border-gray-200">
           <h2 class="font-display text-2xl font-bold text-textPrimary mb-4">Your Rights</h2>
           <p class="text-slate-600 mb-4">You have the right to:</p>
           <ul class="space-y-2 text-slate-600">
-            <li>• Access your personal information</li>
-            <li>• Correct inaccurate data</li>
-            <li>• Request deletion of your data</li>
-            <li>• Opt-out of marketing communications</li>
-            <li>• Object to data processing</li>
+            <li>? Access your personal information</li>
+            <li>? Correct inaccurate data</li>
+            <li>? Request deletion of your data</li>
+            <li>? Opt-out of marketing communications</li>
+            <li>? Object to data processing</li>
           </ul>
           <p class="text-slate-600 mt-4">To exercise these rights, please contact us at privacy@intimateelegance.com</p>
         </div>
 
-        <div class="glass-card rounded-2xl p-8 border border-pink-200">
+        <div class="glass-card rounded-2xl p-8 border border-gray-200">
           <h2 class="font-display text-2xl font-bold text-textPrimary mb-4">Children's Privacy</h2>
           <p class="text-slate-600">Our website is not intended for children under 18. We do not knowingly collect information from minors.</p>
         </div>
 
-        <div class="glass-card rounded-2xl p-8 border border-pink-200">
+        <div class="glass-card rounded-2xl p-8 border border-gray-200">
           <h2 class="font-display text-2xl font-bold text-textPrimary mb-4">Changes to This Policy</h2>
           <p class="text-slate-600">We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new policy on this page and updating the "Last updated" date.</p>
         </div>
 
-        <div class="glass-card rounded-2xl p-8 border border-pink-200 bg-gradient-to-br from-pink-50 to-purple-50">
+        <div class="glass-card rounded-2xl p-8 border border-gray-200 bg-gray-50">
           <h2 class="font-display text-2xl font-bold text-textPrimary mb-4">Contact Us</h2>
           <p class="text-slate-600 mb-4">If you have questions about this Privacy Policy, please contact us:</p>
           <div class="space-y-2 text-slate-600">
@@ -159,3 +159,4 @@
 
 <script setup lang="ts">
 </script>
+

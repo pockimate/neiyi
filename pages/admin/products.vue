@@ -8,7 +8,7 @@
             v-model="searchQuery"
             type="text"
             placeholder="Search products..."
-            class="w-64 pl-10 pr-4 py-2 bg-slate-800 border-2 border-pink-200 rounded-lg focus:outline-none focus:border-primary text-white placeholder-slate-400"
+            class="w-64 pl-10 pr-4 py-2 bg-slate-800 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary text-white placeholder-slate-400"
           />
           <svg class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
@@ -17,7 +17,7 @@
         
         <select 
           v-model="filterCategory"
-          class="w-48 px-4 py-2 bg-slate-800 border-2 border-pink-200 rounded-lg focus:outline-none focus:border-primary text-white cursor-pointer"
+          class="w-48 px-4 py-2 bg-slate-800 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary text-white cursor-pointer"
         >
           <option value="">All Categories</option>
           <option value="Bras & Sets">Bras & Sets</option>
@@ -39,9 +39,9 @@
     </div>
     
     <!-- Products Table -->
-    <div class="glass-card-dark rounded-xl border border-pink-200 overflow-hidden">
+    <div class="glass-card-dark rounded-xl border border-gray-200 overflow-hidden">
       <table class="w-full">
-        <thead class="bg-white/5 border-b border-pink-200">
+        <thead class="bg-white/5 border-b border-gray-200">
           <tr>
             <th class="px-6 py-4 text-left text-sm font-semibold text-white">Product</th>
             <th class="px-6 py-4 text-left text-sm font-semibold text-white">Category</th>
@@ -106,7 +106,7 @@
     
     <!-- Add/Edit Modal -->
     <div v-if="showAddModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div class="glass-card-dark rounded-2xl p-8 border border-pink-200 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+      <div class="glass-card-dark rounded-2xl p-8 border border-gray-200 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <div class="flex items-center justify-between mb-6">
           <h3 class="text-2xl font-bold text-white">{{ editingProduct ? 'Edit Product' : 'Add New Product' }}</h3>
           <button @click="closeModal" class="p-2 hover:bg-white/10 rounded-lg transition-colors cursor-pointer">
@@ -123,7 +123,7 @@
               v-model="productForm.name"
               type="text" 
               required
-              class="w-full px-4 py-3 bg-slate-800 border-2 border-pink-200 rounded-lg focus:outline-none focus:border-primary text-white"
+              class="w-full px-4 py-3 bg-slate-800 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary text-white"
             />
           </div>
           
@@ -133,7 +133,7 @@
               v-model="productForm.description"
               rows="3"
               required
-              class="w-full px-4 py-3 bg-slate-800 border-2 border-pink-200 rounded-lg focus:outline-none focus:border-primary text-white resize-none"
+              class="w-full px-4 py-3 bg-slate-800 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary text-white resize-none"
             ></textarea>
           </div>
           
@@ -145,7 +145,7 @@
                 type="number" 
                 step="0.01"
                 required
-                class="w-full px-4 py-3 bg-slate-800 border-2 border-pink-200 rounded-lg focus:outline-none focus:border-primary text-white"
+                class="w-full px-4 py-3 bg-slate-800 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary text-white"
               />
             </div>
             
@@ -155,7 +155,7 @@
                 v-model.number="productForm.originalPrice"
                 type="number" 
                 step="0.01"
-                class="w-full px-4 py-3 bg-slate-800 border-2 border-pink-200 rounded-lg focus:outline-none focus:border-primary text-white"
+                class="w-full px-4 py-3 bg-slate-800 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary text-white"
               />
             </div>
           </div>
@@ -166,7 +166,7 @@
               <select 
                 v-model="productForm.category"
                 required
-                class="w-full px-4 py-3 bg-slate-800 border-2 border-pink-200 rounded-lg focus:outline-none focus:border-primary text-white cursor-pointer"
+                class="w-full px-4 py-3 bg-slate-800 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary text-white cursor-pointer"
               >
                 <option value="Bras & Sets">Bras & Sets</option>
                 <option value="Bodysuits">Bodysuits</option>
@@ -181,7 +181,7 @@
                 v-model.number="productForm.stock"
                 type="number" 
                 required
-                class="w-full px-4 py-3 bg-slate-800 border-2 border-pink-200 rounded-lg focus:outline-none focus:border-primary text-white"
+                class="w-full px-4 py-3 bg-slate-800 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary text-white"
               />
             </div>
           </div>
@@ -190,7 +190,7 @@
             <label class="block text-sm font-medium mb-2 text-white">Badge (Optional)</label>
             <select 
               v-model="productForm.badge"
-              class="w-full px-4 py-3 bg-slate-800 border-2 border-pink-200 rounded-lg focus:outline-none focus:border-primary text-white cursor-pointer"
+              class="w-full px-4 py-3 bg-slate-800 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary text-white cursor-pointer"
             >
               <option value="">None</option>
               <option value="New">New</option>

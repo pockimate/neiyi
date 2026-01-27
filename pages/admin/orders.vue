@@ -4,7 +4,7 @@
     <div class="flex items-center gap-4 mb-6">
       <select 
         v-model="filterStatus"
-        class="w-48 px-4 py-2 bg-slate-800 border-2 border-pink-200 rounded-lg focus:outline-none focus:border-primary text-white cursor-pointer"
+        class="w-48 px-4 py-2 bg-slate-800 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary text-white cursor-pointer"
       >
         <option value="">All Status</option>
         <option value="Pending">Pending</option>
@@ -18,14 +18,14 @@
         v-model="searchQuery"
         type="text"
         placeholder="Search orders..."
-        class="flex-1 max-w-md px-4 py-2 bg-slate-800 border-2 border-pink-200 rounded-lg focus:outline-none focus:border-primary text-white placeholder-slate-400"
+        class="flex-1 max-w-md px-4 py-2 bg-slate-800 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary text-white placeholder-slate-400"
       />
     </div>
     
     <!-- Orders Table -->
-    <div class="glass-card-dark rounded-xl border border-pink-200 overflow-hidden">
+    <div class="glass-card-dark rounded-xl border border-gray-200 overflow-hidden">
       <table class="w-full">
-        <thead class="bg-white/5 border-b border-pink-200">
+        <thead class="bg-white/5 border-b border-gray-200">
           <tr>
             <th class="px-6 py-4 text-left text-sm font-semibold text-white">Order ID</th>
             <th class="px-6 py-4 text-left text-sm font-semibold text-white">Customer</th>
@@ -84,7 +84,7 @@
     
     <!-- Order Details Modal -->
     <div v-if="selectedOrder" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div class="glass-card-dark rounded-2xl p-8 border border-pink-200 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+      <div class="glass-card-dark rounded-2xl p-8 border border-gray-200 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <div class="flex items-center justify-between mb-6">
           <h3 class="text-2xl font-bold text-white">Order #{{ selectedOrder.id }}</h3>
           <button @click="selectedOrder = null" class="p-2 hover:bg-white/10 rounded-lg transition-colors cursor-pointer">
@@ -122,7 +122,7 @@
                   <div class="w-12 h-12 bg-gradient-to-br from-pink-100 to-rose-50 rounded-lg"></div>
                   <div>
                     <p class="text-white font-semibold">Product {{ i }}</p>
-                    <p class="text-sm text-slate-400">Size: M â€¢ Color: Black</p>
+                    <p class="text-sm text-slate-400">Size: M â€?Color: Black</p>
                   </div>
                 </div>
                 <p class="text-primary font-bold">$89.99</p>
@@ -130,7 +130,7 @@
             </div>
           </div>
           
-          <div class="border-t border-pink-200 pt-4">
+          <div class="border-t border-gray-200 pt-4">
             <div class="flex justify-between text-white mb-2">
               <span>Subtotal</span>
               <span>${{ (selectedOrder.total * 0.9).toFixed(2) }}</span>
@@ -139,7 +139,7 @@
               <span>Tax</span>
               <span>${{ (selectedOrder.total * 0.1).toFixed(2) }}</span>
             </div>
-            <div class="flex justify-between text-xl font-bold text-primary pt-2 border-t border-pink-200">
+            <div class="flex justify-between text-xl font-bold text-primary pt-2 border-t border-gray-200">
               <span>Total</span>
               <span>${{ selectedOrder.total.toFixed(2) }}</span>
             </div>

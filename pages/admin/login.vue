@@ -13,7 +13,7 @@
       </div>
       
       <!-- Login Form -->
-      <div class="glass-card-dark rounded-2xl p-8 border border-pink-200">
+      <div class="glass-card-dark rounded-2xl p-8 border border-gray-200">
         <form @submit.prevent="handleLogin">
           <div class="space-y-6">
             <div>
@@ -22,7 +22,7 @@
                 v-model="form.email"
                 type="email" 
                 required
-                class="w-full max-w-md px-4 py-3 bg-slate-800 border-2 border-pink-200 rounded-lg focus:outline-none focus:border-primary text-white placeholder-slate-400"
+                class="w-full max-w-md px-4 py-3 bg-slate-800 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary text-white placeholder-slate-400"
                 placeholder="admin@example.com"
               />
             </div>
@@ -33,14 +33,14 @@
                 v-model="form.password"
                 type="password" 
                 required
-                class="w-full max-w-md px-4 py-3 bg-slate-800 border-2 border-pink-200 rounded-lg focus:outline-none focus:border-primary text-white placeholder-slate-400"
+                class="w-full max-w-md px-4 py-3 bg-slate-800 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary text-white placeholder-slate-400"
                 placeholder="••••••••"
               />
             </div>
             
             <div class="flex items-center justify-between">
               <label class="flex items-center">
-                <input type="checkbox" class="w-4 h-4 text-primary border-pink-200 rounded focus:ring-primary">
+                <input type="checkbox" class="w-4 h-4 text-primary border-gray-200 rounded focus:ring-primary">
                 <span class="ml-2 text-sm text-slate-300">Remember me</span>
               </label>
               <a href="#" class="text-sm text-primary hover:underline">Forgot password?</a>
@@ -84,7 +84,7 @@
       <!-- Back to Store -->
       <div class="text-center mt-6">
         <NuxtLink to="/" class="text-sm text-slate-400 hover:text-primary transition-colors">
-          ← Back to Store
+          �?Back to Store
         </NuxtLink>
       </div>
     </div>

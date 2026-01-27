@@ -166,7 +166,7 @@
             <p class="text-sm text-textSecondary mb-2">以下行存在错误，将被跳过：</p>
             <ul class="text-sm text-textSecondary space-y-1 max-h-40 overflow-y-auto">
               <li v-for="error in validationErrors.slice(0, 10)" :key="error.row" class="flex items-start">
-                <span class="font-semibold mr-2">第{{ error.row }}行:</span>
+                <span class="font-semibold mr-2">第{{ error.row }}行：</span>
                 <span>{{ error.errors.join(', ') }}</span>
               </li>
             </ul>

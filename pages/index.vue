@@ -2,7 +2,7 @@
   <div class="bg-backgroundLight min-h-screen">
     <TheNavbar />
     
-    <!-- 1. Hero Carousel - 全屏轮播图 -->
+    <!-- 1. Hero Carousel - 全屏轮播�?-->
     <section class="relative h-screen overflow-hidden" style="margin-bottom: var(--space-2xl);">
       <div class="absolute inset-0">
         <template v-for="(slide, slideIndex) in slides" :key="slideIndex">
@@ -254,7 +254,7 @@ import { useProducts } from '~/composables/useProducts'
 const { products } = useProducts()
 const featuredProducts = products.slice(0, 8)
 
-// 轮播图数据
+// 轮播图数�?
 const slides = [
   {
     image: 'https://images.unsplash.com/photo-1583846112476-f5e88c4e9e3f?w=1920&h=1080&fit=crop',
@@ -347,7 +347,7 @@ onMounted(() => {
       rootMargin: '0px 0px -50px 0px'
     })
     
-    // 观察所有带有 fade-in-up 类的元素
+    // 观察所有带�?fade-in-up 类的元素
     document.querySelectorAll('.fade-in-up').forEach(el => {
       observer.observe(el)
     })
@@ -379,7 +379,7 @@ onUnmounted(() => {
   }
 }
 
-/* 主按钮 - 金色渐变 */
+/* 主按�?- 金色渐变 */
 .hero-btn-primary {
   background: linear-gradient(135deg, #C9A882 0%, #B8956F 100%);
   color: #FFFFFF;
@@ -391,7 +391,7 @@ onUnmounted(() => {
   box-shadow: 0 6px 25px rgba(201, 168, 130, 0.5);
 }
 
-/* 次要按钮 - 毛玻璃效果 */
+/* 次要按钮 - 毛玻璃效�?*/
 .hero-btn-secondary {
   background: rgba(255, 255, 255, 0.1);
   border: 2px solid #FFFFFF;
@@ -409,7 +409,7 @@ onUnmounted(() => {
 /* 移动端Hero优化 */
 @media (max-width: 768px) {
   .hero-title {
-    font-size: 2rem !important; /* 32px，从text-5xl的48px减小 */
+    font-size: 2rem !important; /* 32px，从text-5xl�?8px减小 */
     line-height: 1.2;
     margin-bottom: 1rem !important;
   }
@@ -423,7 +423,7 @@ onUnmounted(() => {
   }
 }
 
-/* 小屏幕进一步优化 */
+/* 小屏幕进一步优�?*/
 @media (max-width: 480px) {
   .hero-title {
     font-size: 1.75rem !important; /* 28px */

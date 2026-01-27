@@ -2,7 +2,7 @@
   <nav 
     :class="[
       'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-      isScrolled ? 'bg-white border-b border-border shadow-sm' : 'bg-transparent'
+      isTransparent ? 'bg-transparent' : 'bg-white border-b border-border shadow-sm'
     ]"
   >
     <div class="max-w-7xl mx-auto px-6 py-5">
@@ -12,7 +12,7 @@
           to="/" 
           :class="[
             'text-xl font-semibold tracking-wider cursor-pointer transition-colors duration-300',
-            isScrolled ? 'text-primary' : 'text-white'
+            isTransparent ? 'text-white' : 'text-primary'
           ]"
         >
           INTIMATE ELEGANCE
@@ -24,7 +24,7 @@
             to="/products" 
             :class="[
               'nav-link transition-colors duration-300',
-              isScrolled ? 'text-primary' : 'text-white'
+              isTransparent ? 'text-white' : 'text-primary'
             ]"
           >
             Shop All
@@ -33,7 +33,7 @@
             to="/products?filter=new" 
             :class="[
               'nav-link transition-colors duration-300',
-              isScrolled ? 'text-primary' : 'text-white'
+              isTransparent ? 'text-white' : 'text-primary'
             ]"
           >
             New In
@@ -42,7 +42,7 @@
             to="/products?filter=bestsellers" 
             :class="[
               'nav-link transition-colors duration-300',
-              isScrolled ? 'text-primary' : 'text-white'
+              isTransparent ? 'text-white' : 'text-primary'
             ]"
           >
             Bestsellers
@@ -51,7 +51,7 @@
             to="/about" 
             :class="[
               'nav-link transition-colors duration-300',
-              isScrolled ? 'text-primary' : 'text-white'
+              isTransparent ? 'text-white' : 'text-primary'
             ]"
           >
             About
@@ -65,7 +65,7 @@
             @click="toggleSearch"
             :class="[
               'icon-btn p-2 hover:opacity-60 transition-all duration-300 cursor-pointer',
-              isScrolled ? 'text-primary' : 'text-white'
+              isTransparent ? 'text-white' : 'text-primary'
             ]"
             aria-label="Search"
           >
@@ -80,7 +80,7 @@
             to="/login" 
             :class="[
               'icon-btn p-2 hover:opacity-60 transition-all duration-300 cursor-pointer',
-              isScrolled ? 'text-primary' : 'text-white'
+              isTransparent ? 'text-white' : 'text-primary'
             ]"
             aria-label="Account"
           >
@@ -94,7 +94,7 @@
             @click="toggleUserMenu"
             :class="[
               'icon-btn p-2 hover:opacity-60 transition-all duration-300 cursor-pointer',
-              isScrolled ? 'text-primary' : 'text-white'
+              isTransparent ? 'text-white' : 'text-primary'
             ]"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -111,7 +111,7 @@
             <svg 
               :class="[
                 'w-5 h-5',
-                isScrolled ? 'text-primary' : 'text-white'
+                isTransparent ? 'text-white' : 'text-primary'
               ]" 
               fill="none" 
               stroke="currentColor" 
@@ -133,7 +133,10 @@
           <!-- 移动端菜单按钮 -->
           <button 
             @click="toggleMobileMenu"
-            class="md:hidden p-2 hover:opacity-60 transition-opacity cursor-pointer"
+            :class="[
+              'md:hidden p-2 hover:opacity-60 transition-opacity cursor-pointer',
+              isTransparent ? 'text-white' : 'text-primary'
+            ]"
             aria-label="Menu"
           >
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -216,9 +219,16 @@ import { useProducts } from '~/composables/useProducts'
 
 const cartStore = useCartStore()
 const { products } = useProducts()
+const route = useRoute()
+
+// 检查是否在首页
+const isHomePage = computed(() => route.path === '/')
 
 // 滚动状态
 const isScrolled = ref(false)
+
+// 导航栏是否应该透明（只在首页且未滚动时透明）
+const isTransparent = computed(() => isHomePage.value && !isScrolled.value)
 
 const isSearchOpen = ref(false)
 const searchQuery = ref('')

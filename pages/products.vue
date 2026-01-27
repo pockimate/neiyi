@@ -92,7 +92,7 @@
           />
         </div>
         
-        <!-- 空状态 -->
+        <!-- 空状�?-->
         <div v-if="filteredProducts.length === 0" class="text-center py-20">
           <p class="text-textMuted text-sm uppercase tracking-wide">
             No products found
@@ -101,7 +101,22 @@
         
         <!-- 加载更多 -->
         <div v-if="hasMore" class="text-center" style="margin-top: var(--space-xl);">
-          <button @click="loadMore" class="btn-secondary">
+          <button 
+            @click="loadMore" 
+            style="
+              background: transparent;
+              color: #2C2C2C;
+              font-weight: 600;
+              padding: 14px 32px;
+              font-size: 16px;
+              text-transform: uppercase;
+              letter-spacing: 0.5px;
+              border: 2px solid #2C2C2C;
+              border-radius: 4px;
+              transition: all 0.3s ease;
+              cursor: pointer;
+            "
+          >
             Load More
           </button>
         </div>

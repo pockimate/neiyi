@@ -34,23 +34,22 @@ export default defineNuxtConfig({
       theme: {
         extend: {
           colors: {
-            // Obsessive风格 - 玫瑰金奢华配色
-            // 主色系 - 深色调
+            // 新的配色系统 - 深灰 + 金色
             primary: '#2C2C2C',        // 深灰 - 主要文字、按钮
             primaryDark: '#1A1A1A',    // 更深灰 - hover状态
             primaryLight: '#4A4A4A',   // 中灰 - 次要元素
             
-            // 品牌强调色 - 玫瑰金系（奢华感）
-            accent: '#D4AF37',         // 玫瑰金 - 主要CTA和强调
+            // 品牌强调色 - 金色系
+            accent: '#D4AF37',         // 金色 - 主要CTA和强调
             accentDark: '#B8860B',     // 深金色 - hover状态
-            accentLight: '#F5E6D3',    // 浅玫瑰金 - 背景点缀
+            accentLight: '#F5E6D3',    // 浅金色 - 背景点缀
             
-            // 次要强调色 - 柔和粉色（保留）
-            rose: '#D4A5A5',           // 柔和玫瑰粉
-            roseDark: '#B88B8B',       // 深玫瑰粉
-            roseLight: '#E8C5C5',      // 浅玫瑰粉
+            // 移除粉色，使用中性灰色
+            rose: '#E0E0E0',           // 改为浅灰
+            roseDark: '#CCCCCC',       // 改为中灰
+            roseLight: '#F0F0F0',      // 改为更浅灰
             
-            // 背景色系 - 柔和白色
+            // 背景色系 - 柔和白色和灰色
             background: '#FAFAFA',     // 柔和白背景
             backgroundLight: '#FFFFFF', // 纯白背景
             backgroundDark: '#F0F0F0', // 浅灰背景
@@ -65,7 +64,7 @@ export default defineNuxtConfig({
             border: '#E0E0E0',         // 柔和边框
             borderDark: '#C0C0C0',     // 深边框
             
-            // 中性色系（保持）
+            // 中性色系
             neutral: {
               50: '#FAFAFA',
               100: '#F5F5F5',
