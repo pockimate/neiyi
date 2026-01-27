@@ -206,7 +206,7 @@
                 :key="product.id"
                 :to="`/product-detail?id=${product.id}`"
                 @click="closeSearch"
-                class="flex items-center gap-4 p-3 hover:bg-backgroundLight transition-colors cursor-pointer border-b border-border last:border-b-0"
+                class="flex items-center gap-4 p-3 hover:bg-backgroundLight transition-colors cursor-pointer border-b border-border"
               >
                 <img :src="product.image" :alt="product.name" class="w-16 h-16 object-cover" />
                 <div class="flex-1">
@@ -214,6 +214,15 @@
                   <p class="text-xs text-textMuted">{{ product.category }}</p>
                 </div>
                 <p class="text-sm font-semibold text-accent">${{ product.price.toFixed(2) }}</p>
+              </NuxtLink>
+              
+              <!-- View All Results Link -->
+              <NuxtLink
+                :to="`/search?q=${encodeURIComponent(searchQuery)}`"
+                @click="closeSearch"
+                class="block p-3 text-center text-sm font-medium text-accent hover:bg-accent-50 transition-colors border-t border-border"
+              >
+                View all results for "{{ searchQuery }}"
               </NuxtLink>
             </div>
           </div>
@@ -536,7 +545,7 @@ const handleLogout = () => {
 
 const handleSearch = () => {
   if (searchQuery.value) {
-    navigateTo(`/products?search=${searchQuery.value}`)
+    navigateTo(`/search?q=${encodeURIComponent(searchQuery.value)}`)
     isSearchOpen.value = false
   }
 }
