@@ -171,73 +171,34 @@
             
             <!-- Action Buttons -->
             <div class="space-y-3 mb-8">
-              <button 
+              <BaseButton 
                 @click="handleAddToCart"
-                class="w-full h-14 text-sm"
-                style="
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                  background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
-                  color: #FFFFFF;
-                  font-weight: 600;
-                  font-size: 16px;
-                  text-transform: uppercase;
-                  letter-spacing: 0.5px;
-                  border: none;
-                  border-radius: 4px;
-                  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
-                  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                  cursor: pointer;
-                "
+                variant="primary"
+                size="md"
+                block
               >
                 Add to Cart
-              </button>
-              <button 
+              </BaseButton>
+              <BaseButton 
                 @click="handleBuyNow"
-                class="w-full h-14 text-sm"
-                style="
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                  background: #2C2C2C;
-                  color: #FFFFFF;
-                  font-weight: 600;
-                  font-size: 16px;
-                  text-transform: uppercase;
-                  letter-spacing: 0.5px;
-                  border: none;
-                  border-radius: 4px;
-                  transition: all 0.3s ease;
-                  cursor: pointer;
-                "
+                variant="accent"
+                size="md"
+                block
               >
                 Buy Now
-              </button>
-              <button 
+              </BaseButton>
+              <BaseButton 
                 @click="toggleWishlist"
-                :class="[
-                  'wishlist-btn w-full h-14 text-sm flex items-center justify-center gap-2',
-                  { 'active': isWishlistAnimating }
-                ]"
-                style="
-                  background: transparent;
-                  color: #2C2C2C;
-                  font-weight: 600;
-                  font-size: 16px;
-                  text-transform: uppercase;
-                  letter-spacing: 0.5px;
-                  border: 2px solid #2C2C2C;
-                  border-radius: 4px;
-                  transition: all 0.3s ease;
-                  cursor: pointer;
-                "
+                variant="secondary"
+                size="md"
+                block
+                :class="{ 'active': isWishlistAnimating }"
               >
                 <svg class="w-5 h-5" :fill="isInWishlist ? 'currentColor' : 'none'" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                 </svg>
                 {{ isInWishlist ? 'In Wishlist' : 'Add to Wishlist' }}
-              </button>
+              </BaseButton>
             </div>
             
             <!-- Product Features -->

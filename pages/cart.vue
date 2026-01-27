@@ -15,29 +15,14 @@
           </svg>
           <h3 class="text-xl font-light mb-4 text-primary uppercase tracking-wide">Your cart is empty</h3>
           <p class="text-sm text-textMuted mb-8">Add some items to get started</p>
-          <NuxtLink 
+          <BaseButton 
+            tag="NuxtLink"
             to="/products" 
-            style="
-              display: inline-flex;
-              align-items: center;
-              justify-content: center;
-              background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
-              color: #FFFFFF;
-              font-weight: 600;
-              padding: 14px 32px;
-              font-size: 16px;
-              text-transform: uppercase;
-              letter-spacing: 0.5px;
-              border: none;
-              border-radius: 4px;
-              box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
-              transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-              cursor: pointer;
-              text-decoration: none;
-            "
+            variant="primary"
+            size="md"
           >
             Continue Shopping
-          </NuxtLink>
+          </BaseButton>
         </div>
 
         <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-12">
@@ -100,7 +85,7 @@
                 </div>
                 <p v-if="couponError" class="text-xs text-accent mt-2">{{ couponError }}</p>
                 <p v-if="appliedCoupon" class="text-xs text-primary mt-2">
-                  âœ?{{ appliedCoupon.code }} applied - {{ appliedCoupon.discount }}% off
+                  ï¿½?{{ appliedCoupon.code }} applied - {{ appliedCoupon.discount }}% off
                 </p>
               </div>
               
@@ -141,53 +126,26 @@
                 </div>
               </div>
               
-              <NuxtLink 
+              <BaseButton 
+                tag="NuxtLink"
                 to="/checkout" 
-                style="
-                  display: block;
-                  width: 100%;
-                  text-align: center;
-                  background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
-                  color: #FFFFFF;
-                  font-weight: 600;
-                  padding: 16px 32px;
-                  font-size: 16px;
-                  text-transform: uppercase;
-                  letter-spacing: 0.5px;
-                  border: none;
-                  border-radius: 4px;
-                  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
-                  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                  cursor: pointer;
-                  text-decoration: none;
-                  margin-bottom: 12px;
-                "
+                variant="primary"
+                size="md"
+                block
+                style="margin-bottom: 12px;"
               >
                 Proceed to Checkout
-              </NuxtLink>
+              </BaseButton>
               
-              <NuxtLink 
+              <BaseButton 
+                tag="NuxtLink"
                 to="/products" 
-                style="
-                  display: block;
-                  width: 100%;
-                  text-align: center;
-                  background: transparent;
-                  color: #2C2C2C;
-                  font-weight: 600;
-                  padding: 16px 32px;
-                  font-size: 16px;
-                  text-transform: uppercase;
-                  letter-spacing: 0.5px;
-                  border: 2px solid #2C2C2C;
-                  border-radius: 4px;
-                  transition: all 0.3s ease;
-                  cursor: pointer;
-                  text-decoration: none;
-                "
+                variant="secondary"
+                size="md"
+                block
               >
                 Continue Shopping
-              </NuxtLink>
+              </BaseButton>
               
               <!-- Trust Badges -->
               <div class="mt-8 pt-8 border-t border-border space-y-3">

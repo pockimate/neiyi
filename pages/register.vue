@@ -83,30 +83,15 @@
               </label>
             </div>
             
-            <button
+            <BaseButton
               type="submit"
               :disabled="isLoading"
-              style="
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
-                color: #FFFFFF;
-                font-weight: 600;
-                padding: 16px 40px;
-                font-size: 16px;
-                border: none;
-                border-radius: 9999px;
-                box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
-                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                cursor: pointer;
-                width: 100%;
-                min-height: 48px;
-              "
-              :style="{ opacity: isLoading ? 0.5 : 1, pointerEvents: isLoading ? 'none' : 'auto' }"
+              variant="primary"
+              size="md"
+              block
             >
               {{ isLoading ? 'Creating account...' : 'Create Account' }}
-            </button>
+            </BaseButton>
           </form>
           
           <div class="mt-6 text-center">

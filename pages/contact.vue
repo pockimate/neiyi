@@ -76,26 +76,14 @@
                   ></textarea>
                 </div>
                 
-                <button 
+                <BaseButton 
                   type="submit"
-                  style="
-                    width: 100%;
-                    background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
-                    color: #FFFFFF;
-                    font-weight: 600;
-                    padding: 16px 32px;
-                    font-size: 16px;
-                    text-transform: uppercase;
-                    letter-spacing: 0.5px;
-                    border: none;
-                    border-radius: 9999px;
-                    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
-                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                    cursor: pointer;
-                  "
+                  variant="primary"
+                  size="md"
+                  block
                 >
                   Send Message
-                </button>
+                </BaseButton>
               </form>
             </div>
           </div>
