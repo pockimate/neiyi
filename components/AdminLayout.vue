@@ -114,6 +114,11 @@ const menuItems = [
     icon: 'svg'
   },
   {
+    path: '/admin/import',
+    label: 'Import Products',
+    icon: 'svg'
+  },
+  {
     path: '/admin/orders',
     label: 'Orders',
     icon: 'svg'
