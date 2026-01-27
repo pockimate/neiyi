@@ -360,14 +360,13 @@ const getBadgeClass = (badge: string) => {
   return 'tag-new' // 默认
 }
 
-  isInWishlist.value = !isInWishlist.value
-}
-
 // Initialize current image
 watch(() => product.value, (newProduct) => {
   if (newProduct) {
     currentImage.value = newProduct.image
   }
+}, { immediate: true })
+</script>
 }, { immediate: true })
 </script>
 
