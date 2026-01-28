@@ -29,23 +29,30 @@
               <h2 class="text-lg font-semibold mb-4 text-primary uppercase tracking-wide">Express Checkout</h2>
               <p class="text-sm text-textMuted mb-4">Skip the form and pay instantly with:</p>
               
-              <!-- Loading State -->
-              <div v-if="!paypalLoaded && !paypalError" class="text-center py-8">
-                <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-                <p class="text-sm text-textMuted mt-2">Loading payment options...</p>
+              <div class="grid grid-cols-2 gap-4">
+                <!-- PayPal Express -->
+                <button
+                  @click="handlePayPalExpress"
+                  class="flex items-center justify-center gap-2 px-6 py-4 bg-[#0070BA] hover:bg-[#005EA6] text-white font-semibold rounded-lg transition-colors cursor-pointer"
+                >
+                  <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.067 8.478c.492.88.556 2.014.3 3.327-.74 3.806-3.276 5.12-6.514 5.12h-.5a.805.805 0 00-.794.68l-.04.22-.63 3.993-.028.15a.805.805 0 01-.793.68H8.25c-.384 0-.69-.31-.64-.687l.007-.04.63-3.993.04-.22a.805.805 0 01.794-.68h.5c3.238 0 5.774-1.314 6.514-5.12.256-1.313.192-2.447-.3-3.327z"/>
+                    <path d="M18.768 6.232c-.176-.088-.36-.169-.55-.243a6.696 6.696 0 00-1.314-.308 15.893 15.893 0 00-2.358-.177H9.538a.805.805 0 00-.794.68L7.17 15.812l-.028.15a.805.805 0 00.794.68h2.818l.708-4.487-.022.14a.805.805 0 01.794-.68h1.657c3.238 0 5.774-1.314 6.514-5.12.08-.412.122-.808.13-1.19-.384-.21-.8-.382-1.238-.513z"/>
+                  </svg>
+                  PayPal
+                </button>
+                
+                <!-- Google Pay -->
+                <button
+                  @click="handleGooglePay"
+                  class="flex items-center justify-center gap-2 px-6 py-4 bg-black hover:bg-gray-800 text-white font-semibold rounded-lg transition-colors cursor-pointer"
+                >
+                  <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+                  </svg>
+                  Google Pay
+                </button>
               </div>
-              
-              <!-- Error State -->
-              <div v-if="paypalError" class="p-4 bg-red-50 border border-red-200 rounded-lg mb-4">
-                <p class="text-sm text-red-800">⚠️ {{ paypalError }}</p>
-                <p class="text-xs text-red-600 mt-1">You can still checkout using the credit card form below.</p>
-              </div>
-              
-              <!-- PayPal Buttons Container -->
-              <div id="paypal-button-container" class="mb-4" v-show="paypalLoaded"></div>
-              
-              <!-- Google Pay Button Container -->
-              <div id="google-pay-button-container" class="mb-4" v-show="paypalLoaded"></div>
               
               <div class="relative my-6">
                 <div class="absolute inset-0 flex items-center">
@@ -191,6 +198,17 @@
               <!-- Credit Card Form -->
               <div v-if="form.paymentMethod === 'card'" class="space-y-4">
                 <div>
+                  <label class="block text-sm font-medium mb-2">Card Number *</label>
+                  <input 
+                    v-model="form.cardNumber"
+                    type="text" 
+                    class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary transition-colors"
+                    placeholder="1234 5678 9012 3456"
+                    maxlength="19"
+                    @input="formatCardNumber"
+                  />
+                </div>
+                <div>
                   <label class="block text-sm font-medium mb-2">Cardholder Name *</label>
                   <input 
                     v-model="form.cardName"
@@ -199,35 +217,16 @@
                     placeholder="John Doe"
                   />
                 </div>
-                
-                <div class="p-3 bg-blue-50 border border-blue-200 rounded-lg mb-4">
-                  <p class="text-sm text-blue-800">
-                    ℹ️ Demo mode: Card information is processed securely. In production, this will use PayPal's secure payment processing.
-                  </p>
-                </div>
-                
-                <div>
-                  <label class="block text-sm font-medium mb-2">Card Number *</label>
-                  <input 
-                    v-model="form.cardNumber"
-                    @input="formatCardNumber"
-                    type="text" 
-                    maxlength="19"
-                    class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary transition-colors"
-                    placeholder="1234 5678 9012 3456"
-                  />
-                </div>
-                
                 <div class="grid grid-cols-2 gap-4">
                   <div>
                     <label class="block text-sm font-medium mb-2">Expiry Date *</label>
                     <input 
                       v-model="form.cardExpiry"
-                      @input="formatExpiry"
                       type="text" 
-                      maxlength="5"
                       class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary transition-colors"
                       placeholder="MM/YY"
+                      maxlength="5"
+                      @input="formatExpiry"
                     />
                   </div>
                   <div>
@@ -235,9 +234,9 @@
                     <input 
                       v-model="form.cardCvv"
                       type="text" 
-                      maxlength="4"
                       class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-primary transition-colors"
                       placeholder="123"
+                      maxlength="4"
                     />
                   </div>
                 </div>
@@ -251,10 +250,6 @@
                     <div class="w-10 h-7 bg-gray-100 rounded flex items-center justify-center text-xs font-bold">AMEX</div>
                   </div>
                 </div>
-                
-                <p class="text-xs text-textMuted">
-                  🔒 Your card information is securely processed by PayPal. We never see or store your card details.
-                </p>
               </div>
               
               <!-- PayPal Info -->
@@ -359,13 +354,6 @@
 <script setup lang="ts">
 import { useCartStore } from '~/stores/cart'
 
-// Declare PayPal types
-declare global {
-  interface Window {
-    paypal?: any
-  }
-}
-
 const cartStore = useCartStore()
 
 const form = reactive({
@@ -386,170 +374,6 @@ const form = reactive({
 })
 
 const isSubmitting = ref(false)
-const paypalLoaded = ref(false)
-const paypalError = ref('')
-const paypalButtonsRendered = ref(false)
-
-// Initialize PayPal buttons and card fields
-const initPayPal = () => {
-  if (typeof window === 'undefined' || !window.paypal) {
-    console.log('PayPal SDK not loaded yet')
-    paypalError.value = 'PayPal SDK failed to load. Please refresh the page.'
-    return
-  }
-  
-  if (paypalButtonsRendered.value) {
-    console.log('PayPal buttons already rendered')
-    return
-  }
-  
-  try {
-    paypalLoaded.value = true
-    console.log('PayPal SDK loaded successfully')
-    
-    // Clear containers first
-    const paypalContainer = document.getElementById('paypal-button-container')
-    const googlepayContainer = document.getElementById('google-pay-button-container')
-    
-    if (paypalContainer) paypalContainer.innerHTML = ''
-    if (googlepayContainer) googlepayContainer.innerHTML = ''
-    
-    // PayPal Buttons
-    window.paypal.Buttons({
-    style: {
-      layout: 'horizontal',
-      color: 'gold',
-      shape: 'rect',
-      label: 'paypal',
-      height: 48
-    },
-    createOrder: (data: any, actions: any) => {
-      return actions.order.create({
-        purchase_units: [{
-          amount: {
-            value: cartStore.total.toFixed(2),
-            currency_code: 'USD'
-          },
-          description: `Order from Intimate Elegance - ${cartStore.items.length} items`
-        }]
-      })
-    },
-    onApprove: async (data: any, actions: any) => {
-      const order = await actions.order.capture()
-      console.log('PayPal order captured:', order)
-      
-      // Create order data
-      const orderData = {
-        paymentMethod: 'paypal',
-        paypalOrderId: order.id,
-        items: cartStore.items,
-        subtotal: cartStore.subtotal,
-        tax: cartStore.tax,
-        total: cartStore.total,
-        orderNumber: Math.random().toString(36).substr(2, 9).toUpperCase(),
-        date: new Date().toISOString(),
-        status: 'completed'
-      }
-      
-      localStorage.setItem('lastOrder', JSON.stringify(orderData))
-      cartStore.clearCart()
-      navigateTo('/order-success')
-    },
-    onError: (err: any) => {
-      console.error('PayPal error:', err)
-      alert('Payment failed. Please try again.')
-    }
-  }).render('#paypal-button-container')
-  
-  // Google Pay Button
-  if (window.paypal.Googlepay) {
-    const googlepay = window.paypal.Googlepay()
-    
-    // Check if Google Pay is eligible
-    googlepay.config().then((googlepayConfig: any) => {
-      if (!googlepayConfig.isEligible) {
-        console.log('Google Pay is not eligible')
-        if (googlepayContainer) googlepayContainer.style.display = 'none'
-        return
-      }
-      
-      console.log('Google Pay is eligible, creating button...')
-      
-      // Create and render Google Pay button
-      const button = googlepay.createButton({
-        buttonColor: 'black',
-        buttonType: 'pay',
-        buttonSizeMode: 'fill',
-        style: {
-          height: '48px'
-        },
-        onClick: async () => {
-          try {
-            // Confirm the order with Google Pay
-            const { orderId } = await googlepay.confirmOrder({
-              orderId: await createPayPalOrder(),
-              paymentMethodData: {
-                description: `Order from Intimate Elegance - ${cartStore.items.length} items`
-              }
-            })
-            
-            console.log('Google Pay order confirmed:', orderId)
-            
-            // Create order data
-            const orderData = {
-              paymentMethod: 'googlepay',
-              paypalOrderId: orderId,
-              items: cartStore.items,
-              subtotal: cartStore.subtotal,
-              tax: cartStore.tax,
-              total: cartStore.total,
-              orderNumber: Math.random().toString(36).substr(2, 9).toUpperCase(),
-              date: new Date().toISOString(),
-              status: 'completed'
-            }
-            
-            localStorage.setItem('lastOrder', JSON.stringify(orderData))
-            cartStore.clearCart()
-            navigateTo('/order-success')
-          } catch (err: any) {
-            console.error('Google Pay error:', err)
-            if (err.message !== 'POPUP_CLOSED') {
-              alert('Payment failed. Please try again.')
-            }
-          }
-        }
-      })
-      
-      // Render the button
-      if (googlepayContainer) {
-        googlepayContainer.innerHTML = ''
-        googlepayContainer.appendChild(button)
-        console.log('Google Pay button rendered')
-      }
-    }).catch((err: any) => {
-      console.log('Google Pay config error:', err)
-      if (googlepayContainer) googlepayContainer.style.display = 'none'
-    })
-  } else {
-    console.log('Google Pay not available in PayPal SDK')
-    if (googlepayContainer) googlepayContainer.style.display = 'none'
-  }
-  
-  paypalButtonsRendered.value = true
-  console.log('PayPal initialization complete')
-  
-  } catch (error) {
-    console.error('Error initializing PayPal:', error)
-    paypalError.value = 'Failed to initialize payment options. Please refresh the page.'
-  }
-}
-
-// Helper function to create PayPal order
-const createPayPalOrder = async () => {
-  // In production, this should call your backend API
-  // For now, we'll use a mock order ID
-  return 'ORDER_' + Math.random().toString(36).substr(2, 9).toUpperCase()
-}
 
 // Format card number with spaces
 const formatCardNumber = (e: Event) => {
@@ -569,6 +393,18 @@ const formatExpiry = (e: Event) => {
   form.cardExpiry = value
 }
 
+// Handle PayPal Express
+const handlePayPalExpress = () => {
+  alert('PayPal Express Checkout will be implemented with PayPal SDK')
+  // TODO: Implement PayPal SDK integration
+}
+
+// Handle Google Pay
+const handleGooglePay = () => {
+  alert('Google Pay will be implemented with Google Pay API')
+  // TODO: Implement Google Pay API integration
+}
+
 // Handle form submission
 const handleSubmit = async () => {
   // Basic validation
@@ -578,98 +414,36 @@ const handleSubmit = async () => {
     return
   }
   
-  isSubmitting.value = true
-  
-  try {
-    if (form.paymentMethod === 'card') {
-      // Credit card payment
-      console.log('Processing card payment...')
-      
-      if (!form.cardName || !form.cardNumber || !form.cardExpiry || !form.cardCvv) {
-        alert('Please fill in all card details')
-        isSubmitting.value = false
-        return
-      }
-      
-      // Validate card number (basic check)
-      const cardNumberClean = form.cardNumber.replace(/\s/g, '')
-      if (cardNumberClean.length < 13 || cardNumberClean.length > 19) {
-        alert('Please enter a valid card number')
-        isSubmitting.value = false
-        return
-      }
-      
-      // Validate expiry
-      if (!/^\d{2}\/\d{2}$/.test(form.cardExpiry)) {
-        alert('Please enter expiry date in MM/YY format')
-        isSubmitting.value = false
-        return
-      }
-      
-      // Validate CVV
-      if (form.cardCvv.length < 3 || form.cardCvv.length > 4) {
-        alert('Please enter a valid CVV')
-        isSubmitting.value = false
-        return
-      }
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000))
-      
-      // Create order
-      const orderData = {
-        ...form,
-        items: cartStore.items,
-        subtotal: cartStore.subtotal,
-        tax: cartStore.tax,
-        total: cartStore.total,
-        orderNumber: Math.random().toString(36).substr(2, 9).toUpperCase(),
-        date: new Date().toISOString(),
-        status: 'completed'
-      }
-      
-      localStorage.setItem('lastOrder', JSON.stringify(orderData))
-      cartStore.clearCart()
-      navigateTo('/order-success')
-      
-    } else if (form.paymentMethod === 'paypal') {
-      // PayPal payment - redirect to PayPal
-      alert('Please use the PayPal button above to complete your payment')
-      isSubmitting.value = false
-      return
-    } else {
-      // Unknown payment method
-      alert('Please select a payment method')
-      isSubmitting.value = false
+  if (form.paymentMethod === 'card') {
+    if (!form.cardNumber || !form.cardName || !form.cardExpiry || !form.cardCvv) {
+      alert('Please fill in all card details')
       return
     }
-  } catch (error) {
-    console.error('Payment error:', error)
-    alert('Payment failed. Please try again.')
-    isSubmitting.value = false
   }
+  
+  isSubmitting.value = true
+  
+  // Simulate API call
+  await new Promise(resolve => setTimeout(resolve, 2000))
+  
+  // Create order
+  const orderData = {
+    ...form,
+    items: cartStore.items,
+    subtotal: cartStore.subtotal,
+    tax: cartStore.tax,
+    total: cartStore.total,
+    orderNumber: Math.random().toString(36).substr(2, 9).toUpperCase(),
+    date: new Date().toISOString()
+  }
+  
+  localStorage.setItem('lastOrder', JSON.stringify(orderData))
+  cartStore.clearCart()
+  
+  navigateTo('/order-success')
 }
 
 onMounted(() => {
   cartStore.loadCart()
-  
-  console.log('Checkout page mounted, waiting for PayPal SDK...')
-  // Wait for PayPal SDK to load
-  let attempts = 0
-  const maxAttempts = 100 // 10 seconds
-  
-  const checkPayPal = setInterval(() => {
-    attempts++
-    
-    if (window.paypal) {
-      console.log('PayPal SDK found, initializing...')
-      clearInterval(checkPayPal)
-      initPayPal()
-    } else if (attempts >= maxAttempts) {
-      console.error('PayPal SDK failed to load after 10 seconds')
-      clearInterval(checkPayPal)
-      paypalError.value = 'Payment options are temporarily unavailable. Please use the credit card form below.'
-    }
-  }, 100)
 })
 </script>

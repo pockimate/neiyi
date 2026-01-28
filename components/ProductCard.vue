@@ -1,11 +1,17 @@
 <template>
-  <div class="product-card group relative">
+  <div 
+    class="product-card group relative"
+    v-scroll-reveal="{ delay: cardDelay, once: true }"
+  >
     <!-- 玫瑰金渐变遮罩 -->
     <div class="product-card-overlay"></div>
     
     <NuxtLink :to="`/product-detail?id=${product.id}`" class="block">
       <!-- 图片区域 -->
-      <div class="product-image-wrapper relative aspect-[3/4] overflow-hidden bg-backgroundLight">
+      <div 
+        ref="productImageRef"
+        class="product-image-wrapper relative aspect-[3/4] overflow-hidden bg-backgroundLight"
+      >
         <!-- 主图片 -->
         <OptimizedImage
           :src="product.image"
@@ -62,6 +68,7 @@
         <!-- Hover显示按钮组 -->
         <div class="absolute inset-0 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-400">
           <button 
+            v-ripple
             @click.prevent="handleAddToCart"
             class="btn-add-to-cart"
             :disabled="product.stock === 0"
@@ -69,6 +76,7 @@
             {{ product.stock === 0 ? 'Out of Stock' : 'Add to Cart' }}
           </button>
           <button 
+            v-ripple
             @click.prevent="handleQuickView"
             class="btn-quick-view"
             title="Quick View"
@@ -114,14 +122,18 @@
 
 <script setup lang="ts">
 import { useCartStore } from '~/stores/cart'
+import { useFlyingCart } from '~/composables/useFlyingCart'
 import type { Product } from '~/composables/useProducts'
 
 const props = defineProps<{
   product: Product
+  cardDelay?: number
 }>()
 
 const cartStore = useCartStore()
+const { flyToCart } = useFlyingCart()
 const isInWishlist = ref(false)
+const productImageRef = ref<HTMLElement | null>(null)
 
 const handleAddToCart = (event: Event) => {
   event.stopPropagation()
@@ -129,6 +141,7 @@ const handleAddToCart = (event: Event) => {
   
   if (props.product.stock === 0) return
   
+  // 添加到购物车
   cartStore.addToCart({
     id: props.product.id,
     name: props.product.name,
@@ -139,8 +152,16 @@ const handleAddToCart = (event: Event) => {
     image: props.product.image
   })
   
-  const isCartOpen = useState('cartSidebarOpen')
-  isCartOpen.value = true
+  // 触发飞入动画
+  if (productImageRef.value) {
+    flyToCart(productImageRef.value, props.product.image)
+  }
+  
+  // 打开购物车侧边栏
+  setTimeout(() => {
+    const isCartOpen = useState('cartSidebarOpen')
+    isCartOpen.value = true
+  }, 400)
 }
 
 const handleQuickView = (event: Event) => {
@@ -158,12 +179,49 @@ const toggleWishlist = (event: Event) => {
   
   isInWishlist.value = !isInWishlist.value
   
+  // 添加心跳动画
+  const button = event.currentTarget as HTMLElement
+  button.classList.add('heartbeat')
+  setTimeout(() => {
+    button.classList.remove('heartbeat')
+  }, 1000)
+  
+  // 显示Toast通知
+  showWishlistToast(isInWishlist.value)
+  
   // TODO: 保存到wishlist store或localStorage
   if (isInWishlist.value) {
     console.log('Added to wishlist:', props.product.name)
   } else {
     console.log('Removed from wishlist:', props.product.name)
   }
+}
+
+// Toast通知函数
+const showWishlistToast = (added: boolean) => {
+  const toast = document.createElement('div')
+  toast.className = 'wishlist-toast'
+  toast.innerHTML = `
+    <div class="flex items-center gap-3">
+      <svg class="w-5 h-5 ${added ? 'text-red-500' : 'text-gray-500'}" fill="${added ? 'currentColor' : 'none'}" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+      </svg>
+      <span class="text-sm font-medium">
+        ${added ? 'Added to wishlist' : 'Removed from wishlist'}
+      </span>
+    </div>
+  `
+  
+  document.body.appendChild(toast)
+  
+  // 触发动画
+  setTimeout(() => toast.classList.add('show'), 10)
+  
+  // 3秒后移除
+  setTimeout(() => {
+    toast.classList.remove('show')
+    setTimeout(() => toast.remove(), 300)
+  }, 3000)
 }
 
 // 根据badge类型返回对应的class
@@ -317,5 +375,38 @@ const getBadgeClass = (badge: string) => {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* Toast通知样式 */
+:deep(.wishlist-toast) {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: white;
+  padding: 16px 24px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  border: 1px solid #E0E0E0;
+  z-index: 9999;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+:deep(.wishlist-toast.show) {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* 心跳动画 */
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.3); }
+  50% { transform: scale(1.1); }
+  75% { transform: scale(1.2); }
+}
+
+.heartbeat {
+  animation: heartbeat 0.6s ease-in-out;
 }
 </style>

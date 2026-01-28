@@ -131,22 +131,18 @@
         <!-- Action Buttons -->
         <div class="space-y-3">
           <BaseButton 
-            tag="NuxtLink"
-            to="/checkout"
             variant="primary"
             size="md"
             block
-            @click="close"
+            @click="goToCheckout"
           >
             Checkout
           </BaseButton>
           <BaseButton 
-            tag="NuxtLink"
-            to="/cart"
             variant="secondary"
             size="md"
             block
-            @click="close"
+            @click="goToCart"
           >
             View Cart
           </BaseButton>
@@ -171,6 +167,17 @@ const emit = defineEmits<{
 
 const close = () => {
   emit('close')
+}
+
+// Navigation functions
+const goToCheckout = () => {
+  close()
+  navigateTo('/checkout')
+}
+
+const goToCart = () => {
+  close()
+  navigateTo('/cart')
 }
 
 // Prevent body scroll when sidebar is open

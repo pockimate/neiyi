@@ -3,6 +3,9 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
   
+  // 禁用 SSR 以避免 hydration 问题
+  ssr: false,
+  
   modules: [
     '@nuxtjs/tailwindcss',
     '@pinia/nuxt'
@@ -14,7 +17,8 @@ export default defineNuxtConfig({
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { name: 'description', content: 'Discover our curated collection of luxury lingerie designed to make you feel confident, beautiful, and empowered.' }
+        { name: 'description', content: 'Discover our curated collection of luxury lingerie designed to make you feel confident, beautiful, and empowered.' },
+        { name: 'theme-color', content: '#2C2C2C' }
       ],
       link: [
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
@@ -22,6 +26,13 @@ export default defineNuxtConfig({
         { 
           rel: 'stylesheet', 
           href: 'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800&family=Allura&display=swap' 
+        },
+        { rel: 'manifest', href: '/manifest.json' }
+      ],
+      script: [
+        {
+          src: 'https://www.paypal.com/sdk/js?client-id=test&currency=USD&components=buttons,card-fields,googlepay',
+          defer: true
         }
       ]
     }
@@ -251,12 +262,145 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    preset: 'vercel'
+    preset: 'vercel',
+    // 启用资源压缩 (Gzip + Brotli)
+    compressPublicAssets: true,
+    // 禁用预渲染（避免SSR指令问题）
+    prerender: {
+      crawlLinks: false,
+      routes: []
+    },
+    // 修复Windows路径问题
+    output: {
+      dir: '.vercel/output'
+    },
+    // 安全响应头 - 开发环境放宽限制
+    routeRules: {
+      '/**': {
+        headers: {
+          // XSS 防护
+          'X-Content-Type-Options': 'nosniff',
+          'X-Frame-Options': 'SAMEORIGIN',
+          'X-XSS-Protection': '1; mode=block',
+          
+          // 引用策略
+          'Referrer-Policy': 'strict-origin-when-cross-origin'
+        }
+      }
+    }
+  },
+
+  // 路由规则 - 缓存策略
+  routeRules: {
+    // 动态页面 - 短期缓存
+    '/': { swr: 3600 },
+    '/products': { swr: 600 },
+    '/search': { swr: 300 },
+    '/about': { swr: 3600 },
+    '/contact': { swr: 3600 },
+    '/terms': { swr: 3600 },
+    '/privacy': { swr: 3600 },
+    '/shipping': { swr: 3600 },
+    '/returns': { swr: 3600 },
+    '/size-guide': { swr: 3600 },
+    
+    // 用户相关页面 - 客户端渲染
+    '/cart': { ssr: false },
+    '/checkout': { ssr: false },
+    '/account/**': { ssr: false },
+    '/admin/**': { ssr: false }
+  },
+
+  // 实验性功能 - 性能优化
+  experimental: {
+    payloadExtraction: false,
+    renderJsonPayloads: true,
+    typedPages: true
   },
 
   vite: {
     optimizeDeps: {
-      exclude: ['#app-manifest']
+      exclude: []
+    },
+    build: {
+      // 代码分割配置
+      rollupOptions: {
+        output: {
+          // 简化的分块策略（避免循环依赖）
+          manualChunks: (id) => {
+            // Vendor chunks - 第三方库
+            if (id.includes('node_modules')) {
+              // Vue 生态系统
+              if (id.includes('vue') || id.includes('@vue') || id.includes('pinia')) {
+                return 'vendor-vue'
+              }
+              // 其他第三方库
+              return 'vendor-libs'
+            }
+          },
+          // 文件命名策略
+          chunkFileNames: 'chunks/[name]-[hash].js',
+          entryFileNames: 'entry/[name]-[hash].js',
+          assetFileNames: 'assets/[name]-[hash].[ext]'
+        }
+      },
+      // 压缩配置
+      minify: 'terser',
+      terserOptions: {
+        compress: {
+          // 移除 console
+          drop_console: true,
+          // 移除 debugger
+          drop_debugger: true,
+          // 移除未使用的代码
+          pure_funcs: ['console.log', 'console.info', 'console.debug', 'console.warn']
+        },
+        format: {
+          // 移除注释
+          comments: false
+        }
+      },
+      // CSS 代码分割
+      cssCodeSplit: true,
+      // 资源内联阈值 (4KB)
+      assetsInlineLimit: 4096,
+      // 启用 source map (仅开发环境)
+      sourcemap: false,
+      // 目标浏览器
+      target: 'es2015',
+      // 报告压缩后的大小
+      reportCompressedSize: false
+    },
+    // CSS 优化
+    css: {
+      devSourcemap: false
+    },
+    // 服务器配置
+    server: {
+      // 预热常用文件
+      warmup: {
+        clientFiles: [
+          './app.vue',
+          './pages/index.vue',
+          './pages/products.vue',
+          './components/TheNavbar.vue',
+          './components/TheFooter.vue',
+          './components/ProductCard.vue'
+        ]
+      }
     }
+  },
+
+  // 组件自动导入优化
+  components: {
+    dirs: [
+      {
+        path: '~/components',
+        // 全局组件
+        global: false,
+        // 路径前缀
+        pathPrefix: false
+      }
+    ]
   }
 })

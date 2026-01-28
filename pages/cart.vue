@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white min-h-screen">
+  <div class="bg-white min-h-screen pb-20 md:pb-0">
     <TheNavbar />
     
     <!-- Breadcrumb -->
@@ -16,10 +16,9 @@
           <h3 class="text-xl font-light mb-4 text-primary uppercase tracking-wide">Your cart is empty</h3>
           <p class="text-sm text-textMuted mb-8">Add some items to get started</p>
           <BaseButton 
-            tag="NuxtLink"
-            to="/products" 
             variant="primary"
             size="md"
+            @click="goToProducts"
           >
             Continue Shopping
           </BaseButton>
@@ -320,22 +319,20 @@
               </div>
               
               <BaseButton 
-                tag="NuxtLink"
-                to="/checkout" 
                 variant="primary"
                 size="md"
                 block
                 style="margin-bottom: 12px;"
+                @click="goToCheckout"
               >
                 Proceed to Checkout
               </BaseButton>
               
               <BaseButton 
-                tag="NuxtLink"
-                to="/products" 
                 variant="secondary"
                 size="md"
                 block
+                @click="goToProducts"
               >
                 Continue Shopping
               </BaseButton>
@@ -535,6 +532,15 @@ const estimatedDelivery = computed(() => {
   deliveryDate.setDate(today.getDate() + (shippingCost.value === 0 ? 3 : 5))
   return deliveryDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
 })
+
+// Navigation functions
+const goToCheckout = () => {
+  navigateTo('/checkout')
+}
+
+const goToProducts = () => {
+  navigateTo('/products')
+}
 
 onMounted(() => {
   cartStore.loadCart()

@@ -137,7 +137,8 @@
             @mouseleave="closeMiniCart"
           >
             <NuxtLink 
-              to="/cart" 
+              to="/cart"
+              data-cart-icon
               class="relative p-2 hover:opacity-60 transition-opacity cursor-pointer block" 
               aria-label="Shopping cart"
             >
@@ -153,7 +154,8 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
               </svg>
               <span 
-                v-if="cartStore.cartCount > 0" 
+                v-if="cartStore.cartCount > 0"
+                data-cart-count
                 :class="[
                   'cart-badge absolute -top-1 -right-1 bg-primary text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-semibold',
                   { 'updated': isBadgeAnimating }

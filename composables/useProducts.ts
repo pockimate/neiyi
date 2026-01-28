@@ -37,7 +37,9 @@ export const useProducts = () => {
       name: 'Mesh Teddy',
       description: 'Sheer mesh with floral embroidery',
       price: 79.99,
+      originalPrice: 99.99,
       category: 'Bodysuits',
+      badge: 'Sale',
       gradient: 'from-rose-100 to-pink-50',
       image: 'https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?w=600&h=800&fit=crop'
     },
@@ -46,7 +48,9 @@ export const useProducts = () => {
       name: 'Velvet Bralette',
       description: 'Soft velvet with gold hardware',
       price: 69.99,
+      originalPrice: 94.99,
       category: 'Bras & Sets',
+      badge: 'Sale',
       gradient: 'from-pink-100 to-rose-50',
       image: 'https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?w=600&h=800&fit=crop&sat=-100'
     },
@@ -94,7 +98,9 @@ export const useProducts = () => {
       name: 'Mesh Bodysuit',
       description: 'Sheer mesh with strategic coverage',
       price: 94.99,
+      originalPrice: 129.99,
       category: 'Bodysuits',
+      badge: 'Sale',
       gradient: 'from-rose-100 to-pink-50',
       image: 'https://images.unsplash.com/photo-1611312449408-fcece27cdbb7?w=600&h=800&fit=crop&hue=150'
     },

@@ -1,7 +1,7 @@
 <template>
   <component
     :is="tag"
-    :type="type"
+    :type="tag === 'button' ? type : undefined"
     :disabled="disabled"
     :to="to"
     :class="['base-button', variantClass, sizeClass, { 'w-full': block }]"
@@ -104,9 +104,14 @@ const buttonStyle = computed(() => {
 })
 
 const handleClick = (event: MouseEvent) => {
-  if (!props.disabled) {
-    emit('click', event)
+  if (props.disabled) {
+    event.preventDefault()
+    event.stopPropagation()
+    return
   }
+  
+  // 触发click事件（用于副作用，如关闭侧边栏）
+  emit('click', event)
 }
 </script>
 

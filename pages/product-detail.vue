@@ -1,16 +1,16 @@
 <template>
-  <div class="bg-white min-h-screen">
+  <div class="bg-white min-h-screen pb-20 md:pb-0">
     <TheNavbar />
     
     <section v-if="product" class="pt-24 pb-20">
-      <div class="max-w-7xl mx-auto px-6">
+      <div class="max-w-7xl mx-auto px-4 md:px-6">
         <!-- Breadcrumb -->
         <Breadcrumb :items="[
           { label: 'Products', to: '/products' },
           { label: product.name }
         ]" />
         
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
           <!-- Left: Product Images -->
           <div>
             <!-- Main Image - 正方形 with Zoom -->
@@ -273,6 +273,7 @@
                 variant="primary"
                 size="md"
                 block
+                class="touch-target"
               >
                 Add to Cart
               </BaseButton>
@@ -281,6 +282,7 @@
                 variant="accent"
                 size="md"
                 block
+                class="touch-target"
               >
                 Buy Now
               </BaseButton>
@@ -290,6 +292,7 @@
                 size="md"
                 block
                 :class="{ 'active': isWishlistAnimating }"
+                class="touch-target"
               >
                 <svg class="w-5 h-5" :fill="isInWishlist ? 'currentColor' : 'none'" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
@@ -329,8 +332,8 @@
         </div>
         
         <!-- Product Details Tabs -->
-        <!-- Tabs Section -->
-        <div class="mt-20 border-t border-border">
+        <!-- Tabs Section - Desktop -->
+        <div class="mt-20 border-t border-border hidden md:block">
           <div class="flex gap-8 border-b border-border">
             <button
               v-for="tab in tabs"
@@ -516,6 +519,115 @@
           </div>
         </div>
         
+        <!-- Tabs Section - Mobile (Collapsible) -->
+        <div class="mt-12 md:hidden space-y-3">
+          <div 
+            v-for="tab in tabs" 
+            :key="tab"
+            class="border border-border overflow-hidden"
+          >
+            <button
+              @click="toggleMobileTab(tab)"
+              class="w-full flex items-center justify-between px-4 py-4 bg-white text-left"
+            >
+              <span class="text-sm font-semibold uppercase tracking-wider text-primary">
+                {{ tab }}
+                <span v-if="tab === 'Reviews'" class="ml-1 text-xs">({{ reviews.length }})</span>
+              </span>
+              <svg 
+                class="w-5 h-5 text-primary transition-transform duration-200"
+                :class="{ 'rotate-180': expandedMobileTabs.includes(tab) }"
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+            
+            <Transition name="accordion">
+              <div v-if="expandedMobileTabs.includes(tab)" class="px-4 py-4 bg-backgroundLight">
+                <!-- Description Tab -->
+                <div v-if="tab === 'Description'" class="prose max-w-none">
+                  <p class="text-textSecondary leading-relaxed text-sm">
+                    {{ product.description }}
+                  </p>
+                  <p class="text-textSecondary leading-relaxed mt-4 text-sm">
+                    Experience luxury and comfort with our premium lingerie collection. Each piece is carefully crafted with the finest materials to ensure both style and comfort.
+                  </p>
+                </div>
+                
+                <!-- Details Tab -->
+                <div v-if="tab === 'Details'" class="space-y-3">
+                  <div class="flex py-2 border-b border-border">
+                    <span class="w-1/3 text-xs font-semibold text-primary">Material</span>
+                    <span class="w-2/3 text-xs text-textSecondary">90% Polyamide, 10% Elastane</span>
+                  </div>
+                  <div class="flex py-2 border-b border-border">
+                    <span class="w-1/3 text-xs font-semibold text-primary">Care</span>
+                    <span class="w-2/3 text-xs text-textSecondary">Hand wash cold, lay flat to dry</span>
+                  </div>
+                  <div class="flex py-2 border-b border-border">
+                    <span class="w-1/3 text-xs font-semibold text-primary">Origin</span>
+                    <span class="w-2/3 text-xs text-textSecondary">Made in Europe</span>
+                  </div>
+                </div>
+                
+                <!-- Shipping Tab -->
+                <div v-if="tab === 'Shipping'" class="space-y-3">
+                  <p class="text-textSecondary text-xs leading-relaxed">
+                    Free standard shipping on orders over $50. Express shipping available at checkout.
+                  </p>
+                  <p class="text-textSecondary text-xs leading-relaxed">
+                    Orders are processed within 1-2 business days and typically arrive within 3-5 business days.
+                  </p>
+                </div>
+                
+                <!-- Reviews Tab (Simplified for mobile) -->
+                <div v-if="tab === 'Reviews'">
+                  <div class="text-center mb-4 pb-4 border-b border-border">
+                    <div class="text-3xl font-bold text-primary mb-1">{{ overallRating }}</div>
+                    <div class="flex justify-center text-accent mb-1">
+                      <svg v-for="i in 5" :key="i" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                      </svg>
+                    </div>
+                    <p class="text-xs text-textMuted">Based on {{ reviews.length }} reviews</p>
+                  </div>
+                  
+                  <div class="space-y-4">
+                    <div 
+                      v-for="review in reviews.slice(0, 3)" 
+                      :key="review.id"
+                      class="pb-4 border-b border-border last:border-0"
+                    >
+                      <div class="flex items-start gap-3">
+                        <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0">
+                          <span class="text-sm font-semibold text-gray-600">{{ review.userName.charAt(0) }}</span>
+                        </div>
+                        <div class="flex-1">
+                          <h4 class="font-semibold text-sm text-primary">{{ review.userName }}</h4>
+                          <div class="flex items-center gap-2 mt-1">
+                            <div class="flex text-accent">
+                              <svg v-for="i in review.rating" :key="i" class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                              </svg>
+                            </div>
+                            <span class="text-xs text-textMuted">{{ review.date }}</span>
+                          </div>
+                          <p class="text-xs text-textSecondary leading-relaxed mt-2">
+                            {{ review.content }}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Transition>
+          </div>
+        </div>
+        
         <!-- Recommended Products Section -->
         <div class="mt-20">
           <!-- You May Also Like -->
@@ -574,6 +686,99 @@
         </div>
       </div>
     </section>
+    
+    <!-- Mobile Fixed Bottom Bar -->
+    <div class="md:hidden fixed bottom-16 left-0 right-0 bg-white border-t border-border z-40 safe-area-bottom">
+      <div class="px-4 py-3">
+        <div class="flex items-center gap-3">
+          <button 
+            @click="toggleWishlist"
+            class="w-12 h-12 border border-border flex items-center justify-center transition-colors"
+            :class="{ 'bg-accent/10 border-accent': isInWishlist }"
+          >
+            <svg class="w-6 h-6" :fill="isInWishlist ? 'currentColor' : 'none'" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+            </svg>
+          </button>
+          <button 
+            @click="handleAddToCart"
+            class="flex-1 h-12 bg-primary text-white font-semibold text-sm uppercase tracking-wider transition-colors active:bg-primary/90"
+          >
+            Add to Cart
+          </button>
+          <button 
+            @click="handleBuyNow"
+            class="flex-1 h-12 bg-accent text-white font-semibold text-sm uppercase tracking-wider transition-colors active:bg-accent/90"
+          >
+            Buy Now
+          </button>
+        </div>
+        <div class="mt-2 text-center">
+          <p class="text-xs text-textMuted">
+            <span class="font-semibold text-primary">${{ product.price.toFixed(2) }}</span>
+            <span class="mx-2">•</span>
+            Size: {{ selectedSize }}
+            <span class="mx-2">•</span>
+            Color: {{ selectedColor }}
+          </p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Mobile Fullscreen Image Carousel -->
+    <Teleport to="body">
+      <div 
+        v-if="isMobileCarouselOpen"
+        class="md:hidden fixed inset-0 z-50 bg-black"
+      >
+        <!-- Header -->
+        <div class="absolute top-0 left-0 right-0 bg-gradient-to-b from-black/80 to-transparent z-10 safe-area-top">
+          <div class="flex items-center justify-between px-4 py-4">
+            <button
+              @click="closeMobileCarousel"
+              class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center"
+            >
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+            <div class="text-white text-sm font-medium">
+              {{ currentImageIndex + 1 }} / {{ productImages.length }}
+            </div>
+            <div class="w-10"></div>
+          </div>
+        </div>
+        
+        <!-- Swipeable Image Container -->
+        <div 
+          class="h-full flex items-center justify-center"
+          @touchstart="handleTouchStart"
+          @touchmove="handleTouchMove"
+          @touchend="handleTouchEnd"
+        >
+          <img 
+            :src="currentImage" 
+            :alt="product?.name"
+            class="max-w-full max-h-full object-contain px-4"
+          />
+        </div>
+        
+        <!-- Navigation Dots -->
+        <div class="absolute bottom-8 left-0 right-0 flex justify-center gap-2 safe-area-bottom">
+          <button
+            v-for="(image, index) in productImages"
+            :key="index"
+            @click="selectImage(index)"
+            :class="[
+              'w-2 h-2 rounded-full transition-all',
+              currentImageIndex === index 
+                ? 'bg-white w-6' 
+                : 'bg-white/40'
+            ]"
+          ></button>
+        </div>
+      </div>
+    </Teleport>
     
     <!-- Lightbox Modal -->
     <Teleport to="body">
@@ -682,6 +887,12 @@ const quantity = ref(1)
 const isInWishlist = ref(false)
 const isWishlistAnimating = ref(false)
 const activeTab = ref('Description')
+const expandedMobileTabs = ref<string[]>([])
+const isMobileCarouselOpen = ref(false)
+
+// Touch handling for mobile carousel
+const touchStartX = ref(0)
+const touchEndX = ref(0)
 
 // Image zoom functionality
 const showZoom = ref(false)
@@ -928,7 +1139,12 @@ const validateQuantity = () => {
 }
 
 const openLightbox = () => {
-  isLightboxOpen.value = true
+  // On mobile, open mobile carousel instead
+  if (window.innerWidth < 768) {
+    isMobileCarouselOpen.value = true
+  } else {
+    isLightboxOpen.value = true
+  }
   // Prevent body scroll
   document.body.style.overflow = 'hidden'
 }
@@ -936,6 +1152,11 @@ const openLightbox = () => {
 const closeLightbox = () => {
   isLightboxOpen.value = false
   // Restore body scroll
+  document.body.style.overflow = ''
+}
+
+const closeMobileCarousel = () => {
+  isMobileCarouselOpen.value = false
   document.body.style.overflow = ''
 }
 
@@ -982,7 +1203,20 @@ const handleAddToCart = () => {
 }
 
 const handleBuyNow = () => {
-  handleAddToCart()
+  if (!product.value) return
+  
+  // 添加到购物车但不打开侧边栏
+  cartStore.addToCart({
+    id: product.value.id,
+    name: product.value.name,
+    price: product.value.price,
+    size: selectedSize.value,
+    color: selectedColor.value,
+    quantity: quantity.value,
+    image: product.value.image
+  })
+  
+  // 直接跳转到结账页面
   navigateTo('/checkout')
 }
 
@@ -1008,6 +1242,43 @@ const likeReview = (reviewId: number) => {
 const openImageModal = (imageUrl: string) => {
   // TODO: 实现图片查看模态框
   console.log('Open image:', imageUrl)
+}
+
+// Mobile tab toggle
+const toggleMobileTab = (tab: string) => {
+  const index = expandedMobileTabs.value.indexOf(tab)
+  if (index > -1) {
+    expandedMobileTabs.value.splice(index, 1)
+  } else {
+    expandedMobileTabs.value.push(tab)
+  }
+}
+
+// Touch handlers for mobile carousel
+const handleTouchStart = (e: TouchEvent) => {
+  touchStartX.value = e.touches[0].clientX
+}
+
+const handleTouchMove = (e: TouchEvent) => {
+  touchEndX.value = e.touches[0].clientX
+}
+
+const handleTouchEnd = () => {
+  const swipeThreshold = 50
+  const diff = touchStartX.value - touchEndX.value
+  
+  if (Math.abs(diff) > swipeThreshold) {
+    if (diff > 0) {
+      // Swipe left - next image
+      nextImage()
+    } else {
+      // Swipe right - previous image
+      previousImage()
+    }
+  }
+  
+  touchStartX.value = 0
+  touchEndX.value = 0
 }
 
 // 根据badge类型返回对应的class
@@ -1087,5 +1358,28 @@ input[type="number"] {
 .lightbox-enter-from,
 .lightbox-leave-to {
   opacity: 0;
+}
+
+/* Accordion animation for mobile tabs */
+.accordion-enter-active,
+.accordion-leave-active {
+  transition: all 0.3s ease;
+  max-height: 500px;
+  overflow: hidden;
+}
+
+.accordion-enter-from,
+.accordion-leave-to {
+  max-height: 0;
+  opacity: 0;
+}
+
+/* Safe area for devices with notch */
+.safe-area-top {
+  padding-top: env(safe-area-inset-top);
+}
+
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
 }
 </style>

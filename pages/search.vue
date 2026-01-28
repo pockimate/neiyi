@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white min-h-screen">
+  <div class="bg-white min-h-screen pb-20 md:pb-0">
     <TheNavbar />
     
     <!-- Breadcrumb -->
@@ -21,8 +21,7 @@
                 type="text"
                 placeholder="Search products..."
                 class="w-full px-6 py-4 pl-14 border-2 border-gray-300 transition-all duration-300 focus:border-accent focus:shadow-[0_0_0_4px_rgba(201,168,130,0.1)] focus:outline-none text-base"
-                @keyup.enter="performSearch"
-                @input="debouncedSearch"
+                @keyup.enter="performSearch(searchQuery)"
               />
               <svg class="w-6 h-6 absolute left-4 top-1/2 -translate-y-1/2 text-textMuted pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
@@ -81,14 +80,14 @@
                     </svg>
                     <span class="text-sm text-primary">{{ term }}</span>
                   </div>
-                  <button
+                  <span
                     @click.stop="removeFromHistory(index)"
-                    class="opacity-0 group-hover:opacity-100 transition-opacity text-textMuted hover:text-error-600"
+                    class="opacity-0 group-hover:opacity-100 transition-opacity text-textMuted hover:text-error-600 cursor-pointer"
                   >
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                     </svg>
-                  </button>
+                  </span>
                 </button>
               </div>
             </div>
@@ -153,13 +152,14 @@
 
 <script setup lang="ts">
 import { useProducts } from '~/composables/useProducts'
+import { useDebouncedRef } from '~/composables/useDebounce'
 
 const route = useRoute()
 const router = useRouter()
 const { products } = useProducts()
 
-// Search state
-const searchQuery = ref('')
+// 使用防抖的搜索查询
+const { value: searchQuery, debouncedValue: debouncedSearchQuery } = useDebouncedRef('', 500)
 const searchResults = ref<any[]>([])
 const isSearching = ref(false)
 
@@ -192,7 +192,15 @@ onMounted(() => {
   const query = route.query.q as string
   if (query) {
     searchQuery.value = query
-    performSearch()
+  }
+})
+
+// 监听防抖后的搜索查询
+watch(debouncedSearchQuery, (newQuery) => {
+  if (newQuery.trim().length >= 2) {
+    performSearch(newQuery)
+  } else if (newQuery.trim().length === 0) {
+    searchResults.value = []
   }
 })
 
@@ -239,19 +247,17 @@ const clearHistory = () => {
 // Search from history
 const searchFromHistory = (term: string) => {
   searchQuery.value = term
-  performSearch()
 }
 
 // Search from popular
 const searchFromPopular = (term: string) => {
   searchQuery.value = term
-  performSearch()
   addToHistory(term)
 }
 
 // Perform search
-const performSearch = () => {
-  if (!searchQuery.value.trim()) {
+const performSearch = (query: string) => {
+  if (!query.trim()) {
     searchResults.value = []
     return
   }
@@ -259,37 +265,26 @@ const performSearch = () => {
   isSearching.value = true
   
   // Add to history
-  addToHistory(searchQuery.value)
+  addToHistory(query)
   
   // Update URL
-  router.push({ query: { q: searchQuery.value } })
+  router.push({ query: { q: query } })
   
-  // Simulate API delay
+  // Simulate API delay (in real app, this would be an API call)
   setTimeout(() => {
-    const query = searchQuery.value.toLowerCase()
+    const searchTerm = query.toLowerCase()
     
     // Search in products
     searchResults.value = products.filter(product => {
       return (
-        product.name.toLowerCase().includes(query) ||
-        product.category.toLowerCase().includes(query) ||
-        product.description?.toLowerCase().includes(query)
+        product.name.toLowerCase().includes(searchTerm) ||
+        product.category.toLowerCase().includes(searchTerm) ||
+        product.description?.toLowerCase().includes(searchTerm)
       )
     })
     
     isSearching.value = false
-  }, 300)
-}
-
-// Debounced search
-let searchTimeout: NodeJS.Timeout
-const debouncedSearch = () => {
-  clearTimeout(searchTimeout)
-  searchTimeout = setTimeout(() => {
-    if (searchQuery.value.length >= 2) {
-      performSearch()
-    }
-  }, 500)
+  }, 100)
 }
 
 // Clear search
