@@ -10,7 +10,7 @@
       <!-- 图片区域 -->
       <div 
         ref="productImageRef"
-        class="product-image-wrapper relative aspect-[3/4] overflow-hidden bg-backgroundLight"
+        class="product-image-wrapper relative aspect-[3/4] overflow-hidden bg-primary-900"
       >
         <!-- 主图片 -->
         <OptimizedImage
@@ -35,8 +35,8 @@
         </div>
         
         <!-- 徽章 -->
-        <div 
-          v-if="product.badge" 
+        <div
+          v-if="product.badge"
           :class="getBadgeClass(product.badge)"
           class="absolute top-3 left-3 z-10"
         >
@@ -50,7 +50,7 @@
         >
           <span 
             v-if="product.stock === 0"
-            class="px-3 py-1 bg-gray-900 text-white text-xs font-semibold uppercase tracking-wide"
+            class="px-3 py-1 bg-primary-900 text-white text-xs font-semibold uppercase tracking-wide"
           >
             Sold Out
           </span>
@@ -91,8 +91,8 @@
         <!-- 心愿单按钮 -->
         <button 
           @click.prevent="toggleWishlist"
-          class="wishlist-btn absolute top-3 right-3 z-20 p-2 bg-white/90 hover:bg-white rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100"
-          :class="{ 'text-red-500': isInWishlist, 'text-gray-400': !isInWishlist }"
+          class="wishlist-btn absolute top-3 right-3 z-20 p-2 bg-primary-900/80 hover:bg-accent-500 backdrop-blur-md rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 pulse-heart"
+          :class="{ 'text-accent-500': isInWishlist, 'text-cream-200': !isInWishlist }"
           title="Add to Wishlist"
         >
           <svg class="w-5 h-5" :fill="isInWishlist ? 'currentColor' : 'none'" stroke="currentColor" viewBox="0 0 24 24">
@@ -103,16 +103,16 @@
       
       <!-- 产品信息 -->
       <div class="text-center" style="padding: var(--space-md);">
-        <h3 class="text-sm font-normal text-primary line-clamp-2 leading-relaxed group-hover:text-accent transition-colors duration-300" style="margin-bottom: var(--space-sm);">
+        <h3 class="text-sm font-medium text-cream-200 line-clamp-2 leading-relaxed group-hover:text-accent-500 transition-colors duration-300" style="margin-bottom: var(--space-sm);">
           {{ product.name }}
         </h3>
         
         <div class="flex items-center justify-center" style="gap: var(--space-xs);">
-          <p v-if="product.originalPrice" class="text-xs text-textMuted line-through">
-            ${{ product.originalPrice.toFixed(2) }}
+          <p v-if="product.originalPrice" class="text-xs text-cream-300 line-through">
+            ${{ (product.originalPrice ?? 0).toFixed(2) }}
           </p>
           <p class="text-sm font-semibold text-accent">
-            ${{ product.price.toFixed(2) }}
+            ${{ (product.price ?? 0).toFixed(2) }}
           </p>
         </div>
       </div>
@@ -122,6 +122,7 @@
 
 <script setup lang="ts">
 import { useCartStore } from '~/stores/cart'
+import { useWishlistStore } from '~/stores/wishlist'
 import { useFlyingCart } from '~/composables/useFlyingCart'
 import type { Product } from '~/composables/useProducts'
 
@@ -131,8 +132,9 @@ const props = defineProps<{
 }>()
 
 const cartStore = useCartStore()
+const wishlistStore = useWishlistStore()
 const { flyToCart } = useFlyingCart()
-const isInWishlist = ref(false)
+const isInWishlist = computed(() => wishlistStore.has(props.product.id))
 const productImageRef = ref<HTMLElement | null>(null)
 
 const handleAddToCart = (event: Event) => {
@@ -159,7 +161,7 @@ const handleAddToCart = (event: Event) => {
   
   // 打开购物车侧边栏
   setTimeout(() => {
-    const isCartOpen = useState('cartSidebarOpen')
+    const isCartOpen = useState('cartSidebarOpen', () => false)
     isCartOpen.value = true
   }, 400)
 }
@@ -167,34 +169,26 @@ const handleAddToCart = (event: Event) => {
 const handleQuickView = (event: Event) => {
   event.stopPropagation()
   event.preventDefault()
-  
-  // TODO: 实现快速查看弹窗
-  console.log('Quick view:', props.product.name)
-  alert(`Quick View: ${props.product.name}\n\nThis feature will show a modal with product details.`)
+  // 暂时跳转到详情页（快速查看暂未实现，避免使用 alert）
+  navigateTo(`/product-detail?id=${props.product.id}`)
 }
 
 const toggleWishlist = (event: Event) => {
   event.stopPropagation()
   event.preventDefault()
-  
-  isInWishlist.value = !isInWishlist.value
-  
+
+  // 通过 store 统一管理，自动同步 localStorage + 广播事件
+  const added = wishlistStore.toggle(props.product.id)
+
   // 添加心跳动画
   const button = event.currentTarget as HTMLElement
   button.classList.add('heartbeat')
   setTimeout(() => {
     button.classList.remove('heartbeat')
   }, 1000)
-  
+
   // 显示Toast通知
-  showWishlistToast(isInWishlist.value)
-  
-  // TODO: 保存到wishlist store或localStorage
-  if (isInWishlist.value) {
-    console.log('Added to wishlist:', props.product.name)
-  } else {
-    console.log('Removed from wishlist:', props.product.name)
-  }
+  showWishlistToast(added)
 }
 
 // Toast通知函数
@@ -203,7 +197,7 @@ const showWishlistToast = (added: boolean) => {
   toast.className = 'wishlist-toast'
   toast.innerHTML = `
     <div class="flex items-center gap-3">
-      <svg class="w-5 h-5 ${added ? 'text-red-500' : 'text-gray-500'}" fill="${added ? 'currentColor' : 'none'}" stroke="currentColor" viewBox="0 0 24 24">
+      <svg class="w-5 h-5 ${added ? 'text-red-500' : 'text-cream-300'}" fill="${added ? 'currentColor' : 'none'}" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
       </svg>
       <span class="text-sm font-medium">
@@ -211,18 +205,23 @@ const showWishlistToast = (added: boolean) => {
       </span>
     </div>
   `
-  
+
   document.body.appendChild(toast)
-  
+
   // 触发动画
   setTimeout(() => toast.classList.add('show'), 10)
-  
+
   // 3秒后移除
   setTimeout(() => {
     toast.classList.remove('show')
     setTimeout(() => toast.remove(), 300)
   }, 3000)
 }
+
+// 加载时从 store 恢复 wishlist 状态
+onMounted(() => {
+  wishlistStore.loadFromStorage()
+})
 
 // 根据badge类型返回对应的class
 const getBadgeClass = (badge: string) => {
@@ -237,19 +236,21 @@ const getBadgeClass = (badge: string) => {
 <style scoped>
 /* 产品卡片容器 */
 .product-card {
-  background: #FFFFFF;
-  border: 1px solid #E0E0E0;
+  background: linear-gradient(135deg, rgba(23, 23, 23, 0.9) 0%, rgba(10, 10, 10, 0.95) 100%);
+  border: 1px solid rgba(255, 27, 107, 0.2);
   border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
   position: relative;
+  backdrop-filter: blur(12px);
 }
 
 .product-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
-  border-color: #D4AF37;
+  box-shadow: 0 16px 40px rgba(255, 27, 107, 0.3),
+              0 0 30px rgba(255, 27, 107, 0.15);
+  border-color: rgba(255, 27, 107, 0.6);
 }
 
 /* 玫瑰金渐变遮罩 */
@@ -260,7 +261,7 @@ const getBadgeClass = (badge: string) => {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(180deg, transparent 0%, rgba(212, 175, 55, 0.1) 100%);
+  background: linear-gradient(180deg, transparent 0%, rgba(255, 27, 107, 0.15) 100%);
   opacity: 0;
   transition: opacity 0.4s ease;
   pointer-events: none;
@@ -307,7 +308,7 @@ const getBadgeClass = (badge: string) => {
 
 /* Add to Cart 按钮 */
 .btn-add-to-cart {
-  background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
+  background: linear-gradient(135deg, #FF1B6B 0%, #E6005C 100%);
   color: #FFFFFF;
   padding: 12px 24px;
   font-size: 12px;
@@ -316,7 +317,7 @@ const getBadgeClass = (badge: string) => {
   letter-spacing: 0.5px;
   border: none;
   border-radius: 4px;
-  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+  box-shadow: 0 4px 16px rgba(255, 27, 107, 0.5);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   transform: translateY(10px);
@@ -333,15 +334,18 @@ const getBadgeClass = (badge: string) => {
 }
 
 .btn-add-to-cart:hover:not(:disabled) {
-  background: linear-gradient(135deg, #B8860B 0%, #8B6914 100%);
-  box-shadow: 0 6px 16px rgba(212, 175, 55, 0.5);
+  background: linear-gradient(135deg, #FF3D8B 0%, #FF1B6B 100%);
+  box-shadow: 0 8px 24px rgba(255, 27, 107, 0.7),
+              0 0 20px rgba(255, 27, 107, 0.4);
   transform: translateY(-2px);
 }
 
 /* Quick View 按钮 */
 .btn-quick-view {
-  background: #FFFFFF;
-  color: #2C2C2C;
+  background: rgba(10, 10, 10, 0.85);
+  color: #F5E6D3;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 27, 107, 0.3);
   padding: 12px;
   border: none;
   border-radius: 4px;
@@ -356,7 +360,8 @@ const getBadgeClass = (badge: string) => {
 }
 
 .btn-quick-view:hover {
-  background: #F5F5F5;
+  background: rgba(255, 27, 107, 0.2);
+  border-color: rgba(255, 27, 107, 0.6);
   transform: translateY(-2px);
 }
 
@@ -382,11 +387,13 @@ const getBadgeClass = (badge: string) => {
   position: fixed;
   bottom: 24px;
   right: 24px;
-  background: white;
+  background: linear-gradient(135deg, rgba(23, 23, 23, 0.95) 0%, rgba(10, 10, 10, 0.95) 100%);
+  color: #F5E6D3;
   padding: 16px 24px;
   border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-  border: 1px solid #E0E0E0;
+  box-shadow: 0 8px 32px rgba(255, 27, 107, 0.3);
+  border: 1px solid rgba(255, 27, 107, 0.3);
+  backdrop-filter: blur(20px);
   z-index: 9999;
   transform: translateY(100px);
   opacity: 0;

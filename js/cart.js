@@ -2,10 +2,11 @@
 
 function updateCartCount() {
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const totalItems = cart.reduce((sum, item) => sum + (Number(item.quantity) || 0), 0);
+    const safeCount = Number.isFinite(totalItems) ? totalItems : 0;
     const cartCountElements = document.querySelectorAll('#cartCount');
     cartCountElements.forEach(el => {
-        el.textContent = totalItems;
+        el.textContent = safeCount;
     });
 }
 

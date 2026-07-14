@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white min-h-screen pb-20 md:pb-0">
+  <div class="bg-primary-900/80 min-h-screen pb-20 md:pb-0">
     <TheNavbar />
     
     <!-- Breadcrumb -->
@@ -7,21 +7,24 @@
     
     <section class="pt-4 pb-20 px-6">
       <div class="max-w-7xl mx-auto">
-        <h1 class="text-3xl font-light text-primary mb-12 text-center uppercase tracking-wider">Shopping Cart</h1>
-        
-        <div v-if="cartStore.items.length === 0" class="text-center py-20">
-          <svg class="w-20 h-20 text-border mx-auto mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
-          </svg>
-          <h3 class="text-xl font-light mb-4 text-primary uppercase tracking-wide">Your cart is empty</h3>
-          <p class="text-sm text-textMuted mb-8">Add some items to get started</p>
-          <BaseButton 
-            variant="primary"
-            size="md"
-            @click="goToProducts"
+        <div class="flex items-center justify-between mb-12">
+          <h1 class="text-3xl font-light text-cream-100 uppercase tracking-wider">Shopping Cart</h1>
+          <button
+            v-if="cartStore.items.length > 0"
+            @click="confirmClearCart"
+            class="text-xs text-cream-300 hover:text-red-500 transition-colors uppercase tracking-wider"
           >
-            Continue Shopping
-          </BaseButton>
+            Clear Cart
+          </button>
+        </div>
+        
+        <div v-if="cartStore.items.length === 0">
+          <EmptyState
+            title="Your Cart Is Empty"
+            description="Nothing in here yet. Let's find something bold and beautiful to awaken your desire."
+            action-to="/products"
+            action-label="Continue Shopping"
+          />
         </div>
 
         <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-12">
@@ -29,15 +32,15 @@
           <div class="lg:col-span-2 space-y-6">
             <div v-for="(item, index) in cartStore.items" :key="index" class="border border-border p-6 hover:shadow-md transition-shadow">
               <div class="flex gap-6">
-                <NuxtLink :to="`/product-detail?id=${item.id}`" class="w-32 h-32 bg-backgroundLight flex-shrink-0 overflow-hidden">
+                <NuxtLink :to="`/product-detail?id=${item.id}`" class="w-32 h-32 bg-primary-900/50 flex-shrink-0 overflow-hidden">
                   <img v-if="item.image" :src="item.image" :alt="item.name" class="w-full h-full object-cover hover:scale-105 transition-transform" />
                 </NuxtLink>
                 <div class="flex-1">
                   <div class="flex justify-between items-start mb-2">
                     <NuxtLink :to="`/product-detail?id=${item.id}`" class="hover:text-accent transition-colors">
-                      <h3 class="text-base font-semibold text-primary uppercase tracking-wide">{{ item.name }}</h3>
+                      <h3 class="text-base font-semibold text-cream-100 uppercase tracking-wide">{{ item.name }}</h3>
                     </NuxtLink>
-                    <button @click="cartStore.removeItem(index)" class="text-textMuted hover:text-red-600 transition-colors" title="Remove">
+                    <button @click="cartStore.removeItem(index)" class="text-cream-300 hover:text-red-600 transition-colors" title="Remove">
                       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                       </svg>
@@ -47,21 +50,21 @@
                   <!-- Size & Color Selectors -->
                   <div class="flex gap-4 mb-3">
                     <div>
-                      <label class="text-xs text-textMuted uppercase">Size:</label>
+                      <label class="text-xs text-cream-300 uppercase">Size:</label>
                       <select 
                         v-model="item.size"
                         @change="updateItemSize(index, $event)"
-                        class="ml-2 px-2 py-1 border border-border text-xs focus:border-primary focus:outline-none cursor-pointer"
+                        class="ml-2 px-2 py-1 border border-border text-xs focus:border-accent-500/40 focus:outline-none cursor-pointer"
                       >
                         <option v-for="size in availableSizes" :key="size" :value="size">{{ size }}</option>
                       </select>
                     </div>
                     <div>
-                      <label class="text-xs text-textMuted uppercase">Color:</label>
+                      <label class="text-xs text-cream-300 uppercase">Color:</label>
                       <select 
                         v-model="item.color"
                         @change="updateItemColor(index, $event)"
-                        class="ml-2 px-2 py-1 border border-border text-xs focus:border-primary focus:outline-none cursor-pointer"
+                        class="ml-2 px-2 py-1 border border-border text-xs focus:border-accent-500/40 focus:outline-none cursor-pointer"
                       >
                         <option v-for="color in availableColors" :key="color" :value="color">{{ color }}</option>
                       </select>
@@ -91,21 +94,21 @@
                         :class="[
                           'w-8 h-8 border transition-colors duration-200 text-sm',
                           item.quantity <= 1 
-                            ? 'border-gray-200 text-gray-300 cursor-not-allowed' 
-                            : 'border-border hover:bg-backgroundLight cursor-pointer'
+                            ? 'border-accent-500/20 text-cream-200 cursor-not-allowed' 
+                            : 'border-border hover:bg-primary-900/50 cursor-pointer'
                         ]"
                       >
                         -
                       </button>
-                      <span class="font-semibold text-sm w-8 text-center">{{ item.quantity }}</span>
+                      <span class="font-semibold text-sm w-8 text-center">{{ item.quantity ?? 1 }}</span>
                       <button 
                         @click="cartStore.updateQuantity(index, 1)" 
                         :disabled="item.quantity >= getItemStock(item)"
                         :class="[
                           'w-8 h-8 border transition-colors duration-200 text-sm',
                           item.quantity >= getItemStock(item)
-                            ? 'border-gray-200 text-gray-300 cursor-not-allowed' 
-                            : 'border-border hover:bg-backgroundLight cursor-pointer'
+                            ? 'border-accent-500/20 text-cream-200 cursor-not-allowed' 
+                            : 'border-border hover:bg-primary-900/50 cursor-pointer'
                         ]"
                       >
                         +
@@ -114,8 +117,8 @@
                     
                     <!-- Price -->
                     <div class="text-right">
-                      <p class="text-lg font-semibold text-primary">${{ (item.price * item.quantity).toFixed(2) }}</p>
-                      <p v-if="item.originalPrice" class="text-xs text-textMuted line-through">${{ (item.originalPrice * item.quantity).toFixed(2) }}</p>
+                      <p class="text-lg font-semibold text-cream-100">${{ ((item.price ?? 0) * (item.quantity ?? 1)).toFixed(2) }}</p>
+                      <p v-if="item.originalPrice" class="text-xs text-cream-300 line-through">${{ ((item.originalPrice ?? 0) * (item.quantity ?? 1)).toFixed(2) }}</p>
                     </div>
                   </div>
                   
@@ -123,7 +126,7 @@
                   <div class="flex gap-4 mt-4 pt-4 border-t border-border">
                     <button 
                       @click="moveToWishlist(index)"
-                      class="text-xs text-textMuted hover:text-primary transition-colors flex items-center gap-1"
+                      class="text-xs text-cream-300 hover:text-cream-100 transition-colors flex items-center gap-1"
                     >
                       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
@@ -132,7 +135,7 @@
                     </button>
                     <button 
                       @click="saveForLater(index)"
-                      class="text-xs text-textMuted hover:text-primary transition-colors flex items-center gap-1"
+                      class="text-xs text-cream-300 hover:text-cream-100 transition-colors flex items-center gap-1"
                     >
                       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
@@ -146,32 +149,32 @@
             
             <!-- Saved for Later Section -->
             <div v-if="savedItems.length > 0" class="mt-12">
-              <h2 class="text-xl font-light text-primary mb-6 uppercase tracking-wider">Saved for Later</h2>
+              <h2 class="text-xl font-light text-cream-100 mb-6 uppercase tracking-wider">Saved for Later</h2>
               <div class="space-y-4">
-                <div v-for="(item, index) in savedItems" :key="index" class="border border-border p-4 bg-gray-50">
+                <div v-for="(item, index) in savedItems" :key="index" class="border border-border p-4 bg-primary-950/40">
                   <div class="flex gap-4">
-                    <div class="w-20 h-20 bg-white flex-shrink-0 overflow-hidden">
+                    <div class="w-20 h-20 bg-primary-900/80 flex-shrink-0 overflow-hidden">
                       <img v-if="item.image" :src="item.image" :alt="item.name" class="w-full h-full object-cover" />
                     </div>
                     <div class="flex-1">
-                      <h4 class="text-sm font-semibold text-primary mb-1">{{ item.name }}</h4>
-                      <p class="text-xs text-textMuted mb-2">Size: {{ item.size }} | Color: {{ item.color }}</p>
+                      <h4 class="text-sm font-semibold text-cream-100 mb-1">{{ item.name }}</h4>
+                      <p class="text-xs text-cream-300 mb-2">Size: {{ item.size }} | Color: {{ item.color }}</p>
                       <div class="flex gap-3">
                         <button 
                           @click="moveBackToCart(index)"
-                          class="text-xs text-primary hover:underline"
+                          class="text-xs text-cream-100 hover:underline"
                         >
                           Move to Cart
                         </button>
                         <button 
                           @click="removeSavedItem(index)"
-                          class="text-xs text-textMuted hover:text-red-600"
+                          class="text-xs text-cream-300 hover:text-red-600"
                         >
                           Remove
                         </button>
                       </div>
                     </div>
-                    <p class="text-sm font-semibold text-primary">${{ item.price.toFixed(2) }}</p>
+                    <p class="text-sm font-semibold text-cream-100">${{ (item.price ?? 0).toFixed(2) }}</p>
                   </div>
                 </div>
               </div>
@@ -181,23 +184,23 @@
           <!-- Order Summary -->
           <div class="lg:col-span-1">
             <div class="border border-border p-8 sticky top-32">
-              <h2 class="text-xl font-light mb-8 text-primary uppercase tracking-wider">Order Summary</h2>
+              <h2 class="text-xl font-light mb-8 text-cream-100 uppercase tracking-wider">Order Summary</h2>
               
               <!-- Coupon Code -->
               <div class="mb-8">
-                <label class="block text-xs font-semibold mb-3 text-primary uppercase tracking-wide">Promo Code</label>
+                <label class="block text-xs font-semibold mb-3 text-cream-100 uppercase tracking-wide">Promo Code</label>
                 <div class="flex gap-2">
                   <input
                     v-model="couponCode"
                     type="text"
                     placeholder="Enter code"
-                    class="flex-1 px-4 py-3 border-2 border-gray-300 transition-all duration-300 focus:border-accent focus:shadow-[0_0_0_4px_rgba(201,168,130,0.1)] focus:outline-none text-sm disabled:bg-gray-100 disabled:cursor-not-allowed"
+                    class="flex-1 px-4 py-3 border-2 border-accent-500/30 transition-all duration-300 focus:border-accent focus:shadow-[0_0_0_4px_rgba(201,168,130,0.1)] focus:outline-none text-sm disabled:bg-primary-950/40 disabled:cursor-not-allowed"
                     :disabled="appliedCoupon !== null"
                   />
                   <button
                     v-if="!appliedCoupon"
                     @click="applyCoupon"
-                    class="px-6 py-3 bg-primary hover:bg-white hover:text-primary border border-primary text-white text-xs uppercase tracking-wide font-semibold transition-all duration-200 cursor-pointer"
+                    class="px-6 py-3 bg-primary-900/60 hover:bg-primary-900/80 hover:text-cream-100 border border-accent-500/40 text-white text-xs uppercase tracking-wide font-semibold transition-all duration-200 cursor-pointer"
                   >
                     Apply
                   </button>
@@ -240,15 +243,15 @@
                     <div 
                       v-for="coupon in availableCoupons" 
                       :key="coupon.code"
-                      class="p-3 bg-backgroundLight border border-border rounded hover:border-accent transition-colors cursor-pointer"
+                      class="p-3 bg-primary-900/50 border border-border rounded hover:border-accent transition-colors cursor-pointer"
                       @click="selectCoupon(coupon)"
                     >
                       <div class="flex justify-between items-start mb-1">
-                        <span class="text-xs font-bold text-primary">{{ coupon.code }}</span>
+                        <span class="text-xs font-bold text-cream-100">{{ coupon.code }}</span>
                         <span class="text-xs text-accent font-semibold">{{ coupon.discount }}% OFF</span>
                       </div>
-                      <p class="text-xs text-textMuted">{{ coupon.description }}</p>
-                      <p v-if="coupon.minPurchase > 0" class="text-xs text-textSecondary mt-1">
+                      <p class="text-xs text-cream-300">{{ coupon.description }}</p>
+                      <p v-if="coupon.minPurchase > 0" class="text-xs text-cream-200 mt-1">
                         Min. purchase: ${{ coupon.minPurchase }}
                       </p>
                     </div>
@@ -257,43 +260,43 @@
               </div>
               
               <div class="space-y-4 mb-8">
-                <div class="flex justify-between text-sm text-textMuted">
+                <div class="flex justify-between text-sm text-cream-300">
                   <span>Subtotal</span>
                   <span>${{ cartStore.subtotal.toFixed(2) }}</span>
                 </div>
-                <div v-if="appliedCoupon" class="flex justify-between text-sm text-primary">
+                <div v-if="appliedCoupon" class="flex justify-between text-sm text-cream-100">
                   <span>Discount ({{ appliedCoupon.discount }}%)</span>
                   <span>-${{ discountAmount.toFixed(2) }}</span>
                 </div>
-                <div class="flex justify-between text-sm text-textMuted">
+                <div class="flex justify-between text-sm text-cream-300">
                   <span>Shipping</span>
-                  <span v-if="cartStore.subtotal >= 100" class="text-primary">Free</span>
+                  <span v-if="cartStore.subtotal >= 75" class="text-cream-100">Complimentary</span>
                   <span v-else>${{ shippingCost.toFixed(2) }}</span>
                 </div>
-                <div class="flex justify-between text-sm text-textMuted">
+                <div class="flex justify-between text-sm text-cream-300">
                   <span>Tax (10%)</span>
                   <span>${{ taxAmount.toFixed(2) }}</span>
                 </div>
                 <div class="border-t border-border pt-4 flex justify-between font-semibold text-base">
                   <span>Total</span>
-                  <span class="text-primary">${{ finalTotal.toFixed(2) }}</span>
+                  <span class="text-cream-100">${{ finalTotal.toFixed(2) }}</span>
                 </div>
               </div>
               
               <!-- Free Shipping Progress -->
-              <div v-if="cartStore.subtotal < 100" class="mb-8 p-4 bg-info-50 border border-info-200 rounded">
+              <div v-if="cartStore.subtotal < 75" class="mb-8 p-4 bg-info-50 border border-info-200 rounded">
                 <div class="flex items-center gap-2 mb-3">
                   <svg class="w-4 h-4 text-info-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                   </svg>
                   <p class="text-xs text-info-700 font-medium">
-                    Add <span class="font-bold">${{ (100 - cartStore.subtotal).toFixed(2) }}</span> more for free shipping
+                    Add <span class="font-bold">${{ (75 - cartStore.subtotal).toFixed(2) }}</span> more for complimentary shipping
                   </p>
                 </div>
                 <div class="w-full h-2 bg-info-100 rounded-full overflow-hidden">
-                  <div 
+                  <div
                     class="h-full bg-info-500 transition-all duration-300 rounded-full"
-                    :style="{ width: `${(cartStore.subtotal / 100) * 100}%` }"
+                    :style="{ width: `${Math.min(100, (cartStore.subtotal / 75) * 100)}%` }"
                   ></div>
                 </div>
               </div>
@@ -355,7 +358,7 @@
                   <svg class="w-4 h-4 text-accent-600" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                   </svg>
-                  <span>Free shipping over $100</span>
+                  <span>Complimentary shipping over $75</span>
                 </div>
               </div>
             </div>
@@ -364,8 +367,8 @@
         
         <!-- Recommended Products -->
         <div v-if="cartStore.items.length > 0" class="mt-20">
-          <h2 class="text-2xl font-light text-primary mb-8 text-center uppercase tracking-wider">Don't Forget These</h2>
-          <p class="text-sm text-textMuted text-center mb-12">Complete your look with these complementary items</p>
+          <h2 class="text-2xl font-light text-cream-100 mb-8 text-center uppercase tracking-wider">Don't Forget These</h2>
+          <p class="text-sm text-cream-300 text-center mb-12">Complete your look with these complementary items</p>
           
           <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
             <ProductCard 
@@ -377,20 +380,45 @@
         </div>
       </div>
     </section>
-    
+
+    <!-- Clear Cart Confirmation Modal -->
+    <Teleport to="body">
+      <div v-if="showClearConfirm" class="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4" @click.self="showClearConfirm = false">
+        <div class="bg-primary-900 border border-red-500/40 rounded-2xl p-6 max-w-md w-full">
+          <h3 class="font-display text-xl font-bold text-cream-100 mb-2">Clear your cart?</h3>
+          <p class="text-sm text-cream-300 mb-6">This will remove all items from your cart. You can't undo this.</p>
+          <div class="flex gap-3 justify-end">
+            <BaseButton variant="secondary" size="sm" @click="showClearConfirm = false">Cancel</BaseButton>
+            <BaseButton size="sm" @click="doClearCart" class="bg-red-500 hover:bg-red-600 text-white border-0">Yes, clear cart</BaseButton>
+          </div>
+        </div>
+      </div>
+    </Teleport>
+
     <TheFooter />
   </div>
 </template>
 
 <script setup lang="ts">
 import { useCartStore } from '~/stores/cart'
+import { useWishlistStore } from '~/stores/wishlist'
 import { useProducts } from '~/composables/useProducts'
 
+useSeoMeta({
+  title: 'Shopping Cart · LUNA·SENSUAL',
+  description: 'Review your selected items and proceed to checkout.',
+  robots: 'noindex, follow'
+})
+
 const cartStore = useCartStore()
+const wishlistStore = useWishlistStore()
 const { products } = useProducts()
 
 // Saved for later items
 const savedItems = ref<any[]>([])
+
+// Clear cart confirmation modal
+const showClearConfirm = ref(false)
 
 // Available sizes and colors
 const availableSizes = ['XS', 'S', 'M', 'L', 'XL']
@@ -409,8 +437,47 @@ const availableCoupons = [
   { code: 'WELCOME15', discount: 15, description: '15% off for new customers', minPurchase: 0 }
 ]
 
-// Recommended products
-const recommendedProducts = computed(() => products.slice(0, 4))
+// Recommended products: 优先推荐购物车中已存在分类的其他商品，否则展示热门新品
+const recommendedProducts = computed(() => {
+  // 收集购物车中商品的分类
+  const cartCategories = new Set(
+    cartStore.items
+      .map(item => products.find(p => p.id === item.id)?.category)
+      .filter(Boolean)
+  )
+
+  // 排除购物车中已有的商品
+  const cartIds = new Set(cartStore.items.map(item => item.id))
+
+  // 第一优先：相同分类的其他商品
+  const sameCategory = products.filter(p =>
+    p.category && cartCategories.has(p.category) && !cartIds.has(p.id)
+  )
+
+  // 第二优先：新品
+  const newArrivals = products.filter(p => p.badge === 'New' && !cartIds.has(p.id))
+
+  // 合并去重，取前 4 个
+  const combined: typeof products = []
+  const seen = new Set<number>()
+  ;[...sameCategory, ...newArrivals].forEach(p => {
+    if (!seen.has(p.id) && combined.length < 4) {
+      combined.push(p)
+      seen.add(p.id)
+    }
+  })
+  return combined
+})
+
+// 清空购物车（带确认）
+const confirmClearCart = () => {
+  showClearConfirm.value = true
+}
+
+const doClearCart = () => {
+  cartStore.clearCart()
+  showClearConfirm.value = false
+}
 
 // Stock simulation (in real app, this would come from backend)
 const getItemStock = (item: any) => {
@@ -427,22 +494,19 @@ const getItemStock = (item: any) => {
 
 const updateItemSize = (index: number, event: Event) => {
   const target = event.target as HTMLSelectElement
-  cartStore.items[index].size = target.value
-  cartStore.saveCart()
+  cartStore.updateItemSize(index, target.value)
 }
 
 const updateItemColor = (index: number, event: Event) => {
   const target = event.target as HTMLSelectElement
-  cartStore.items[index].color = target.value
-  cartStore.saveCart()
+  cartStore.updateItemColor(index, target.value)
 }
 
 const moveToWishlist = (index: number) => {
   const item = cartStore.items[index]
-  // TODO: Add to wishlist store
-  console.log('Move to wishlist:', item.name)
+  // 通过 store 统一加入心愿单
+  wishlistStore.add(item.id)
   cartStore.removeItem(index)
-  alert(`${item.name} moved to wishlist!`)
 }
 
 const saveForLater = (index: number) => {
@@ -505,7 +569,7 @@ const discountAmount = computed(() => {
 })
 
 const shippingCost = computed(() => {
-  return cartStore.subtotal >= 100 ? 0 : 9.99
+  return cartStore.subtotal >= 75 ? 0 : 9.99
 })
 
 const subtotalAfterDiscount = computed(() => {
@@ -544,6 +608,7 @@ const goToProducts = () => {
 
 onMounted(() => {
   cartStore.loadCart()
+  wishlistStore.loadFromStorage()
   // Load saved items from localStorage
   const saved = localStorage.getItem('savedForLater')
   if (saved) {

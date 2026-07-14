@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout - Intimate Elegance</title>
+    <title>Checkout - LUNA·SENSUAL</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -59,7 +59,7 @@
                     <svg class="w-8 h-8 text-primary" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
                     </svg>
-                    <span class="font-display text-2xl font-semibold text-primary">Intimate Elegance</span>
+                    <span class="font-display text-2xl font-semibold text-primary">LUNA·SENSUAL</span>
                 </a>
             </div>
         </div>
@@ -235,27 +235,35 @@
     <script src="js/cart.js"></script>
     <script>
         function loadOrderSummary() {
-            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const rawCart = JSON.parse(localStorage.getItem('cart') || '[]');
+            // 验证数据完整性
+            const cart = rawCart.map(item => ({
+                ...item,
+                quantity: Number(item.quantity) || 1,
+                price: Number(item.price) || 0
+            })).filter(item => item.id && item.name);
             const orderItemsContainer = document.getElementById('orderItems');
-            
+
             let subtotal = 0;
             orderItemsContainer.innerHTML = cart.map(item => {
-                subtotal += item.price * item.quantity;
+                const qty = Number(item.quantity) || 1;
+                const price = Number(item.price) || 0;
+                subtotal += price * qty;
                 return `
                     <div class="flex items-center space-x-3">
                         <div class="w-16 h-16 bg-gradient-to-br from-pink-100 to-rose-50 rounded-lg flex-shrink-0"></div>
                         <div class="flex-1 min-w-0">
                             <p class="font-semibold text-sm truncate">${item.name}</p>
-                            <p class="text-xs text-slate-600">Qty: ${item.quantity}</p>
+                            <p class="text-xs text-slate-600">Qty: ${qty}</p>
                         </div>
-                        <p class="font-semibold text-primary">$${(item.price * item.quantity).toFixed(2)}</p>
+                        <p class="font-semibold text-primary">$${(price * qty).toFixed(2)}</p>
                     </div>
                 `;
             }).join('');
-            
+
             const tax = subtotal * 0.1;
             const total = subtotal + tax;
-            
+
             document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
             document.getElementById('tax').textContent = `$${tax.toFixed(2)}`;
             document.getElementById('total').textContent = `$${total.toFixed(2)}`;

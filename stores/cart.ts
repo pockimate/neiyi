@@ -17,13 +17,15 @@ export const useCartStore = defineStore('cart', {
   }),
 
   getters: {
-    // 使用缓存的计算属性避免重复计算
+    // 使用缓存的计算属性避免重复计算，防御 NaN
     cartCount: (state) => {
-      return state.items.reduce((sum, item) => sum + item.quantity, 0)
+      const count = state.items.reduce((sum, item) => sum + (Number(item.quantity) || 0), 0)
+      return Number.isFinite(count) ? count : 0
     },
-    
+
     subtotal: (state) => {
-      return state.items.reduce((sum, item) => sum + (item.price * item.quantity), 0)
+      const total = state.items.reduce((sum, item) => sum + ((Number(item.price) || 0) * (Number(item.quantity) || 0)), 0)
+      return Number.isFinite(total) ? total : 0
     },
     
     tax(): number {
@@ -47,16 +49,22 @@ export const useCartStore = defineStore('cart', {
 
   actions: {
     addToCart(product: CartItem) {
+      // 确保数量和价格有效
+      const safeProduct = {
+        ...product,
+        quantity: Number(product.quantity) || 1,
+        price: Number(product.price) || 0
+      }
       // 使用 Map 优化查找性能
-      const key = `${product.id}-${product.size}-${product.color}`
+      const key = `${safeProduct.id}-${safeProduct.size}-${safeProduct.color}`
       const existing = this.itemsById.get(key)
 
       if (existing) {
         // 直接修改现有项，避免数组操作
-        existing.quantity += product.quantity
+        existing.quantity += safeProduct.quantity
       } else {
         // 使用 Object.freeze 防止意外修改（可选）
-        this.items.push({ ...product })
+        this.items.push({ ...safeProduct })
       }
 
       this.persistCart()
@@ -80,6 +88,22 @@ export const useCartStore = defineStore('cart', {
       this.persistCart()
     },
 
+    updateItemSize(index: number, size: string) {
+      const item = this.items[index]
+      if (item) {
+        item.size = size
+        this.persistCart()
+      }
+    },
+
+    updateItemColor(index: number, color: string) {
+      const item = this.items[index]
+      if (item) {
+        item.color = color
+        this.persistCart()
+      }
+    },
+
     clearCart() {
       this.items = []
       this.persistCart()
@@ -101,7 +125,7 @@ export const useCartStore = defineStore('cart', {
 
     // 持久化到 localStorage（防抖）
     persistCart() {
-      if (!process.client) return
+      if (!import.meta.client) return
       
       // 使用 requestIdleCallback 在空闲时保存
       if ('requestIdleCallback' in window) {
@@ -118,14 +142,22 @@ export const useCartStore = defineStore('cart', {
 
     // 从 localStorage 加载
     async loadCart() {
-      if (!process.client) return
-      
+      if (!import.meta.client) return
+
       this.isLoading = true
-      
+
       try {
         const saved = localStorage.getItem('cart')
         if (saved) {
-          this.items = JSON.parse(saved)
+          const parsed = JSON.parse(saved)
+          // 验证数据完整性：确保每个 item 的 quantity 和 price 是有效数字
+          this.items = Array.isArray(parsed)
+            ? parsed.map((item: any) => ({
+                ...item,
+                quantity: Number(item.quantity) || 1,
+                price: Number(item.price) || 0
+              })).filter((item: any) => item.id && item.name)
+            : []
         }
       } catch (error) {
         console.error('Failed to load cart:', error)

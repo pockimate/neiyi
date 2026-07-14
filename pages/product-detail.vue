@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white min-h-screen pb-20 md:pb-0">
+  <div class="bg-primary-800 min-h-screen pb-20 md:pb-0">
     <TheNavbar />
     
     <section v-if="product" class="pt-24 pb-20">
@@ -15,7 +15,7 @@
           <div>
             <!-- Main Image - 正方形 with Zoom -->
             <div 
-              class="mb-4 aspect-square bg-backgroundLight border border-border overflow-hidden group relative cursor-zoom-in"
+              class="mb-4 aspect-square bg-transparent border border-border overflow-hidden group relative cursor-zoom-in"
               @mouseenter="showZoom = true"
               @mouseleave="showZoom = false"
               @mousemove="handleMouseMove"
@@ -31,8 +31,8 @@
               />
               
               <!-- 全屏查看图标 -->
-              <div class="absolute top-4 right-4 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer z-10">
-                <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div class="absolute top-4 right-4 w-10 h-10 bg-primary-900/90 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer z-10">
+                <svg class="w-5 h-5 text-cream-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
                 </svg>
               </div>
@@ -82,41 +82,43 @@
             </div>
             
             <!-- Product Name -->
-            <h1 class="text-3xl font-normal text-primary mb-4 leading-tight">
+            <h1 class="text-3xl font-normal text-cream-200 mb-4 leading-tight">
               {{ product.name }}
             </h1>
             
             <!-- Description -->
-            <p class="text-sm text-textSecondary mb-6 leading-relaxed">
+            <p class="text-sm text-cream-200 mb-6 leading-relaxed">
               {{ product.description }}
             </p>
             
             <!-- Rating -->
             <div class="flex items-center gap-3 mb-6 pb-6 border-b border-border">
               <div class="flex text-accent">
-                <svg v-for="i in 5" :key="i" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <svg v-for="i in 5" :key="i" class="w-4 h-4" :fill="i <= Math.round(Number(overallRating)) ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="1.5" viewBox="0 0 20 20">
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
                 </svg>
               </div>
-              <span class="text-sm text-textMuted">4.8 (128 reviews)</span>
+              <span class="text-sm text-cream-300">{{ overallRating }} ({{ reviews.length }} reviews)</span>
             </div>
             
             <!-- Price -->
             <div class="mb-8">
               <div class="flex items-baseline gap-3">
-                <span class="text-3xl font-semibold text-primary">${{ product.price.toFixed(2) }}</span>
-                <span v-if="product.originalPrice" class="text-lg text-textMuted line-through">${{ product.originalPrice.toFixed(2) }}</span>
+                <span class="text-3xl font-semibold text-cream-200">${{ (product.price ?? 0).toFixed(2) }}</span>
+                <span v-if="product.originalPrice" class="text-lg text-cream-300 line-through">${{ (product.originalPrice ?? 0).toFixed(2) }}</span>
               </div>
-              <p class="text-sm text-success mt-2">✓ In Stock - Ships within 24 hours</p>
+              <p v-if="product.stock === 0" class="text-sm text-red-400 mt-2 font-semibold">Out of stock — restocking soon</p>
+              <p v-else-if="product.stock <= 5" class="text-sm text-orange-400 mt-2 font-semibold">Only {{ product.stock }} left — selling fast</p>
+              <p v-else class="text-sm text-green-400 mt-2">In stock — ships within 24 hours</p>
             </div>
             
             <!-- Size Selection -->
             <div class="mb-6">
               <div class="flex items-center justify-between mb-3">
-                <label class="text-sm font-semibold text-primary uppercase tracking-wider">
+                <label class="text-sm font-semibold text-cream-200 uppercase tracking-wider">
                   Size: {{ selectedSize }}
                 </label>
-                <NuxtLink to="/size-guide" class="text-xs text-textMuted hover:text-primary transition-colors underline">
+                <NuxtLink to="/size-guide" class="text-xs text-cream-300 hover:text-cream-200 transition-colors underline">
                   Size Guide
                 </NuxtLink>
               </div>
@@ -129,10 +131,10 @@
                   :class="[
                     'size-selector py-3 text-sm font-semibold border transition-all duration-200 relative',
                     selectedSize === size.name 
-                      ? 'bg-primary text-white border-primary' 
+                      ? 'bg-primary-900/60 text-white border-accent-500/40' 
                       : size.stock === 0
-                        ? 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed'
-                        : 'bg-white text-primary border-border hover:border-primary cursor-pointer'
+                        ? 'bg-primary-950/40 text-cream-300 border-accent-500/20 cursor-not-allowed'
+                        : 'bg-primary-800 text-cream-200 border-border hover:border-accent-500/40 cursor-pointer'
                   ]"
                   :title="size.stock === 0 ? 'Out of stock' : `${size.stock} in stock`"
                 >
@@ -142,7 +144,7 @@
                     v-if="size.stock === 0"
                     class="absolute inset-0 flex items-center justify-center"
                   >
-                    <span class="w-full h-px bg-gray-400 rotate-[-20deg]"></span>
+                    <span class="w-full h-px bg-primary-800 rotate-[-20deg]"></span>
                   </span>
                   <!-- 低库存提示 -->
                   <span 
@@ -152,18 +154,18 @@
                 </button>
               </div>
               <!-- 库存提示 -->
-              <p 
+              <p
                 v-if="selectedSizeStock && selectedSizeStock <= 5"
                 class="text-xs mt-2"
                 :class="selectedSizeStock <= 3 ? 'text-red-600' : 'text-orange-600'"
               >
-                {{ selectedSizeStock <= 3 ? '⚠️' : '⏰' }} Only {{ selectedSizeStock }} left in stock!
+                Only {{ selectedSizeStock }} left in stock.
               </p>
             </div>
             
             <!-- Color Selection -->
             <div class="mb-8">
-              <label class="block text-sm font-semibold text-primary uppercase tracking-wider mb-3">
+              <label class="block text-sm font-semibold text-cream-200 uppercase tracking-wider mb-3">
                 Color: {{ selectedColor }}
               </label>
               <div class="flex gap-3">
@@ -174,8 +176,8 @@
                   :class="[
                     'color-selector w-12 h-12 rounded-full border-2 transition-all duration-200 cursor-pointer relative group',
                     selectedColor === color.name 
-                      ? 'border-primary scale-110 shadow-lg' 
-                      : 'border-gray-300 hover:border-primary hover:scale-105'
+                      ? 'border-accent-500/40 scale-110 shadow-lg' 
+                      : 'border-accent-500/30 hover:border-accent-500/40 hover:scale-105'
                   ]"
                   :style="{ backgroundColor: color.hex }"
                   :title="color.name"
@@ -201,8 +203,8 @@
             <!-- Quantity -->
             <div class="mb-8">
               <div class="flex items-center justify-between mb-3">
-                <label class="text-sm font-semibold text-primary uppercase tracking-wider">Quantity</label>
-                <span class="text-xs text-textMuted">Max: {{ maxQuantity }}</span>
+                <label class="text-sm font-semibold text-cream-200 uppercase tracking-wider">Quantity</label>
+                <span class="text-xs text-cream-300">Max: {{ maxQuantity }}</span>
               </div>
               <div class="flex items-center gap-3">
                 <button 
@@ -211,8 +213,8 @@
                   :class="[
                     'quantity-btn w-12 h-12 border transition-colors flex items-center justify-center',
                     quantity <= 1 
-                      ? 'border-gray-200 text-gray-300 cursor-not-allowed' 
-                      : 'border-border hover:border-primary cursor-pointer'
+                      ? 'border-accent-500/20 text-cream-200 cursor-not-allowed' 
+                      : 'border-border hover:border-accent-500/40 cursor-pointer'
                   ]"
                 >
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -225,7 +227,7 @@
                   min="1"
                   :max="maxQuantity"
                   @input="validateQuantity"
-                  class="w-20 h-12 text-center border border-border focus:border-primary focus:outline-none"
+                  class="w-20 h-12 text-center border border-border focus:border-accent-500/40 focus:outline-none"
                 />
                 <button 
                   @click="increaseQuantity"
@@ -233,8 +235,8 @@
                   :class="[
                     'quantity-btn w-12 h-12 border transition-colors flex items-center justify-center',
                     quantity >= maxQuantity 
-                      ? 'border-gray-200 text-gray-300 cursor-not-allowed' 
-                      : 'border-border hover:border-primary cursor-pointer'
+                      ? 'border-accent-500/20 text-cream-200 cursor-not-allowed' 
+                      : 'border-border hover:border-accent-500/40 cursor-pointer'
                   ]"
                 >
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -261,28 +263,30 @@
                   <svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                   </svg>
-                  <span>🎉 10% bulk discount applied!</span>
+                  <span>10% bulk discount applied!</span>
                 </div>
               </div>
             </div>
             
             <!-- Action Buttons -->
             <div class="space-y-3 mb-8">
-              <BaseButton 
+              <BaseButton
                 @click="handleAddToCart"
                 variant="primary"
                 size="md"
                 block
                 class="touch-target"
+                :disabled="product.stock === 0 || selectedSizeStock === 0"
               >
-                Add to Cart
+                {{ product.stock === 0 ? 'Out of Stock' : (selectedSizeStock === 0 ? 'Size Unavailable' : 'Add to Cart') }}
               </BaseButton>
-              <BaseButton 
+              <BaseButton
                 @click="handleBuyNow"
                 variant="accent"
                 size="md"
                 block
                 class="touch-target"
+                :disabled="product.stock === 0 || selectedSizeStock === 0"
               >
                 Buy Now
               </BaseButton>
@@ -304,28 +308,28 @@
             <!-- Product Features -->
             <div class="border-t border-border pt-6 space-y-3">
               <div class="flex items-center gap-3 text-sm">
-                <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5 text-cream-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                 </svg>
-                <span class="text-textSecondary">Premium Quality Materials</span>
+                <span class="text-cream-200">Premium Quality Materials</span>
               </div>
               <div class="flex items-center gap-3 text-sm">
-                <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5 text-cream-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                 </svg>
-                <span class="text-textSecondary">Free Shipping on Orders Over $50</span>
+                <span class="text-cream-200">Complimentary Shipping Over $75</span>
               </div>
               <div class="flex items-center gap-3 text-sm">
-                <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5 text-cream-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                 </svg>
-                <span class="text-textSecondary">30-Day Easy Returns</span>
+                <span class="text-cream-200">30-Day Easy Returns</span>
               </div>
               <div class="flex items-center gap-3 text-sm">
-                <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5 text-cream-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                 </svg>
-                <span class="text-textSecondary">Discreet Packaging</span>
+                <span class="text-cream-200">Discreet Packaging</span>
               </div>
             </div>
           </div>
@@ -342,8 +346,8 @@
               :class="[
                 'py-4 text-sm font-semibold uppercase tracking-wider transition-colors cursor-pointer',
                 activeTab === tab 
-                  ? 'text-primary border-b-2 border-primary' 
-                  : 'text-textMuted hover:text-primary'
+                  ? 'text-cream-200 border-b-2 border-accent-500/40' 
+                  : 'text-cream-300 hover:text-cream-200'
               ]"
             >
               {{ tab }}
@@ -354,10 +358,10 @@
           <div class="py-8">
             <!-- Description Tab -->
             <div v-if="activeTab === 'Description'" class="prose max-w-none">
-              <p class="text-textSecondary leading-relaxed">
+              <p class="text-cream-200 leading-relaxed">
                 {{ product.description }}
               </p>
-              <p class="text-textSecondary leading-relaxed mt-4">
+              <p class="text-cream-200 leading-relaxed mt-4">
                 Experience luxury and comfort with our premium lingerie collection. Each piece is carefully crafted with the finest materials to ensure both style and comfort.
               </p>
             </div>
@@ -365,25 +369,25 @@
             <!-- Details Tab -->
             <div v-if="activeTab === 'Details'" class="space-y-3">
               <div class="flex py-3 border-b border-border">
-                <span class="w-1/3 text-sm font-semibold text-primary">Material</span>
-                <span class="w-2/3 text-sm text-textSecondary">90% Polyamide, 10% Elastane</span>
+                <span class="w-1/3 text-sm font-semibold text-cream-200">Material</span>
+                <span class="w-2/3 text-sm text-cream-200">90% Polyamide, 10% Elastane</span>
               </div>
               <div class="flex py-3 border-b border-border">
-                <span class="w-1/3 text-sm font-semibold text-primary">Care</span>
-                <span class="w-2/3 text-sm text-textSecondary">Hand wash cold, lay flat to dry</span>
+                <span class="w-1/3 text-sm font-semibold text-cream-200">Care</span>
+                <span class="w-2/3 text-sm text-cream-200">Hand wash cold, lay flat to dry</span>
               </div>
               <div class="flex py-3 border-b border-border">
-                <span class="w-1/3 text-sm font-semibold text-primary">Origin</span>
-                <span class="w-2/3 text-sm text-textSecondary">Made in Europe</span>
+                <span class="w-1/3 text-sm font-semibold text-cream-200">Origin</span>
+                <span class="w-2/3 text-sm text-cream-200">Made in Europe</span>
               </div>
             </div>
             
             <!-- Shipping Tab -->
             <div v-if="activeTab === 'Shipping'" class="space-y-4">
-              <p class="text-textSecondary text-sm leading-relaxed">
-                Free standard shipping on orders over $50. Express shipping available at checkout.
+              <p class="text-cream-200 text-sm leading-relaxed">
+                Complimentary standard shipping on orders over $75. Express shipping available at checkout.
               </p>
-              <p class="text-textSecondary text-sm leading-relaxed">
+              <p class="text-cream-200 text-sm leading-relaxed">
                 Orders are processed within 1-2 business days and typically arrive within 3-5 business days.
               </p>
             </div>
@@ -394,26 +398,26 @@
               <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 pb-8 border-b border-border">
                 <!-- Overall Rating -->
                 <div class="text-center">
-                  <div class="text-5xl font-bold text-primary mb-2">{{ overallRating }}</div>
+                  <div class="text-5xl font-bold text-cream-200 mb-2">{{ overallRating }}</div>
                   <div class="flex justify-center text-accent mb-2">
                     <svg v-for="i in 5" :key="i" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
                     </svg>
                   </div>
-                  <p class="text-sm text-textMuted">Based on {{ reviews.length }} reviews</p>
+                  <p class="text-sm text-cream-300">Based on {{ reviews.length }} reviews</p>
                 </div>
                 
                 <!-- Rating Distribution -->
                 <div class="space-y-2">
                   <div v-for="star in [5, 4, 3, 2, 1]" :key="star" class="flex items-center gap-3">
-                    <span class="text-sm text-textSecondary w-12">{{ star }} star</span>
-                    <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                    <span class="text-sm text-cream-200 w-12">{{ star }} star</span>
+                    <div class="flex-1 h-2 bg-primary-900/60 rounded-full overflow-hidden">
                       <div 
                         class="h-full bg-accent transition-all duration-300"
                         :style="{ width: `${getRatingPercentage(star)}%` }"
                       ></div>
                     </div>
-                    <span class="text-sm text-textMuted w-12 text-right">{{ getRatingCount(star) }}</span>
+                    <span class="text-sm text-cream-300 w-12 text-right">{{ getRatingCount(star) }}</span>
                   </div>
                 </div>
               </div>
@@ -427,8 +431,8 @@
                   :class="[
                     'px-4 py-2 text-sm border rounded-full transition-all',
                     selectedReviewFilter === filter.value
-                      ? 'bg-primary text-white border-primary'
-                      : 'bg-white text-textSecondary border-border hover:border-primary'
+                      ? 'bg-primary-900/60 text-white border-accent-500/40'
+                      : 'bg-primary-800 text-cream-200 border-border hover:border-accent-500/40'
                   ]"
                 >
                   {{ filter.label }}
@@ -444,22 +448,22 @@
                 >
                   <div class="flex items-start gap-4">
                     <!-- Avatar -->
-                    <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0">
-                      <span class="text-lg font-semibold text-gray-600">{{ review.userName.charAt(0) }}</span>
+                    <div class="w-12 h-12 rounded-full bg-primary-900/60 flex items-center justify-center flex-shrink-0">
+                      <span class="text-lg font-semibold text-cream-100">{{ review.userName.charAt(0) }}</span>
                     </div>
                     
                     <div class="flex-1">
                       <!-- Header -->
                       <div class="flex items-center justify-between mb-2">
                         <div>
-                          <h4 class="font-semibold text-primary">{{ review.userName }}</h4>
+                          <h4 class="font-semibold text-cream-200">{{ review.userName }}</h4>
                           <div class="flex items-center gap-2 mt-1">
                             <div class="flex text-accent">
                               <svg v-for="i in review.rating" :key="i" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
                               </svg>
                             </div>
-                            <span class="text-xs text-textMuted">{{ review.date }}</span>
+                            <span class="text-xs text-cream-300">{{ review.date }}</span>
                           </div>
                         </div>
                         <span v-if="review.verified" class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">
@@ -468,12 +472,12 @@
                       </div>
                       
                       <!-- Specs -->
-                      <p class="text-xs text-textMuted mb-3">
+                      <p class="text-xs text-cream-300 mb-3">
                         Size: {{ review.size }} • Color: {{ review.color }}
                       </p>
                       
                       <!-- Content -->
-                      <p class="text-sm text-textSecondary leading-relaxed mb-3">
+                      <p class="text-sm text-cream-200 leading-relaxed mb-3">
                         {{ review.content }}
                       </p>
                       
@@ -493,14 +497,14 @@
                       <div class="flex items-center gap-4 text-sm">
                         <button 
                           @click="likeReview(review.id)"
-                          class="flex items-center gap-1 text-textMuted hover:text-primary transition-colors"
+                          class="flex items-center gap-1 text-cream-300 hover:text-cream-200 transition-colors"
                         >
                           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"/>
                           </svg>
                           <span>Helpful ({{ review.likes }})</span>
                         </button>
-                        <button class="text-textMuted hover:text-red-600 transition-colors">
+                        <button class="text-cream-300 hover:text-red-600 transition-colors">
                           Report
                         </button>
                       </div>
@@ -528,14 +532,14 @@
           >
             <button
               @click="toggleMobileTab(tab)"
-              class="w-full flex items-center justify-between px-4 py-4 bg-white text-left"
+              class="w-full flex items-center justify-between px-4 py-4 bg-primary-800 text-left"
             >
-              <span class="text-sm font-semibold uppercase tracking-wider text-primary">
+              <span class="text-sm font-semibold uppercase tracking-wider text-cream-200">
                 {{ tab }}
                 <span v-if="tab === 'Reviews'" class="ml-1 text-xs">({{ reviews.length }})</span>
               </span>
               <svg 
-                class="w-5 h-5 text-primary transition-transform duration-200"
+                class="w-5 h-5 text-cream-200 transition-transform duration-200"
                 :class="{ 'rotate-180': expandedMobileTabs.includes(tab) }"
                 fill="none" 
                 stroke="currentColor" 
@@ -546,13 +550,13 @@
             </button>
             
             <Transition name="accordion">
-              <div v-if="expandedMobileTabs.includes(tab)" class="px-4 py-4 bg-backgroundLight">
+              <div v-if="expandedMobileTabs.includes(tab)" class="px-4 py-4 bg-transparent">
                 <!-- Description Tab -->
                 <div v-if="tab === 'Description'" class="prose max-w-none">
-                  <p class="text-textSecondary leading-relaxed text-sm">
+                  <p class="text-cream-200 leading-relaxed text-sm">
                     {{ product.description }}
                   </p>
-                  <p class="text-textSecondary leading-relaxed mt-4 text-sm">
+                  <p class="text-cream-200 leading-relaxed mt-4 text-sm">
                     Experience luxury and comfort with our premium lingerie collection. Each piece is carefully crafted with the finest materials to ensure both style and comfort.
                   </p>
                 </div>
@@ -560,25 +564,25 @@
                 <!-- Details Tab -->
                 <div v-if="tab === 'Details'" class="space-y-3">
                   <div class="flex py-2 border-b border-border">
-                    <span class="w-1/3 text-xs font-semibold text-primary">Material</span>
-                    <span class="w-2/3 text-xs text-textSecondary">90% Polyamide, 10% Elastane</span>
+                    <span class="w-1/3 text-xs font-semibold text-cream-200">Material</span>
+                    <span class="w-2/3 text-xs text-cream-200">90% Polyamide, 10% Elastane</span>
                   </div>
                   <div class="flex py-2 border-b border-border">
-                    <span class="w-1/3 text-xs font-semibold text-primary">Care</span>
-                    <span class="w-2/3 text-xs text-textSecondary">Hand wash cold, lay flat to dry</span>
+                    <span class="w-1/3 text-xs font-semibold text-cream-200">Care</span>
+                    <span class="w-2/3 text-xs text-cream-200">Hand wash cold, lay flat to dry</span>
                   </div>
                   <div class="flex py-2 border-b border-border">
-                    <span class="w-1/3 text-xs font-semibold text-primary">Origin</span>
-                    <span class="w-2/3 text-xs text-textSecondary">Made in Europe</span>
+                    <span class="w-1/3 text-xs font-semibold text-cream-200">Origin</span>
+                    <span class="w-2/3 text-xs text-cream-200">Made in Europe</span>
                   </div>
                 </div>
                 
                 <!-- Shipping Tab -->
                 <div v-if="tab === 'Shipping'" class="space-y-3">
-                  <p class="text-textSecondary text-xs leading-relaxed">
-                    Free standard shipping on orders over $50. Express shipping available at checkout.
+                  <p class="text-cream-200 text-xs leading-relaxed">
+                    Complimentary standard shipping on orders over $75. Express shipping available at checkout.
                   </p>
-                  <p class="text-textSecondary text-xs leading-relaxed">
+                  <p class="text-cream-200 text-xs leading-relaxed">
                     Orders are processed within 1-2 business days and typically arrive within 3-5 business days.
                   </p>
                 </div>
@@ -586,13 +590,13 @@
                 <!-- Reviews Tab (Simplified for mobile) -->
                 <div v-if="tab === 'Reviews'">
                   <div class="text-center mb-4 pb-4 border-b border-border">
-                    <div class="text-3xl font-bold text-primary mb-1">{{ overallRating }}</div>
+                    <div class="text-3xl font-bold text-cream-200 mb-1">{{ overallRating }}</div>
                     <div class="flex justify-center text-accent mb-1">
                       <svg v-for="i in 5" :key="i" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
                       </svg>
                     </div>
-                    <p class="text-xs text-textMuted">Based on {{ reviews.length }} reviews</p>
+                    <p class="text-xs text-cream-300">Based on {{ reviews.length }} reviews</p>
                   </div>
                   
                   <div class="space-y-4">
@@ -602,20 +606,20 @@
                       class="pb-4 border-b border-border last:border-0"
                     >
                       <div class="flex items-start gap-3">
-                        <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0">
-                          <span class="text-sm font-semibold text-gray-600">{{ review.userName.charAt(0) }}</span>
+                        <div class="w-10 h-10 rounded-full bg-primary-900/60 flex items-center justify-center flex-shrink-0">
+                          <span class="text-sm font-semibold text-cream-100">{{ review.userName.charAt(0) }}</span>
                         </div>
                         <div class="flex-1">
-                          <h4 class="font-semibold text-sm text-primary">{{ review.userName }}</h4>
+                          <h4 class="font-semibold text-sm text-cream-200">{{ review.userName }}</h4>
                           <div class="flex items-center gap-2 mt-1">
                             <div class="flex text-accent">
                               <svg v-for="i in review.rating" :key="i" class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
                               </svg>
                             </div>
-                            <span class="text-xs text-textMuted">{{ review.date }}</span>
+                            <span class="text-xs text-cream-300">{{ review.date }}</span>
                           </div>
-                          <p class="text-xs text-textSecondary leading-relaxed mt-2">
+                          <p class="text-xs text-cream-200 leading-relaxed mt-2">
                             {{ review.content }}
                           </p>
                         </div>
@@ -632,7 +636,7 @@
         <div class="mt-20">
           <!-- You May Also Like -->
           <div class="mb-16">
-            <h2 class="text-2xl font-light text-primary mb-6 uppercase tracking-wider">You May Also Like</h2>
+            <h2 class="text-2xl font-light text-cream-200 mb-6 uppercase tracking-wider">You May Also Like</h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
               <ProductCard 
                 v-for="product in recommendedProducts" 
@@ -643,25 +647,25 @@
           </div>
           
           <!-- Frequently Bought Together -->
-          <div class="mb-16 bg-gray-50 p-8 rounded-lg">
-            <h2 class="text-2xl font-light text-primary mb-6 uppercase tracking-wider">Frequently Bought Together</h2>
+          <div class="mb-16 bg-primary-950/40 p-8 rounded-lg">
+            <h2 class="text-2xl font-light text-cream-200 mb-6 uppercase tracking-wider">Frequently Bought Together</h2>
             <div class="flex flex-col md:flex-row items-center gap-6">
               <div class="flex items-center gap-4 flex-wrap justify-center">
                 <div v-for="(item, index) in bundleItems" :key="item.id" class="flex items-center">
-                  <div class="w-24 h-24 bg-white border border-border rounded-lg overflow-hidden">
+                  <div class="w-24 h-24 bg-primary-800 border border-border rounded-lg overflow-hidden">
                     <img :src="item.image" :alt="item.name" class="w-full h-full object-cover" />
                   </div>
-                  <svg v-if="index < bundleItems.length - 1" class="w-6 h-6 text-textMuted mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg v-if="index < bundleItems.length - 1" class="w-6 h-6 text-cream-300 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                   </svg>
                 </div>
               </div>
               <div class="flex-shrink-0">
                 <div class="text-center mb-4">
-                  <p class="text-sm text-textMuted mb-1">Bundle Price:</p>
+                  <p class="text-sm text-cream-300 mb-1">Bundle Price:</p>
                   <div class="flex items-baseline gap-2 justify-center">
-                    <span class="text-2xl font-bold text-primary">${{ bundlePrice.toFixed(2) }}</span>
-                    <span class="text-sm text-textMuted line-through">${{ bundleOriginalPrice.toFixed(2) }}</span>
+                    <span class="text-2xl font-bold text-cream-200">${{ bundlePrice.toFixed(2) }}</span>
+                    <span class="text-sm text-cream-300 line-through">${{ bundleOriginalPrice.toFixed(2) }}</span>
                   </div>
                   <p class="text-xs text-green-600 font-semibold">Save ${{ (bundleOriginalPrice - bundlePrice).toFixed(2) }}</p>
                 </div>
@@ -674,7 +678,7 @@
           
           <!-- Recently Viewed -->
           <div v-if="recentlyViewed.length > 0">
-            <h2 class="text-2xl font-light text-primary mb-6 uppercase tracking-wider">Recently Viewed</h2>
+            <h2 class="text-2xl font-light text-cream-200 mb-6 uppercase tracking-wider">Recently Viewed</h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
               <ProductCard 
                 v-for="product in recentlyViewed" 
@@ -688,7 +692,7 @@
     </section>
     
     <!-- Mobile Fixed Bottom Bar -->
-    <div class="md:hidden fixed bottom-16 left-0 right-0 bg-white border-t border-border z-40 safe-area-bottom">
+    <div v-if="product" class="md:hidden fixed bottom-16 left-0 right-0 bg-primary-800 border-t border-border z-40 safe-area-bottom">
       <div class="px-4 py-3">
         <div class="flex items-center gap-3">
           <button 
@@ -700,22 +704,24 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
             </svg>
           </button>
-          <button 
+          <button
             @click="handleAddToCart"
-            class="flex-1 h-12 bg-primary text-white font-semibold text-sm uppercase tracking-wider transition-colors active:bg-primary/90"
+            :disabled="product.stock === 0 || selectedSizeStock === 0"
+            class="flex-1 h-12 bg-primary-900/60 text-white font-semibold text-sm uppercase tracking-wider transition-colors active:bg-primary-900/80 disabled:bg-primary-950/40 disabled:text-cream-300"
           >
-            Add to Cart
+            {{ product.stock === 0 ? 'Sold Out' : (selectedSizeStock === 0 ? 'Unavailable' : 'Add to Cart') }}
           </button>
-          <button 
+          <button
             @click="handleBuyNow"
-            class="flex-1 h-12 bg-accent text-white font-semibold text-sm uppercase tracking-wider transition-colors active:bg-accent/90"
+            :disabled="product.stock === 0 || selectedSizeStock === 0"
+            class="flex-1 h-12 bg-accent text-white font-semibold text-sm uppercase tracking-wider transition-colors active:bg-accent/90 disabled:bg-primary-950/40 disabled:text-cream-300"
           >
             Buy Now
           </button>
         </div>
         <div class="mt-2 text-center">
-          <p class="text-xs text-textMuted">
-            <span class="font-semibold text-primary">${{ product.price.toFixed(2) }}</span>
+          <p class="text-xs text-cream-300">
+            <span class="font-semibold text-cream-200">${{ (product.price ?? 0).toFixed(2) }}</span>
             <span class="mx-2">•</span>
             Size: {{ selectedSize }}
             <span class="mx-2">•</span>
@@ -736,7 +742,7 @@
           <div class="flex items-center justify-between px-4 py-4">
             <button
               @click="closeMobileCarousel"
-              class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center"
+              class="w-10 h-10 bg-primary-900/10 rounded-full flex items-center justify-center"
             >
               <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -771,8 +777,8 @@
             @click="selectImage(index)"
             :class="[
               'w-2 h-2 rounded-full transition-all',
-              currentImageIndex === index 
-                ? 'bg-white w-6' 
+              currentImageIndex === index
+                ? 'bg-white w-6'
                 : 'bg-white/40'
             ]"
           ></button>
@@ -790,7 +796,7 @@
         <!-- Close Button -->
         <button
           @click="closeLightbox"
-          class="absolute top-6 right-6 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors z-10"
+          class="absolute top-6 right-6 w-12 h-12 bg-primary-900/10 hover:bg-primary-900/20 rounded-full flex items-center justify-center transition-colors z-10"
         >
           <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -815,7 +821,7 @@
         <button
           v-if="currentImageIndex > 0"
           @click.stop="previousImage"
-          class="absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors"
+          class="absolute left-6 top-1/2 -translate-y-1/2 w-12 h-12 bg-primary-900/10 hover:bg-primary-900/20 rounded-full flex items-center justify-center transition-colors"
         >
           <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
@@ -825,7 +831,7 @@
         <button
           v-if="currentImageIndex < productImages.length - 1"
           @click.stop="nextImage"
-          class="absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors"
+          class="absolute right-6 top-1/2 -translate-y-1/2 w-12 h-12 bg-primary-900/10 hover:bg-primary-900/20 rounded-full flex items-center justify-center transition-colors"
         >
           <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -855,14 +861,36 @@
 
 <script setup lang="ts">
 import { useCartStore } from '~/stores/cart'
+import { useWishlistStore } from '~/stores/wishlist'
 import { useProducts } from '~/composables/useProducts'
 
 const route = useRoute()
 const cartStore = useCartStore()
+const wishlistStore = useWishlistStore()
 const { products } = useProducts()
 
 const productId = computed(() => parseInt(route.query.id as string))
 const product = computed(() => products.find(p => p.id === productId.value))
+
+// SEO - 动态标题与描述
+useSeoMeta(() => {
+  if (!product.value) {
+    return {
+      title: 'Product · LUNA·SENSUAL',
+      robots: 'noindex'
+    }
+  }
+  const p = product.value
+  return {
+    title: `${p.name} · LUNA·SENSUAL`,
+    description: p.description,
+    ogTitle: p.name,
+    ogDescription: p.description,
+    ogImage: p.image,
+    ogType: 'product',
+    twitterCard: 'summary_large_image'
+  }
+})
 
 // Product images (using same image for demo, replace with actual images)
 const productImages = computed(() => {
@@ -884,7 +912,7 @@ const currentImage = computed(() => productImages.value[currentImageIndex.value]
 const selectedSize = ref('M')
 const selectedColor = ref('Black')
 const quantity = ref(1)
-const isInWishlist = ref(false)
+const isInWishlist = computed(() => product.value ? wishlistStore.has(product.value.id) : false)
 const isWishlistAnimating = ref(false)
 const activeTab = ref('Description')
 const expandedMobileTabs = ref<string[]>([])
@@ -902,58 +930,42 @@ const mainImageRef = ref<HTMLImageElement | null>(null)
 // Lightbox functionality
 const isLightboxOpen = ref(false)
 
-// Size stock data (模拟数据，实际应从后端获取)
-const sizesWithStock = ref([
-  { name: 'XS', stock: 5 },
-  { name: 'S', stock: 8 },
-  { name: 'M', stock: 12 },
-  { name: 'L', stock: 3 },
-  { name: 'XL', stock: 0 }
-])
-
-// Color data with images
-const colors = [
-  { 
-    name: 'Black', 
-    hex: '#000000',
-    images: [
-      product.value?.image,
-      product.value?.image,
-      product.value?.image,
-      product.value?.image
-    ]
-  },
-  { 
-    name: 'White', 
-    hex: '#FFFFFF',
-    images: [
-      product.value?.image,
-      product.value?.image,
-      product.value?.image,
-      product.value?.image
-    ]
-  },
-  { 
-    name: 'Nude', 
-    hex: '#E8C4A0',
-    images: [
-      product.value?.image,
-      product.value?.image,
-      product.value?.image,
-      product.value?.image
-    ]
-  },
-  { 
-    name: 'Red', 
-    hex: '#DC2626',
-    images: [
-      product.value?.image,
-      product.value?.image,
-      product.value?.image,
-      product.value?.image
-    ]
+// Size stock data — 来自商品数据
+const sizesWithStock = computed(() => {
+  if (product.value?.sizes) {
+    return product.value.sizes
   }
-]
+  // 兜底默认
+  return [
+    { name: 'XS', stock: 5 },
+    { name: 'S', stock: 8 },
+    { name: 'M', stock: 12 },
+    { name: 'L', stock: 3 },
+    { name: 'XL', stock: 0 }
+  ]
+})
+
+// Color data with images — 来自商品数据
+const colors = computed(() => {
+  if (product.value?.colors && product.value.colors.length > 0) {
+    return product.value.colors.map(c => ({
+      ...c,
+      images: [
+        product.value?.image,
+        product.value?.hoverImage || product.value?.image,
+        product.value?.image,
+        product.value?.hoverImage || product.value?.image
+      ]
+    }))
+  }
+  // 兜底默认
+  return [
+    { name: 'Black', hex: '#000000', images: [product.value?.image, product.value?.image, product.value?.image, product.value?.image] },
+    { name: 'White', hex: '#FFFFFF', images: [product.value?.image, product.value?.image, product.value?.image, product.value?.image] },
+    { name: 'Nude', hex: '#E8C4A0', images: [product.value?.image, product.value?.image, product.value?.image, product.value?.image] },
+    { name: 'Red', hex: '#DC2626', images: [product.value?.image, product.value?.image, product.value?.image, product.value?.image] }
+  ]
+})
 
 const tabs = ['Description', 'Details', 'Shipping', 'Reviews']
 
@@ -1051,7 +1063,38 @@ const getRatingPercentage = (star: number) => {
 
 // Recommended products
 const recommendedProducts = computed(() => products.slice(0, 4))
-const recentlyViewed = computed(() => products.slice(4, 8))
+// Recently Viewed: 从 localStorage 读取真实访问历史
+const recentlyViewed = ref<typeof products>([])
+
+const loadRecentlyViewed = () => {
+  if (!import.meta.client) return
+  try {
+    const stored = localStorage.getItem('recently_viewed')
+    if (!stored) return
+    const ids: number[] = JSON.parse(stored)
+    // 排除当前商品，取最多 4 个
+    recentlyViewed.value = ids
+      .filter(id => id !== productId.value)
+      .map(id => products.find(p => p.id === id))
+      .filter(Boolean)
+      .slice(0, 4)
+  } catch (e) {
+    console.error('Failed to load recently viewed:', e)
+  }
+}
+
+const trackProductView = () => {
+  if (!import.meta.client || !product.value) return
+  try {
+    const stored = localStorage.getItem('recently_viewed')
+    const ids: number[] = stored ? JSON.parse(stored) : []
+    // 把当前商品移到最前，去重，保留最近 8 个
+    const updated = [product.value.id, ...ids.filter(id => id !== product.value!.id)].slice(0, 8)
+    localStorage.setItem('recently_viewed', JSON.stringify(updated))
+  } catch (e) {
+    console.error('Failed to track product view:', e)
+  }
+}
 
 // Bundle items
 const bundleItems = computed(() => [
@@ -1079,7 +1122,7 @@ const maxQuantity = computed(() => {
 })
 
 const selectedColorData = computed(() => {
-  return colors.find(c => c.name === selectedColor.value)
+  return colors.value.find(c => c.name === selectedColor.value)
 })
 
 const handleMouseMove = (event: MouseEvent) => {
@@ -1198,7 +1241,7 @@ const handleAddToCart = () => {
     image: product.value.image
   })
   
-  const isCartOpen = useState('cartSidebarOpen')
+  const isCartOpen = useState('cartSidebarOpen', () => false)
   isCartOpen.value = true
 }
 
@@ -1221,15 +1264,22 @@ const handleBuyNow = () => {
 }
 
 const toggleWishlist = () => {
-  isInWishlist.value = !isInWishlist.value
-  
+  if (!product.value) return
+  const added = wishlistStore.toggle(product.value.id)
+
   // 触发心形动画（仅在添加到愿望清单时）
-  if (isInWishlist.value) {
+  if (added) {
     isWishlistAnimating.value = true
     setTimeout(() => {
       isWishlistAnimating.value = false
     }, 600)
   }
+}
+
+// 页面加载时同步愿望清单状态
+const loadWishlist = () => {
+  if (!import.meta.client) return
+  wishlistStore.loadFromStorage()
 }
 
 const likeReview = (reviewId: number) => {
@@ -1240,8 +1290,17 @@ const likeReview = (reviewId: number) => {
 }
 
 const openImageModal = (imageUrl: string) => {
-  // TODO: 实现图片查看模态框
-  console.log('Open image:', imageUrl)
+  // 找到这张图片在 productImages 中的索引，打开 lightbox
+  const index = productImages.value.indexOf(imageUrl)
+  if (index > -1) {
+    currentImageIndex.value = index
+  }
+  if (window.innerWidth < 768) {
+    isMobileCarouselOpen.value = true
+  } else {
+    isLightboxOpen.value = true
+  }
+  document.body.style.overflow = 'hidden'
 }
 
 // Mobile tab toggle
@@ -1292,6 +1351,11 @@ const getBadgeClass = (badge: string) => {
 
 onMounted(() => {
   window.addEventListener('keydown', handleKeydown)
+  // 加载最近浏览 + 记录本次访问
+  loadRecentlyViewed()
+  trackProductView()
+  // 同步 wishlist 状态
+  loadWishlist()
 })
 
 onUnmounted(() => {
